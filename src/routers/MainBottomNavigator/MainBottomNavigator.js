@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { View } from 'react-native';
 
-import { SECONDARY_COLOR, DISABLED_COLOR, DARK_COLOR } from './../../utils/Constants';
+import { SECONDARY_COLOR, DISABLED_COLOR, DARK_COLOR, PETS_TOP_TAB_NAVIGATOR } from './../../utils/Constants';
 
 // Navigators
 import PetsTopTabNavigator from '../PetsTopTabNavigator/PetsTopTabNavigator';
@@ -11,7 +11,7 @@ import PetsTopTabNavigator from '../PetsTopTabNavigator/PetsTopTabNavigator';
 import Mock1 from './../../screens/Mock1';
 
 const routesConfig = {
-    Mock1: {
+    [PETS_TOP_TAB_NAVIGATOR]: {
         screen: PetsTopTabNavigator,
         navigationOptions:{
             tabBarLabel:'Mascotas',
@@ -28,7 +28,7 @@ const routesConfig = {
 };
 
 const navigatorConfig = {
-    initialRouteName: 'Mock1',
+    initialRouteName: PETS_TOP_TAB_NAVIGATOR,
     tabBarOptions: {
         activeTintColor: SECONDARY_COLOR,
         inactiveTintColor: DISABLED_COLOR,

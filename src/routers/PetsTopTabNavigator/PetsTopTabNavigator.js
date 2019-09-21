@@ -1,15 +1,15 @@
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
-import { SECONDARY_COLOR, DISABLED_COLOR, PRIMARY_COLOR } from '../../utils/Constants';
+import { SECONDARY_COLOR, DISABLED_COLOR, PRIMARY_COLOR, LOSTED_PUBLICATIONS_LIST_SCREEN } from '../../utils/Constants';
 
 // Screens
 import Mock1 from '../../screens/Mock1';
 import LostedPublicationListScreen from '../../screens/LostedPublicationListScreen/LostedPublicationListScreen';
 
 const routesConfig = {
-    Losted: {
+    [LOSTED_PUBLICATIONS_LIST_SCREEN]: {
         screen: LostedPublicationListScreen,
-        navigationOptions:{
+        navigationOptions: {
             tabBarLabel:'Perdidas',
         }
     },
@@ -22,7 +22,7 @@ const routesConfig = {
 };
 
 const navigatorConfig = {
-    initialRouteName: 'Losted',
+    initialRouteName: LOSTED_PUBLICATIONS_LIST_SCREEN,
     tabBarOptions: {
         activeTintColor: '#FFF',
         inactiveTintColor: DISABLED_COLOR,

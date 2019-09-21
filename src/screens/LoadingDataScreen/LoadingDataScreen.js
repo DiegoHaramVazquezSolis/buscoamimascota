@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import Orientation from 'react-native-orientation';
+import Orientation from 'react-native-orientation-locker';
 
 import { getData } from './../../utils/LocalStorage';
+import { ON_BOARDING, MAIN_BOTTOM_NAVIGATOR, ON_BOARDING_VIEWED_AS } from '../../utils/Constants';
 
 const LoadingDataScreen = ({ navigation }) => {
 
@@ -10,16 +11,17 @@ const LoadingDataScreen = ({ navigation }) => {
      */
     useEffect(() => {
         async function checkOnBoarding() {
+            
             /**
              * On the first time (after installation) the user must be
              * the onboarding, in any other initialization of the app
              * the user must be redirected to the MainBottomNavigator
              */
-            if(await getData('on_boarding_viewed') === 'true'){
+            if(await getData(ON_BOARDING_VIEWED_AS) === 'true'){
                 Orientation.lockToPortrait();
-                navigation.navigate('MainBottomNavigator');
+                navigation.navigate(MAIN_BOTTOM_NAVIGATOR);
             } else {
-                navigation.navigate('OnBoardingIntroductionScreen');
+                navigation.navigate(ON_BOARDING);
             }
         }
         checkOnBoarding();
