@@ -1,17 +1,21 @@
 import React from 'react';
 import { View } from 'react-native';
+import { Provider } from 'react-redux';
 
 import Grid from './src/components/simple/Grid/Grid';
 import Router from './src/routers/Router';
 import GlobalStyles from './src/utils/GlobalStyles';
+import { configureStore } from './src/redux/configureStore';
 
 console.disableYellowBox = true;
 
 const App = () => (
-    <View style={[GlobalStyles.flex1, { backgroundColor: '#EDF0F2' }]}>
-        <Grid show={false} />
-        <Router />
-    </View>
+    <Provider store={configureStore()}>
+        <View style={[GlobalStyles.flex1, { backgroundColor: '#EDF0F2' }]}>
+            <Grid show={false} />
+            <Router />
+        </View>
+    </Provider>
 );
 
 export default App;
