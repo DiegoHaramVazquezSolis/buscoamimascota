@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1021296714116",
+    "firebase_url": "https://busco-a-mi-mascota-236922.firebaseio.com",
+    "project_id": "busco-a-mi-mascota-236922",
+    "storage_bucket": "busco-a-mi-mascota-236922.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1021296714116:android:b8adf997760e356ab0fdd1",
+        "android_client_info": {
+          "package_name": "com.buscoamimascota"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1021296714116-l90pno6dch9snp6d1tlnlrmg4h7rlpto.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASZwpwn8B_6cQWuXC0o6jtaiTa3T7alZI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1021296714116-l90pno6dch9snp6d1tlnlrmg4h7rlpto.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
