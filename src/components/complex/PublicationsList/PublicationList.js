@@ -4,23 +4,19 @@ import { View, FlatList } from 'react-native';
 import styles from './styles';
 import PublicationCard from '../PublicationCard/PublicationCard';
 
-const PublicationList = () => {
+const PublicationList = ({ publications }) => {
     return (
         <View style={styles.listStyle}>
             <FlatList
                 showsVerticalScrollIndicator={false}
-                data={[
-                    {id: 'dsa', name: 'Misifus', city: 'Puebla de Zaragozaddddddd',
-                        description: 'ES UN PERRO BEAGLE DE 4 AÑOS DE EDAD TRI COLOR BASTANTE TIMIDO, LADRA CUANDO ESTA ASUSTADO PERO NO MUERDE, POR FAVOR AYUDENME A ENCONTRARLO, SE OFRECE RECOMPENSA $$$'},
-                    {id: 'dsad',name: 'Kenji', city: 'Guadalajara', description: 'Es un perro beagle de 4 años de edad tri color bastante timido, ladra cuando esta asustado pero no muerde, por favor ayudenme a encontrarlo, se ofrece recompensa $$$'},
-                    {id: 'dsadf',name: 'Brunonuvinsdknvds', city: 'Guadalajara'},
-                    {id: 'dsavdsv',name: 'Goofy', city: 'Guadalajara'},
-                    {id: 'dsavsdv',name: 'Garfield', city: 'Guadalajara'},
-                    {id: 'dsaxfdf',name: 'Pacheco', city: 'Guadalajara'}
-                ]}
+                data={Object.keys(publications).map((key) => (publications[key]))}
+                initialNumToRender={5}
                 keyExtractor={(item) => (`Publication-${item.id}`)}
                 renderItem={({ item, index }) => (
-                    <PublicationCard {...item} lastChild={index === 5} />
+                    <PublicationCard
+                        key={item.id}
+                        {...item}
+                        lastChild={index + 1 === Object.keys(publications).length} />
                 )} />
         </View>
     );

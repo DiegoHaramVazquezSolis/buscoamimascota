@@ -9,11 +9,11 @@ import { returnTextBasedOnMaxLengthWithLimit } from '../../../utils/Utils';
 
 const PublicationCard = ({ image = '', name = '', description = '', onContactPress = () => {}, onShowDetailsPress = () => {}, lastChild = false }) => {
     return (
-        <View style={[GlobalStyles.alignItemsCenter ,styles.card, { marginBottom: lastChild ? 12 : 0}]}>
+        <View style={[GlobalStyles.alignItemsCenter, styles.card, { marginBottom: lastChild ? 12 : 0}]}>
             <View>
                 <Image
                     style={styles.image}
-                    source={{ uri: 'https://images.unsplash.com/photo-1534985111090-85c477f9d813?ixlib=rb-1.2.1&auto=format&fit=crop&w=375&q=80' }} />
+                    source={{ uri: image }} />
             </View>
             <View style={styles.interactionContainer}>
                 <View>
