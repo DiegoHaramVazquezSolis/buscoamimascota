@@ -5,15 +5,17 @@ import { widthPercentageToDP } from 'react-native-responsive-screen';
 import GlobalStyles from './../../utils/GlobalStyles';
 import CarouselOnBoardingIntroduction from './../../components/complex/CarouselOnBoardingIntroduction/CarouselOnBoardingIntroduction';
 import StepsProgressIndicator from './../../components/complex/StepsProgressIndicator/StepsProgressIndicator';
-import { storeData } from './../../utils/LocalStorage';
+import { storeAsyncStorageData } from './../../utils/LocalStorage';
 import ContainedButton from './../../components/simple/ContainedButton/ContainedButton';
 import styles from './styles';
+import { ON_BOARDING_VIEWED_AS, MAIN_BOTTOM_NAVIGATOR } from '../../utils/Constants';
 
 const OnBoardingIntroductionScreen = ({ navigation = {} }) => {  
     const [ currentIndex, setState ] = useState(0);
 
     /**
-     * @description Set the current index based on scroll position of the carrousel to show on the progress icons
+     * Set the current index based on scroll position of the carrousel to show on the progress icons
+     * 
      * @param {object} scrollEvent Event returned from onScroll method of ScrollView
      */
     determineIndexWithScrollPosition = (scrollEvent) => {
@@ -22,11 +24,11 @@ const OnBoardingIntroductionScreen = ({ navigation = {} }) => {
     }
 
     /**
-     * @description Set the onboarding as seen an navigate to the principal screen
+     * Set the onboarding as seen an navigate to the principal screen
      */
     getStarted = () => {
-        storeData('on_boarding_viewed', 'true');
-        navigation.navigate('MainBottomNavigator');
+        storeAsyncStorageData(ON_BOARDING_VIEWED_AS, 'true');
+        navigation.navigate(MAIN_BOTTOM_NAVIGATOR);
     }
 
 

@@ -1,25 +1,42 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
-export async function storeData(dataKey, value) {
+/**
+ * Save a given value with the specified key on async storage
+ * 
+ * @param {string} dataKey Key of the value to save on async storage
+ * @param {string} value Value to save on async storage
+ */
+export async function storeAsyncStorageData(dataKey, value) {
     try {
-      await AsyncStorage.setItem(`@bamm_${dataKey}`, value);
+        await AsyncStorage.setItem(`@bamm_${dataKey}`, value);
     } catch (error) {
-      console.error(error);
+        console.error(error);
     }
 }
 
-export async function getData(dataKey) {
+/**
+ * Get a value from async storage based on the key of that value
+ * 
+ * @param {string} dataKey Key of the async storage data to find
+ * @returns {string || null} The value of the flag on async storage (null if don't exist)
+ */
+export async function getAsyncStorageData(dataKey) {
     try {
-      return await AsyncStorage.getItem(`@bamm_${dataKey}`);
+        return await AsyncStorage.getItem(`@bamm_${dataKey}`);
     } catch(error) {
-      console.error(error);
+        console.error(error);
     }
 }
 
-export async function removeData(dataKey) {
+/**
+ * Remove a specific value from async storage based on the key
+ * 
+ * @param {string} dataKey Key of the async storage value to remove
+ */
+export async function removeAsyncStorageData(dataKey) {
     try {
-      await AsyncStorage.removeItem(`@bamm_${dataKey}`);
+        await AsyncStorage.removeItem(`@bamm_${dataKey}`);
     } catch(error) {
-      console.error(error);
+        console.error(error);
     }
 }

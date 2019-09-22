@@ -1,4 +1,4 @@
-import { GET_LOSTED_PUBLICATION, REMOVE_LOSTED_PUBLICATION } from '../../utils/Constants';
+import { GET_LOSTED_PUBLICATION, REMOVE_LOSTED_PUBLICATION, REMOVE_ALL_LOSTED_PUBLICATIONS } from '../../utils/Constants';
 
 const initialState = {};
 
@@ -20,6 +20,13 @@ function LostedPublications(state = initialState, action) {
             delete currentPublications[action.payload];
 
             return { ...state, ...currentPublications };
+        case REMOVE_ALL_LOSTED_PUBLICATIONS:
+            let publicationsToRemove = state;
+            Object.keys(publicationsToRemove).forEach((key) => {
+                delete publicationsToRemove[key];
+            });
+
+            return { ...state, ...publicationsToRemove };
         default:
 
             return state;
