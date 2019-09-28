@@ -9,7 +9,7 @@ import { getAsyncStorageData } from '../../utils/LocalStorage';
 import { USER_COUNTRY_AS, USER_REGION_AS } from '../../utils/Constants';
 
 const LostedPublicationListScreen = ({ lostedPublications = {}, fetched = false }) => {
-    const [ openLocationModal, setOpenLocationModal ] = useState(false);
+    const [ openLocationDialog, setOpenLocationDialog ] = useState(false);
 
     useEffect(() => {
 
@@ -22,7 +22,7 @@ const LostedPublicationListScreen = ({ lostedPublications = {}, fetched = false 
                 const region = await getAsyncStorageData(USER_REGION_AS);
 
                 if (!country && !region) {
-                    setOpenLocationModal(true);
+                    setOpenLocationDialog(true);
                 }
             } catch (error) {
                 console.error(error);
@@ -37,8 +37,8 @@ const LostedPublicationListScreen = ({ lostedPublications = {}, fetched = false 
                 <PublicationList publications={lostedPublications} />
             }
             <UserLocationDialog
-                visible={openLocationModal}
-                onClose={() => setOpenLocationModal(false)} />
+                visible={openLocationDialog}
+                onClose={() => setOpenLocationDialog(false)} />
         </SafeAreaView>
     );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Text } from 'react-native';
+import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
 
 import styles from './styles';
 import GlobalStyles from '../../../utils/GlobalStyles';
@@ -7,7 +7,7 @@ import TextButton from '../../simple/TextButton/TextButton';
 import Assets from '../../../../assets/Assets';
 import { returnTextBasedOnMaxLengthWithLimit } from '../../../utils/Utils';
 
-const PublicationCard = ({ image = '', name = '', description = '', onContactPress = () => {}, onShowDetailsPress = () => {}, lastChild = false }) => {
+const PublicationCard = ({ id = '', image = '', name = '', description = '', onSharePress = () => {}, lastChild = false }) => {
     return (
         <View style={[GlobalStyles.alignItemsCenter, styles.card, { marginBottom: lastChild ? 12 : 0}]}>
             <View>
@@ -27,7 +27,9 @@ const PublicationCard = ({ image = '', name = '', description = '', onContactPre
                 <View style={styles.actionsContainer}>
                     <TextButton>Contactar</TextButton>
                     <View style={styles.iconsContainer}>
-                        <Assets.svg.ShareIcon style={styles.shareIcon} />
+                        <TouchableWithoutFeedback onPress={() => onSharePress(id)}>
+                            <Assets.svg.ShareIcon style={styles.shareIcon} />
+                        </TouchableWithoutFeedback>
                         <Assets.svg.MoreOptionsIcon style={styles.optionIcon} />
                     </View>
                 </View>

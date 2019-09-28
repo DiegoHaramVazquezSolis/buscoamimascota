@@ -19,7 +19,13 @@ const UserLocationDialog = ({ visible = '', onClose = () => {}, removeAllPublica
         selectedCity: ''
     };
 
-    function reducer(prevState, state) {
+    /**
+     * Update the state
+     * 
+     * @param {object} prevState Previous value of the state
+     * @param {object} state New values to update on state
+     */
+    reducer = (prevState, state) => {
         return {...prevState, ...state};
     }
 
