@@ -18,7 +18,6 @@ export async function storeAsyncStorageData(dataKey, value) {
  * Get a value from async storage based on the key of that value
  * 
  * @param {string} dataKey Key of the async storage data to find
- * @returns {string || null} The value of the flag on async storage (null if don't exist)
  */
 export async function getAsyncStorageData(dataKey) {
     try {
