@@ -19,11 +19,14 @@ export const REMOVE_ALL_LOSTED_PUBLICATIONS = 'REMOVE_ALL_LOSTED_PUBLICATIONS';
 // Navigator constants
 export const MAIN_BOTTOM_NAVIGATOR = 'MainBottomNavigator';
 export const PETS_TOP_TAB_NAVIGATOR = 'PetsTopTabNavigator';
+export const PUBLICATIONS_STACK_NAVIGATOR = 'PublicationsStackNavigator';
+export const PUBLICATION_DETAILS_STACK_NAVIGATOR = 'PublicationDetailsStackNavigator';
 
 // Screen constants
 export const ON_BOARDING_SCREEN = 'OnBoardingIntroductionScreen';
 export const LOADING_DATA_SCREEN = 'LoadingDataScreen';
 export const LOSTED_PUBLICATIONS_LIST_SCREEN = 'LostedPublicationsListScreen';
+export const PUBLICATION_DETAILS_SCREEN = 'PublicationDetailsScreen';
 
 // Async storage constants
 export const ON_BOARDING_VIEWED_AS = 'on_boarding_viewed';
