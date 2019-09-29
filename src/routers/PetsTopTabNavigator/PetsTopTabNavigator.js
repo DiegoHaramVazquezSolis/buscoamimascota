@@ -26,6 +26,7 @@ const navigatorConfig = {
     tabBarOptions: {
         activeTintColor: '#FFF',
         inactiveTintColor: DISABLED_COLOR,
+        backBehavior: 'order',
         style: {
             backgroundColor: PRIMARY_COLOR
         },

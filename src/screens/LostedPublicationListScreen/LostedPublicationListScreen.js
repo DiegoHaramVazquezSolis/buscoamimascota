@@ -34,7 +34,9 @@ const LostedPublicationListScreen = ({ lostedPublications = {}, fetched = false 
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
             {fetched &&
-                <PublicationList publications={lostedPublications} />
+                <PublicationList
+                    losted
+                    publications={lostedPublications} />
             }
             <UserLocationDialog
                 visible={openLocationDialog}

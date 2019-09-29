@@ -2,17 +2,17 @@ import React from 'react';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { View } from 'react-native';
 
-import { SECONDARY_COLOR, DISABLED_COLOR, DARK_COLOR, PETS_TOP_TAB_NAVIGATOR } from './../../utils/Constants';
+import { PUBLICATIONS_STACK_NAVIGATOR, SECONDARY_COLOR, DISABLED_COLOR, DARK_COLOR } from './../../utils/Constants';
 
 // Navigators
-import PetsTopTabNavigator from '../PetsTopTabNavigator/PetsTopTabNavigator';
+import PublicationsStackNavigator from '../PublicationsStackNavigator/PublicationsStackNavigator';
 
 // Screens
 import Mock1 from './../../screens/Mock1';
 
 const routesConfig = {
-    [PETS_TOP_TAB_NAVIGATOR]: {
-        screen: PetsTopTabNavigator,
+    [PUBLICATIONS_STACK_NAVIGATOR]: {
+        screen: PublicationsStackNavigator,
         navigationOptions:{
             tabBarLabel:'Mascotas',
             tabBarIcon:({tintColor}) => <View style={{ marginTop: 8, height: 24, width: 24, backgroundColor: tintColor, borderRadius: 100 }} />
@@ -28,7 +28,7 @@ const routesConfig = {
 };
 
 const navigatorConfig = {
-    initialRouteName: PETS_TOP_TAB_NAVIGATOR,
+    initialRouteName: PUBLICATIONS_STACK_NAVIGATOR,
     tabBarOptions: {
         activeTintColor: SECONDARY_COLOR,
         inactiveTintColor: DISABLED_COLOR,
