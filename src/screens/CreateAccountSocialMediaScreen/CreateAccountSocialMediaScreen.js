@@ -6,6 +6,7 @@ import styles from './styles';
 import SocialMediaButton from '../../components/simple/SocialMediaButton/SocialMediaButton';
 import { PRIMARY_COLOR, CREATE_ACCOUNT_EMAIL_SCREEN } from '../../utils/Constants';
 import Assets from '../../../assets/Assets';
+import { loginWithFacebook } from '../../services/auth';
 
 const CreateAccountSocialMediaScreen = ({ navigation }) => {
     return (
@@ -27,7 +28,7 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
                     <SocialMediaButton
                         backgroundColor='#3B5998'
                         color='#FFF'
-                        onPress={() => console.log('google')}
+                        onPress={loginWithFacebook}
                         Icon={Assets.svg.FIconFacebookIcon}>
                         Continuar con facebook
                     </SocialMediaButton>
