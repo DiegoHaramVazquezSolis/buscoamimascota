@@ -25,10 +25,25 @@ export default styles = StyleSheet.create({
     },
     contentContainer: {
         alignSelf: 'center',
-        marginTop: 20,
         marginBottom: 32,
         marginLeft: widthPercentageToDP(5.7),
         marginRight: widthPercentageToDP(5.7)
+    },
+    closeIconContainer: {
+        flexDirection: 'row-reverse',
+        marginRight: widthPercentageToDP(3.9)
+    },
+    close: {
+        fontSize: 22,
+        letterSpacing: .2,
+        fontWeight: '700',
+        color: '#000'
+    },
+    headerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginRight: widthPercentageToDP(3.9)
     },
     title: {
         fontSize: 24,
