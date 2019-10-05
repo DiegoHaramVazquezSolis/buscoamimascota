@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Orientation from 'react-native-orientation-locker';
 
 import { getAsyncStorageData } from './../../utils/LocalStorage';
-import { ON_BOARDING_SCREEN, MAIN_BOTTOM_NAVIGATOR, ON_BOARDING_VIEWED_AS } from '../../utils/Constants';
+import { ON_BOARDING_SCREEN, ON_BOARDING_VIEWED_AS, APP_STACK_NAVIGATOR } from '../../utils/Constants';
 import { firebaseLinks } from '../../services/firebase';
 
 const LoadingDataScreen = ({ navigation }) => {
@@ -25,7 +25,7 @@ const LoadingDataScreen = ({ navigation }) => {
                 if (initialLink) {
                     console.log('Initial link:', initialLink);
                 }
-                navigation.navigate(MAIN_BOTTOM_NAVIGATOR);
+                navigation.navigate(APP_STACK_NAVIGATOR);
             } else {
                 navigation.navigate(ON_BOARDING_SCREEN);
             }

@@ -2,13 +2,13 @@ import { createSwitchNavigator } from 'react-navigation';
 
 import OnBoardingIntroductionScreen from './../../screens/OnBoardingScreens/OnBoardingIntroductionScreen'
 import LoadingDataScreen from './../../screens/LoadingDataScreen/LoadingDataScreen';
-import MainBottomNavigator from './../MainBottomNavigator/MainBottomNavigator';
-import { LOADING_DATA_SCREEN, ON_BOARDING_SCREEN, MAIN_BOTTOM_NAVIGATOR } from '../../utils/Constants';
+import { LOADING_DATA_SCREEN, ON_BOARDING_SCREEN, APP_STACK_NAVIGATOR } from '../../utils/Constants';
+import AppStackNavigator from '../AppStackNavigator/AppStackNavigator';
 
 const routesConfig = {
     [LOADING_DATA_SCREEN]: LoadingDataScreen,
     [ON_BOARDING_SCREEN]: OnBoardingIntroductionScreen,
-    [MAIN_BOTTOM_NAVIGATOR]: MainBottomNavigator
+    [APP_STACK_NAVIGATOR]: AppStackNavigator,
 };
 
 const navigatorConfig = {
