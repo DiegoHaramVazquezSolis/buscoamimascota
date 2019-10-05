@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import { Share, View, FlatList } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
@@ -6,8 +6,19 @@ import styles from './styles';
 import PublicationCard from '../PublicationCard/PublicationCard';
 import { createDynamicLink } from '../../../services/dynamicLinks';
 import { PUBLICATION_DETAILS_SCREEN } from '../../../utils/Constants';
+import PublicationContactDialog from '../PublicationContactDialog/PublicationContactDialog';
 
 const PublicationList = ({ navigation = {}, publications = {} }) => {
+    const initialState = {
+        openContactDialog: false,
+        selectedPet: {}
+    };
+
+    reducer = (prevState, nextState) => {
+        return { ...prevState, ...nextState };
+    }
+
+    const [ state, setState ] = useReducer(reducer, initialState);
 
     /**
      * Send the user to publication details screen and send the related
@@ -29,6 +40,14 @@ const PublicationList = ({ navigation = {}, publications = {} }) => {
         });
     }
 
+    /**
+     * Open the contact dialog and set the selected pet (to show the right info)
+     * @param {string} id Identifier of the publication on the database
+     */
+    onContactPress = async (id) => {
+        setState({ openContactDialog: true, selectedPet: publications[id] });
+    }
+
     return (
         <View style={styles.listStyle}>
             <FlatList
@@ -41,11 +60,16 @@ const PublicationList = ({ navigation = {}, publications = {} }) => {
                         key={item.id}
                         {...item}
                         onSharePress={onSharePress}
+                        onContactPress={onContactPress}
                         onPublicationPress={onPublicationPress}
                         lastChild={index + 1 === Object.keys(publications).length} />
                 )} />
+            <PublicationContactDialog
+                visible={state.openContactDialog}
+                contactInfo={state.selectedPet.contact}
+                onClose={() => setState({ openContactDialog: false })} />
         </View>
     );
-}
+};
 
 export default withNavigation(PublicationList);

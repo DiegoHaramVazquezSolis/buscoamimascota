@@ -8,7 +8,7 @@ import Assets from '../../../../assets/Assets';
 import { returnTextBasedOnMaxLengthWithLimit } from '../../../utils/Utils';
 import { PRIMARY_COLOR } from '../../../utils/Constants';
 
-const PublicationCard = ({ onPublicationPress = () => {}, id = '', image = '', name = '', description = '', onSharePress = () => {}, lastChild = false }) => {
+const PublicationCard = ({ onPublicationPress = () => {}, id = '', image = '', name = '', description = '', onSharePress = (id) => {}, onContactPress = (id) => {}, lastChild = false }) => {
     return (
         <TouchableWithoutFeedback onPress={() => onPublicationPress(id)}>
             <View style={[GlobalStyles.alignItemsCenter, styles.card, { marginBottom: lastChild ? 12 : 0}]}>
@@ -27,7 +27,7 @@ const PublicationCard = ({ onPublicationPress = () => {}, id = '', image = '', n
                         </Text>
                     </View>
                     <View style={styles.actionsContainer}>
-                        <TextButton>Contactar</TextButton>
+                        <TextButton onPress={() => onContactPress(id)}>Contactar</TextButton>
                         <View style={styles.iconsContainer}>
                             <TouchableWithoutFeedback onPress={() => onSharePress(id)}>
                                 <Assets.svg.ShareIcon
