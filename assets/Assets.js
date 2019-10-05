@@ -9,6 +9,8 @@ import WhatsappIcon from './icons/Whatsapp.svg';
 import MobileIcon from './icons/Mobile.svg';
 import PhoneIcon from './icons/Phone.svg';
 import CloselIcon from './icons/Close.svg';
+import FIconFacebookIcon from './icons/FIconFacebook.svg';
+import GoogleIcon from './icons/GoogleIcon.svg';
 
 export default Assets = {
     svg: {
@@ -22,6 +24,8 @@ export default Assets = {
         WhatsappIcon,
         MobileIcon,
         PhoneIcon,
-        CloselIcon
+        CloselIcon,
+        FIconFacebookIcon,
+        GoogleIcon
     }
 }
