@@ -6,6 +6,9 @@ import MoreOptionsIcon from './icons/MoreOptions.svg';
 import FacebookIcon from './icons/Facebook.svg';
 import MessengerIcon from './icons/Messenger.svg';
 import WhatsappIcon from './icons/Whatsapp.svg';
+import MobileIcon from './icons/Mobile.svg';
+import PhoneIcon from './icons/Phone.svg';
+import CloselIcon from './icons/Close.svg';
 
 export default Assets = {
     svg: {
@@ -16,6 +19,9 @@ export default Assets = {
         MoreOptionsIcon,
         FacebookIcon,
         MessengerIcon,
-        WhatsappIcon
+        WhatsappIcon,
+        MobileIcon,
+        PhoneIcon,
+        CloselIcon
     }
 }
