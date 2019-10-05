@@ -30,6 +30,7 @@ export const LOADING_DATA_SCREEN = 'LoadingDataScreen';
 export const LOSTED_PUBLICATIONS_LIST_SCREEN = 'LostedPublicationsListScreen';
 export const PUBLICATION_DETAILS_SCREEN = 'PublicationDetailsScreen';
 export const CREATE_ACCOUNT_SOCIAL_MEDIA_SCREEN = 'CreateAccountSocialMediaScreen';
+export const CREATE_ACCOUNT_EMAIL_SCREEN = 'CreateAccountEmailScreen';
 
 // Async storage constants
 export const ON_BOARDING_VIEWED_AS = 'on_boarding_viewed';

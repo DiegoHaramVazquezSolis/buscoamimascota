@@ -4,10 +4,10 @@ import { SafeAreaView, Text, View } from 'react-native';
 import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
 import SocialMediaButton from '../../components/simple/SocialMediaButton/SocialMediaButton';
-import { PRIMARY_COLOR } from '../../utils/Constants';
+import { PRIMARY_COLOR, CREATE_ACCOUNT_EMAIL_SCREEN } from '../../utils/Constants';
 import Assets from '../../../assets/Assets';
 
-const CreateAccountSocialMediaScreen = () => {
+const CreateAccountSocialMediaScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
             <Text style={styles.title}>
@@ -36,7 +36,7 @@ const CreateAccountSocialMediaScreen = () => {
                     <SocialMediaButton
                         backgroundColor={PRIMARY_COLOR}
                         color='#FFF'
-                        onPress={() => console.log('google')}>
+                        onPress={() => navigation.navigate(CREATE_ACCOUNT_EMAIL_SCREEN)}>
                         Registrarte con tu correo
                     </SocialMediaButton>
                 </View>
