@@ -4,7 +4,7 @@ import { SafeAreaView, Text, View } from 'react-native';
 import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
 import SocialMediaButton from '../../components/simple/SocialMediaButton/SocialMediaButton';
-import { PRIMARY_COLOR, CREATE_ACCOUNT_EMAIL_SCREEN } from '../../utils/Constants';
+import { PRIMARY_COLOR, CREATE_ACCOUNT_EMAIL_SCREEN, LOSTED_PUBLICATIONS_LIST_SCREEN } from '../../utils/Constants';
 import Assets from '../../../assets/Assets';
 import { loginWithFacebook, setupGoogleSignin, loginWithGoogle } from '../../services/auth';
 
@@ -12,6 +12,16 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
     useEffect(() => {
         setupGoogleSignin();
     }, []);
+
+    signInWithGoogle = async () => {
+        await loginWithGoogle();
+        navigation.navigate(LOSTED_PUBLICATIONS_LIST_SCREEN);
+    }
+
+    signInWithFacebook = async () => {
+        await loginWithFacebook();
+        navigation.navigate(LOSTED_PUBLICATIONS_LIST_SCREEN);
+    }
 
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
@@ -23,7 +33,7 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
                     <SocialMediaButton
                         backgroundColor='#FFF'
                         color='rgba(0, 0, 0, .54)'
-                        onPress={loginWithGoogle}
+                        onPress={signInWithGoogle}
                         Icon={Assets.svg.GoogleIcon}>
                         Continuar con google
                     </SocialMediaButton>
@@ -32,7 +42,7 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
                     <SocialMediaButton
                         backgroundColor='#3B5998'
                         color='#FFF'
-                        onPress={loginWithFacebook}
+                        onPress={signInWithFacebook}
                         Icon={Assets.svg.FIconFacebookIcon}>
                         Continuar con facebook
                     </SocialMediaButton>

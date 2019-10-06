@@ -1,5 +1,6 @@
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { GoogleSignin } from '@react-native-community/google-signin';
+import { Alert } from 'react-native';
 
 import { auth, FacebookAuthProvider, GoogleAuthProvider } from './firebase';
 import { WEB_CLIENT_GOOGLE_AUTH } from '../utils/Constants';
@@ -48,5 +49,34 @@ export const setupGoogleSignin = () => {
     }
     catch (err) {
       console.error('[Google signin error]', err.code, err.message);
+    }
+}
+
+export const signInWithEmail = async (email, password) => {
+    try {
+        return await auth.createUserWithEmailAndPassword(email, password);
+    } catch (error) {
+        let message = 'Hubo un error, revisa los campos o intentalo mas tarde';
+        switch (error.code) {
+            case 'auth/invalid-email':
+                message = 'La direccion de correo electronico no es valida';
+                break;
+            case 'auth/email-already-in-use':
+                message = 'Ya existe una cuenta con este correo';
+                break;
+            case 'auth/weak-password':
+                    message = 'La contraseña debe tener al menos 6 caracteres';
+                break;
+            default:
+                break;
+        }
+        Alert.alert(
+            'Error',
+            message,
+            [
+                { text: 'Entendido' }
+            ]
+        );
+        return Promise.reject(error);
     }
 }
