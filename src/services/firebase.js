@@ -7,3 +7,4 @@ export const auth = firebase.auth();
 
 // Auth providers
 export const FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
+export const GoogleAuthProvider = firebase.auth.GoogleAuthProvider;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
 
 import GlobalStyles from '../../utils/GlobalStyles';
@@ -6,9 +6,13 @@ import styles from './styles';
 import SocialMediaButton from '../../components/simple/SocialMediaButton/SocialMediaButton';
 import { PRIMARY_COLOR, CREATE_ACCOUNT_EMAIL_SCREEN } from '../../utils/Constants';
 import Assets from '../../../assets/Assets';
-import { loginWithFacebook } from '../../services/auth';
+import { loginWithFacebook, setupGoogleSignin, loginWithGoogle } from '../../services/auth';
 
 const CreateAccountSocialMediaScreen = ({ navigation }) => {
+    useEffect(() => {
+        setupGoogleSignin();
+    }, []);
+
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
             <Text style={styles.title}>
@@ -19,7 +23,7 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
                     <SocialMediaButton
                         backgroundColor='#FFF'
                         color='rgba(0, 0, 0, .54)'
-                        onPress={() => console.log('google')}
+                        onPress={loginWithGoogle}
                         Icon={Assets.svg.GoogleIcon}>
                         Continuar con google
                     </SocialMediaButton>

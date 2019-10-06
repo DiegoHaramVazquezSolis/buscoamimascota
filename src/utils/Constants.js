@@ -40,3 +40,4 @@ export const USER_CITY_AS = 'user_city';
 
 // API Key constants
 export const BATTUTA_API_KEY = 'b60ad6a578b6decda04575a54429b117';
+export const WEB_CLIENT_GOOGLE_AUTH = '1021296714116-l90pno6dch9snp6d1tlnlrmg4h7rlpto.apps.googleusercontent.com';
