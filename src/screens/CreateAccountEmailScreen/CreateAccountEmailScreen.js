@@ -1,5 +1,6 @@
 import React, { useReducer, useRef } from 'react';
 import { Alert, SafeAreaView, Text, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
@@ -59,51 +60,52 @@ const CreateAccountEmailScreen = ({ navigation }) => {
             <Text style={styles.title}>
                 Registrate para continuar
             </Text>
-            <View style={styles.contentContainer}>
-                <View style={styles.fieldContainer}>
-                    <CustomTextInput
-                        keyboardType='email-address'
-                        onSubmitEditing={() => passwordRef.current.focus()}
-                        placeholder='Email'
-                        onChangeText={(email) => setState({ email })} />
-                </View>
-                <View style={styles.fieldContainer}>
-                    <CustomTextInput
-                        keyboardType=''
-                        reference={passwordRef}
-                        onSubmitEditing={() => confirmPasswordRef.current.focus()}
-                        secureTextEntry
-                        placeholder='Contraseña'
-                        onChangeText={(password) => setState({ password })} />
-                </View>
-                <View style={styles.fieldContainer}>
-                    <CustomTextInput
-                        reference={confirmPasswordRef}
-                        secureTextEntry
-                        placeholder='Repetir contraseña'
-                        onChangeText={(confirmPassword) => setState({ confirmPassword })} />
-                </View>
+            <KeyboardAwareScrollView>
+                <View style={styles.contentContainer}>
+                    <View style={styles.fieldContainer}>
+                        <CustomTextInput
+                            keyboardType='email-address'
+                            onSubmitEditing={() => passwordRef.current.focus()}
+                            placeholder='Email'
+                            onChangeText={(email) => setState({ email })} />
+                    </View>
+                    <View style={styles.fieldContainer}>
+                        <CustomTextInput
+                            reference={passwordRef}
+                            onSubmitEditing={() => confirmPasswordRef.current.focus()}
+                            secureTextEntry
+                            placeholder='Contraseña'
+                            onChangeText={(password) => setState({ password })} />
+                    </View>
+                    <View style={styles.fieldContainer}>
+                        <CustomTextInput
+                            reference={confirmPasswordRef}
+                            secureTextEntry
+                            placeholder='Repetir contraseña'
+                            onChangeText={(confirmPassword) => setState({ confirmPassword })} />
+                    </View>
 
-                <View style={styles.advertismentContainer}>
-                    <Text style={styles.advertismentText}>
-                        Al continuar aceptas las
-                        <Text style={styles.link}>
-                            {' '}Condiciones del servicio
+                    <View style={styles.advertismentContainer}>
+                        <Text style={styles.advertismentText}>
+                            Al continuar aceptas las
+                            <Text style={styles.link}>
+                                {' '}Condiciones del servicio
+                            </Text>
+                            {' '}y la
+                            <Text style={styles.link}>
+                                {' '}Politica de privacidad
+                            </Text>
+                            {' '}de Busco a mi mascota
                         </Text>
-                        {' '}y la
-                        <Text style={styles.link}>
-                            {' '}Politica de privacidad
-                        </Text>
-                        {' '}de Busco a mi mascota
-                    </Text>
-                </View>
+                    </View>
 
-                <View style={styles.buttonContainer}>
-                    <ContainedButton onPress={createAccountWithEmail}>
-                        Crear cuenta
-                    </ContainedButton>
+                    <View style={styles.buttonContainer}>
+                        <ContainedButton onPress={createAccountWithEmail}>
+                            Crear cuenta
+                        </ContainedButton>
+                    </View>
                 </View>
-            </View>
+            </KeyboardAwareScrollView>
         </SafeAreaView>
     );
 }

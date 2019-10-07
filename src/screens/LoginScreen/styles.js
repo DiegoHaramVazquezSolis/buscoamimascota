@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 
-import { PRIMARY_TEXT_COLOR, SECONDARY_TEXT_COLOR, PRIMARY_COLOR } from '../../utils/Constants';
+import { PRIMARY_TEXT_COLOR, DISABLED_COLOR, SECONDARY_TEXT_COLOR } from '../../utils/Constants';
 
 export default styles = StyleSheet.create({
     title: {
@@ -15,29 +15,35 @@ export default styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        width: widthPercentageToDP(92)
     },
     fieldContainer: {
         marginTop: heightPercentageToDP(3.28)
     },
-    advertismentContainer: {
-        width: widthPercentageToDP(90),
+    buttonContainer: {
+        flexDirection: 'row-reverse',
         marginTop: heightPercentageToDP(4.82),
-        marginBottom: heightPercentageToDP(3.28)
+        marginRight: 16
     },
-    advertismentText: {
+    dividier: {
+        borderWidth: 1,
+        borderColor: DISABLED_COLOR,
+        borderRadius: 100,
+        marginTop: heightPercentageToDP(3.28)
+    },
+    alternative: {
         fontSize: 16,
         fontWeight: '700',
         textAlign: 'center',
-        lineHeight: 19,
-        color: SECONDARY_TEXT_COLOR
+        color: SECONDARY_TEXT_COLOR,
+        marginTop: heightPercentageToDP(3.28)
     },
-    link: {
-        color: PRIMARY_COLOR
+    signInButtonContainer: {
+        alignSelf: 'center',
+        marginBottom: heightPercentageToDP(4)
     },
-    buttonContainer: {
-        flexDirection: 'row-reverse',
-        marginRight: 16,
-        marginBottom: 24
+    socialMediaLoginOptions: {
+        marginTop: heightPercentageToDP(4.82)
     }
 });

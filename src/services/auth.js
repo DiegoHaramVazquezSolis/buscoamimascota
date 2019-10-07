@@ -5,6 +5,9 @@ import { Alert } from 'react-native';
 import { auth, FacebookAuthProvider, GoogleAuthProvider } from './firebase';
 import { WEB_CLIENT_GOOGLE_AUTH } from '../utils/Constants';
 
+/**
+ * Create an account or log a user if already have account with facebook
+ */
 export const loginWithFacebook = async () => {
     try {
         const facebookLoginResult = await LoginManager.logInWithPermissions(['public_profile', 'email']);
@@ -25,6 +28,10 @@ export const loginWithFacebook = async () => {
     }
 }
 
+/**
+ * Create an account or log a user if already have account with google
+ * (always use afther of setupGoogleSignin())
+ */
 export const loginWithGoogle = async () => {
     try {
         const googleLoginResult = await GoogleSignin.signIn();
@@ -40,6 +47,9 @@ export const loginWithGoogle = async () => {
     }
 }
 
+/**
+ * Initialize the google sign in
+ */
 export const setupGoogleSignin = () => {
     try {
       GoogleSignin.configure({
@@ -52,6 +62,11 @@ export const setupGoogleSignin = () => {
     }
 }
 
+/**
+ * Create an account with email and password
+ * @param {string} email User selected email
+ * @param {string} password User selected password
+ */
 export const signInWithEmail = async (email, password) => {
     try {
         return await auth.createUserWithEmailAndPassword(email, password);
@@ -73,6 +88,26 @@ export const signInWithEmail = async (email, password) => {
         Alert.alert(
             'Error',
             message,
+            [
+                { text: 'Entendido' }
+            ]
+        );
+        return Promise.reject(error);
+    }
+}
+
+/**
+ * Log a user with email and password
+ * @param {string} email User email
+ * @param {string} password User password
+ */
+export const logInWithEmail = async (email, password) => {
+    try {
+        return await auth.signInWithEmailAndPassword(email, password);
+    } catch (error) {
+        Alert.alert(
+            'Error',
+            'Correo o contraseña incorrectos',
             [
                 { text: 'Entendido' }
             ]
