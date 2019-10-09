@@ -1,4 +1,4 @@
-import { firebaseDynamicLinks, firebaseLinks } from './firebase';
+import { firebaseDynamicLinksGenerator } from './firebase';
 
 export async function createDynamicLink(urlParams) {
     let urlFormatedParams = '';
@@ -8,9 +8,9 @@ export async function createDynamicLink(urlParams) {
         }
         urlFormatedParams += `${key}=${urlParams[key]}`;
     });
-    console.log(urlFormatedParams);
-    const link = new firebaseDynamicLinks.DynamicLink(`https://buscoamimascota.com/?${urlFormatedParams}`, 'https://buscoamimascota.page.link')
-        .android.setPackageName('com.buscoamimascota.android');
 
-    return await firebaseLinks.createShortDynamicLink(link, 'SHORT');
+    return await firebaseDynamicLinksGenerator.buildShortLink({
+        link: `https://buscoamimascota.com/?${urlFormatedParams}`,
+        domainUriPrefix: 'https://buscoamimascota.page.link'
+    }, 'SHORT');
 }

@@ -3,7 +3,7 @@ import Orientation from 'react-native-orientation-locker';
 
 import { getAsyncStorageData } from './../../utils/LocalStorage';
 import { ON_BOARDING_SCREEN, ON_BOARDING_VIEWED_AS, APP_STACK_NAVIGATOR } from '../../utils/Constants';
-import { firebaseLinks } from '../../services/firebase';
+import { firebaseDynamicLinksGenerator } from '../../services/firebase';
 
 const LoadingDataScreen = ({ navigation }) => {
 
@@ -21,7 +21,7 @@ const LoadingDataScreen = ({ navigation }) => {
             if(await getAsyncStorageData(ON_BOARDING_VIEWED_AS) === 'true'){
                 Orientation.lockToPortrait();
 
-                const initialLink = await firebaseLinks.getInitialLink();
+                const initialLink = await firebaseDynamicLinksGenerator.getInitialLink();
                 if (initialLink) {
                     console.log('Initial link:', initialLink);
                 }
