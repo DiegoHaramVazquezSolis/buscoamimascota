@@ -4,7 +4,7 @@ import { SafeAreaView, Text, View } from 'react-native';
 import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
 import SocialMediaButton from '../../components/simple/SocialMediaButton/SocialMediaButton';
-import { PRIMARY_COLOR, CREATE_ACCOUNT_EMAIL_SCREEN, LOSTED_PUBLICATIONS_LIST_SCREEN } from '../../utils/Constants';
+import { PRIMARY_COLOR, CREATE_ACCOUNT_EMAIL_SCREEN, LOSTED_PUBLICATIONS_LIST_SCREEN, LOGIN_SCREEN } from '../../utils/Constants';
 import Assets from '../../../assets/Assets';
 import { loginWithFacebook, setupGoogleSignin, loginWithGoogle } from '../../services/auth';
 
@@ -74,7 +74,7 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
 
                 <Text style={styles.haveAccount}>
                     ¿Ya tienes una cuenta?
-                    <Text style={styles.link}>
+                    <Text style={styles.link} onPress={() => navigation.navigate(LOGIN_SCREEN)}>
                         {' '}Inicia sesión
                     </Text>
                 </Text>
