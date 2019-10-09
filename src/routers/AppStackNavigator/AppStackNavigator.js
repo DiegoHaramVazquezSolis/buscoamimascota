@@ -20,7 +20,7 @@ const routesConfig = {
 };
 
 const navigatorConfig = {
-    initialRouteName: AUTHENTICATION_STACK_NAVIGATOR,
+    initialRouteName: MAIN_BOTTOM_NAVIGATOR,
     navigationOptions: {
         header: null
     }

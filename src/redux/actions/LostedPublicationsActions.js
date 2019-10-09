@@ -55,7 +55,7 @@ export const getLostedPublications = () => async (dispatch) => {
                 lostedRef.where('country', '==', country).where('region', '==', region).orderBy('timeStamp', 'asc').limit(25)
                 .onSnapshot((lostedPublicationsSnap) => {
 
-                    return dispatch(manageLostedPublications(lostedPublicationsSnap.docChanges));
+                    return dispatch(manageLostedPublications(lostedPublicationsSnap.docChanges()));
                 }, (error) => {
                     Clipboard.setString(JSON.stringify(error));
                     console.error('[LostedPublicationsActios => Publication listener]:', error);
