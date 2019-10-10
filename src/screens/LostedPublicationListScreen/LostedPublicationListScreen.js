@@ -3,12 +3,17 @@ import { SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 
 import GlobalStyles from '../../utils/GlobalStyles';
-import PublicationList from '../../components/complex/PublicationsList/PublicationList';
-import UserLocationDialog from '../../components/complex/UserLocationDialog/UserLocationDialog';
-import { getAsyncStorageData } from '../../utils/LocalStorage';
+
 import { USER_COUNTRY_AS, USER_REGION_AS } from '../../utils/Constants';
 
-const LostedPublicationListScreen = ({ lostedPublications = {}, fetched = false }) => {
+import { getAsyncStorageData } from '../../utils/LocalStorage';
+
+import PublicationList from '../../components/complex/PublicationsList/PublicationList';
+import UserLocationDialog from '../../components/complex/UserLocationDialog/UserLocationDialog';
+import FloatingActionButton from '../../components/simple/FloatingActionButton/FloatingActionButton';
+import Assets from '../../../assets/Assets';
+
+const LostedPublicationListScreen = ({ navigation, lostedPublications = {}, fetched = false }) => {
     const [ openLocationDialog, setOpenLocationDialog ] = useState(false);
 
     useEffect(() => {
@@ -41,6 +46,9 @@ const LostedPublicationListScreen = ({ lostedPublications = {}, fetched = false 
             <UserLocationDialog
                 visible={openLocationDialog}
                 onClose={() => setOpenLocationDialog(false)} />
+            <FloatingActionButton
+                Icon={Assets.svg.AddIcon}
+                onPress={() => navigation.navigate('Nowhere')} />
         </SafeAreaView>
     );
 }

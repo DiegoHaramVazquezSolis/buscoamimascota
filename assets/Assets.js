@@ -11,6 +11,7 @@ import PhoneIcon from './icons/Phone.svg';
 import CloselIcon from './icons/Close.svg';
 import FIconFacebookIcon from './icons/FIconFacebook.svg';
 import GoogleIcon from './icons/GoogleIcon.svg';
+import AddIcon from './icons/Add.svg';
 
 export default Assets = {
     svg: {
@@ -26,6 +27,7 @@ export default Assets = {
         PhoneIcon,
         CloselIcon,
         FIconFacebookIcon,
-        GoogleIcon
+        GoogleIcon,
+        AddIcon
     }
 }
