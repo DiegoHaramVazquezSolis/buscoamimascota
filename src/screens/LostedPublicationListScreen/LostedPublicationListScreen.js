@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import GlobalStyles from '../../utils/GlobalStyles';
 
-import { USER_COUNTRY_AS, USER_REGION_AS } from '../../utils/Constants';
+import { USER_COUNTRY_AS, USER_REGION_AS, AUTHENTICATION_STACK_NAVIGATOR } from '../../utils/Constants';
 
 import { getAsyncStorageData } from '../../utils/LocalStorage';
 
@@ -13,7 +13,7 @@ import UserLocationDialog from '../../components/complex/UserLocationDialog/User
 import FloatingActionButton from '../../components/simple/FloatingActionButton/FloatingActionButton';
 import Assets from '../../../assets/Assets';
 
-const LostedPublicationListScreen = ({ navigation, lostedPublications = {}, fetched = false }) => {
+const LostedPublicationListScreen = ({ isLoggedUser, navigation, lostedPublications = {}, fetched = false }) => {
     const [ openLocationDialog, setOpenLocationDialog ] = useState(false);
 
     useEffect(() => {
@@ -48,14 +48,15 @@ const LostedPublicationListScreen = ({ navigation, lostedPublications = {}, fetc
                 onClose={() => setOpenLocationDialog(false)} />
             <FloatingActionButton
                 Icon={Assets.svg.AddIcon}
-                onPress={() => navigation.navigate('Nowhere')} />
+                onPress={() => navigation.navigate(isLoggedUser ? 'D'/**TODO: Send to create publication stack */ : AUTHENTICATION_STACK_NAVIGATOR)} />
         </SafeAreaView>
     );
 }
 
 mapStateToProps = (state) => ({
     lostedPublications: state.LostedPublications,
-    fetched: Object.keys(state.LostedPublications).length > 0
+    fetched: Object.keys(state.LostedPublications).length > 0,
+    isLoggedUser: state.User.isLogged
 });
 
 export default connect(mapStateToProps)(LostedPublicationListScreen);
