@@ -12,9 +12,15 @@ export const ERROR_COLOR = '#FF0000';
 export const DISABLED_COLOR = '#E5E5E5';
 
 // Redux constants
+
+/* LostedPublicationsReducer */
 export const GET_LOSTED_PUBLICATION = 'GET_LOSTED_PUBLICATION';
 export const REMOVE_LOSTED_PUBLICATION = 'REMOVE_LOSTED_PUBLICATION';
 export const REMOVE_ALL_LOSTED_PUBLICATIONS = 'REMOVE_ALL_LOSTED_PUBLICATIONS';
+
+/* UserReducer */
+export const USER_LOGGED = 'USER_LOGGED';
+export const USER_NOT_LOGGED = 'USER_NOT_LOGGED';
 
 // Navigator constants
 export const APP_STACK_NAVIGATOR = 'AppStackNavigator';

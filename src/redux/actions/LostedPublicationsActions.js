@@ -1,7 +1,8 @@
 import { USER_CITY_AS, USER_COUNTRY_AS, GET_LOSTED_PUBLICATION, REMOVE_LOSTED_PUBLICATION, REMOVE_ALL_LOSTED_PUBLICATIONS, USER_REGION_AS } from '../../utils/Constants';
+
 import { lostedRef } from '../../services/database';
+
 import { getAsyncStorageData } from '../../utils/LocalStorage';
-import { Clipboard } from 'react-native';
 
 /**
  * Action of redux for set a publication of losted pets in the global state
@@ -57,7 +58,6 @@ export const getLostedPublications = () => async (dispatch) => {
 
                     return dispatch(manageLostedPublications(lostedPublicationsSnap.docChanges()));
                 }, (error) => {
-                    Clipboard.setString(JSON.stringify(error));
                     console.error('[LostedPublicationsActios => Publication listener]:', error);
                 });
             }

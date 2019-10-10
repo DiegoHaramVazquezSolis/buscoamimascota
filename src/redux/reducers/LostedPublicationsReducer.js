@@ -2,12 +2,6 @@ import { GET_LOSTED_PUBLICATION, REMOVE_LOSTED_PUBLICATION, REMOVE_ALL_LOSTED_PU
 
 const initialState = {};
 
-/**
- * Reducer for losted pets publications
- * 
- * @param {object} state Global state of the app
- * @param {object} action Called action (object with type and payload)
- */
 function LostedPublications(state = initialState, action) {
     switch (action.type) {
         case GET_LOSTED_PUBLICATION:
@@ -28,7 +22,6 @@ function LostedPublications(state = initialState, action) {
 
             return { ...state, ...publicationsToRemove };
         default:
-
             return state;
     }
 };
