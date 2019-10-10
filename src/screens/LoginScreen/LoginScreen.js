@@ -12,6 +12,7 @@ import { loginWithFacebook, loginWithGoogle, logInWithEmail, setupGoogleSignin }
 import CustomTextInput from '../../components/simple/CustomTextInput/CustomTextInput';
 import ContainedButton from '../../components/simple/ContainedButton/ContainedButton';
 import SocialMediaButton from '../../components/simple/SocialMediaButton/SocialMediaButton';
+import ScreenTitle from '../../components/simple/ScreenTitle/ScreenTitle';
 
 const LoginScreen = ({ navigation }) => {
     useEffect(() => {
@@ -48,9 +49,9 @@ const LoginScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
-            <Text style={styles.title}>
+            <ScreenTitle>
                 Inicia sesión para continuar
-            </Text>
+            </ScreenTitle>
             <KeyboardAwareScrollView>
                 <View style={styles.contentContainer}>
                     <View style={styles.fieldContainer}>

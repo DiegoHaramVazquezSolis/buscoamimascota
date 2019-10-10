@@ -8,6 +8,7 @@ import CustomTextInput from '../../components/simple/CustomTextInput/CustomTextI
 import ContainedButton from '../../components/simple/ContainedButton/ContainedButton';
 import { signInWithEmail } from '../../services/auth';
 import { LOSTED_PUBLICATIONS_LIST_SCREEN } from '../../utils/Constants';
+import ScreenTitle from '../../components/simple/ScreenTitle/ScreenTitle';
 
 const CreateAccountEmailScreen = ({ navigation }) => {
     let passwordRef = useRef();
@@ -57,9 +58,9 @@ const CreateAccountEmailScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
-            <Text style={styles.title}>
+            <ScreenTitle>
                 Registrate para continuar
-            </Text>
+            </ScreenTitle>
             <KeyboardAwareScrollView>
                 <View style={styles.contentContainer}>
                     <View style={styles.fieldContainer}>

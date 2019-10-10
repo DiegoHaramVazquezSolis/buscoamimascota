@@ -7,6 +7,7 @@ import SocialMediaButton from '../../components/simple/SocialMediaButton/SocialM
 import { PRIMARY_COLOR, CREATE_ACCOUNT_EMAIL_SCREEN, LOSTED_PUBLICATIONS_LIST_SCREEN, LOGIN_SCREEN } from '../../utils/Constants';
 import Assets from '../../../assets/Assets';
 import { loginWithFacebook, setupGoogleSignin, loginWithGoogle } from '../../services/auth';
+import ScreenTitle from '../../components/simple/ScreenTitle/ScreenTitle';
 
 const CreateAccountSocialMediaScreen = ({ navigation }) => {
     useEffect(() => {
@@ -25,9 +26,9 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
-            <Text style={styles.title}>
+            <ScreenTitle>
                 Registrate o inicia sesión para continuar
-            </Text>
+            </ScreenTitle>
             <View style={styles.contentContainer}>
                 <View style={styles.signInButtonContainer}>
                     <SocialMediaButton
