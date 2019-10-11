@@ -2,13 +2,13 @@ import React from 'react';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { View } from 'react-native';
 
-import { PUBLICATIONS_STACK_NAVIGATOR, SECONDARY_COLOR, DISABLED_COLOR, DARK_COLOR } from './../../utils/Constants';
+import { PUBLICATIONS_STACK_NAVIGATOR, SECONDARY_COLOR, DISABLED_COLOR, DARK_COLOR } from './../../../utils/Constants';
 
 // Navigators
-import PublicationsStackNavigator from '../PublicationsStackNavigator/PublicationsStackNavigator';
+import PublicationsStackNavigator from '../../StackNavigators/PublicationsStackNavigator/PublicationsStackNavigator';
 
 // Screens
-import Mock1 from './../../screens/Mock1';
+import Mock1 from './../../../screens/Mock1';
 
 const routesConfig = {
     [PUBLICATIONS_STACK_NAVIGATOR]: {

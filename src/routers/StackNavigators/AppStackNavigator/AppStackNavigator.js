@@ -1,7 +1,9 @@
 import { createStackNavigator } from 'react-navigation-stack';
 
-import { MAIN_BOTTOM_NAVIGATOR, AUTHENTICATION_STACK_NAVIGATOR } from '../../utils/Constants';
-import MainBottomNavigator from '../MainBottomNavigator/MainBottomNavigator';
+import { MAIN_BOTTOM_NAVIGATOR, AUTHENTICATION_STACK_NAVIGATOR } from '../../../utils/Constants';
+
+import MainBottomNavigator from '../../BottomTabNavigators/MainBottomNavigator/MainBottomNavigator';
+
 import AuthenticationStackNavigator from '../AuthenticationStackNavigator/AuthenticationStackNavigator';
 
 const routesConfig = {

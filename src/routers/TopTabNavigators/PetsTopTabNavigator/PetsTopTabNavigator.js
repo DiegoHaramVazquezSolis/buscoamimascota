@@ -1,10 +1,10 @@
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
-import { SECONDARY_COLOR, DISABLED_COLOR, PRIMARY_COLOR, LOSTED_PUBLICATIONS_LIST_SCREEN } from '../../utils/Constants';
+import { SECONDARY_COLOR, DISABLED_COLOR, PRIMARY_COLOR, LOSTED_PUBLICATIONS_LIST_SCREEN } from '../../../utils/Constants';
 
 // Screens
-import Mock1 from '../../screens/Mock1';
-import LostedPublicationListScreen from '../../screens/LostedPublicationListScreen/LostedPublicationListScreen';
+import Mock1 from '../../../screens/Mock1';
+import LostedPublicationListScreen from '../../../screens/LostedPublicationListScreen/LostedPublicationListScreen';
 
 const routesConfig = {
     [LOSTED_PUBLICATIONS_LIST_SCREEN]: {
