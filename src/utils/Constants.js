@@ -29,6 +29,7 @@ export const PETS_TOP_TAB_NAVIGATOR = 'PetsTopTabNavigator';
 export const PUBLICATIONS_STACK_NAVIGATOR = 'PublicationsStackNavigator';
 export const PUBLICATION_DETAILS_STACK_NAVIGATOR = 'PublicationDetailsStackNavigator';
 export const AUTHENTICATION_STACK_NAVIGATOR = 'AuthenticationStackNavigator';
+export const CREATE_PUBLICATION_STACK_NAVIGATOR = 'CreatePublicationStackNavigator';
 
 // Screen constants
 export const ON_BOARDING_SCREEN = 'OnBoardingIntroductionScreen';
@@ -38,6 +39,7 @@ export const PUBLICATION_DETAILS_SCREEN = 'PublicationDetailsScreen';
 export const CREATE_ACCOUNT_SOCIAL_MEDIA_SCREEN = 'CreateAccountSocialMediaScreen';
 export const CREATE_ACCOUNT_EMAIL_SCREEN = 'CreateAccountEmailScreen';
 export const LOGIN_SCREEN = 'LoginScreen';
+export const CHOOSE_PUBLICATION_TYPE_SCREEN = 'ChoosePublicationTypeScreen';
 
 // Async storage constants
 export const ON_BOARDING_VIEWED_AS = 'on_boarding_viewed';
