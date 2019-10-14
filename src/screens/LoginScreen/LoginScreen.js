@@ -5,8 +5,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
 
-import { LOSTED_PUBLICATIONS_LIST_SCREEN } from '../../utils/Constants';
-
 import { loginWithFacebook, loginWithGoogle, logInWithEmail, setupGoogleSignin } from '../../services/auth';
 
 import CustomTextInput from '../../components/simple/CustomTextInput/CustomTextInput';
@@ -34,17 +32,17 @@ const LoginScreen = ({ navigation }) => {
 
     LogInWithGoogle = async () => {
         await loginWithGoogle();
-        navigation.navigate(LOSTED_PUBLICATIONS_LIST_SCREEN);
+        navigation.navigate(navigation.state.params.returnTo);
     }
 
     LogInWithFacebook = async () => {
         await loginWithFacebook();
-        navigation.navigate(LOSTED_PUBLICATIONS_LIST_SCREEN);
+        navigation.navigate(navigation.state.params.returnTo);
     }
 
     LogInWithEmail = async () => {
         await logInWithEmail(state.email, state.password);
-        navigation.navigate(LOSTED_PUBLICATIONS_LIST_SCREEN);
+        navigation.navigate(navigation.state.params.returnTo);
     }
 
     return (

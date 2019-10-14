@@ -3,10 +3,13 @@ import { SafeAreaView, Text, View } from 'react-native';
 
 import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
-import SocialMediaButton from '../../components/simple/SocialMediaButton/SocialMediaButton';
-import { PRIMARY_COLOR, CREATE_ACCOUNT_EMAIL_SCREEN, LOSTED_PUBLICATIONS_LIST_SCREEN, LOGIN_SCREEN } from '../../utils/Constants';
+
+import { PRIMARY_COLOR, CREATE_ACCOUNT_EMAIL_SCREEN, LOGIN_SCREEN } from '../../utils/Constants';
 import Assets from '../../../assets/Assets';
+
 import { loginWithFacebook, setupGoogleSignin, loginWithGoogle } from '../../services/auth';
+
+import SocialMediaButton from '../../components/simple/SocialMediaButton/SocialMediaButton';
 import ScreenTitle from '../../components/simple/ScreenTitle/ScreenTitle';
 
 const CreateAccountSocialMediaScreen = ({ navigation }) => {
@@ -16,12 +19,12 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
 
     signInWithGoogle = async () => {
         await loginWithGoogle();
-        navigation.navigate(LOSTED_PUBLICATIONS_LIST_SCREEN);
+        navigation.navigate(navigation.state.params.returnTo);
     }
 
     signInWithFacebook = async () => {
         await loginWithFacebook();
-        navigation.navigate(LOSTED_PUBLICATIONS_LIST_SCREEN);
+        navigation.navigate(navigation.state.params.returnTo);
     }
 
     return (
@@ -52,7 +55,7 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
                     <SocialMediaButton
                         backgroundColor={PRIMARY_COLOR}
                         color='#FFF'
-                        onPress={() => navigation.navigate(CREATE_ACCOUNT_EMAIL_SCREEN)}>
+                        onPress={() => navigation.navigate(CREATE_ACCOUNT_EMAIL_SCREEN, { returnTo: navigation.state.params.returnTo })}>
                         Registrarte con tu correo
                     </SocialMediaButton>
                 </View>
@@ -75,7 +78,7 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
 
                 <Text style={styles.haveAccount}>
                     ¿Ya tienes una cuenta?
-                    <Text style={styles.link} onPress={() => navigation.navigate(LOGIN_SCREEN)}>
+                    <Text style={styles.link} onPress={() => navigation.navigate(LOGIN_SCREEN, { returnTo: navigation.state.params.returnTo })}>
                         {' '}Inicia sesión
                     </Text>
                 </Text>

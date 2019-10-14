@@ -4,10 +4,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
+
+import { signInWithEmail } from '../../services/auth';
+
 import CustomTextInput from '../../components/simple/CustomTextInput/CustomTextInput';
 import ContainedButton from '../../components/simple/ContainedButton/ContainedButton';
-import { signInWithEmail } from '../../services/auth';
-import { LOSTED_PUBLICATIONS_LIST_SCREEN } from '../../utils/Constants';
 import ScreenTitle from '../../components/simple/ScreenTitle/ScreenTitle';
 
 const CreateAccountEmailScreen = ({ navigation }) => {
@@ -32,7 +33,7 @@ const CreateAccountEmailScreen = ({ navigation }) => {
             if (password === confirmPassword) {
                 try {
                     await signInWithEmail(email, password);
-                    navigation.navigate(LOSTED_PUBLICATIONS_LIST_SCREEN);
+                    navigation.navigate(navigation.state.params.returnTo);
                 } catch (error) {
                     console.log(error);
                 }
