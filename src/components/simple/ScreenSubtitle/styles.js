@@ -1,15 +1,15 @@
 import { StyleSheet } from 'react-native';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 
-import { PRIMARY_TEXT_COLOR } from '../../../utils/Constants';
+import { SECONDARY_TEXT_COLOR } from '../../../utils/Constants';
 
 export default styles = StyleSheet.create({
-    title: {
-        fontSize: 32,
+    subtitle: {
+        fontSize: 24,
         fontWeight: '700',
         textAlign: 'center',
-        color: PRIMARY_TEXT_COLOR,
-        marginTop: heightPercentageToDP(5),
+        color: SECONDARY_TEXT_COLOR,
+        marginTop: heightPercentageToDP(2.5),
         maxWidth: widthPercentageToDP(92)
     }
 });

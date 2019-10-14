@@ -12,6 +12,8 @@ import CloselIcon from './icons/Close.svg';
 import FIconFacebookIcon from './icons/FIconFacebook.svg';
 import GoogleIcon from './icons/GoogleIcon.svg';
 import AddIcon from './icons/Add.svg';
+import CartelIcon from './icons/Cartel.svg';
+import AdoptionIcon from './icons/Adoption.svg';
 
 export default Assets = {
     svg: {
@@ -28,6 +30,8 @@ export default Assets = {
         CloselIcon,
         FIconFacebookIcon,
         GoogleIcon,
-        AddIcon
+        AddIcon,
+        CartelIcon,
+        AdoptionIcon
     }
 }
