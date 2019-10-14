@@ -14,7 +14,7 @@ import ScreenSubtitle from '../../components/simple/ScreenSubtitle/ScreenSubtitl
 import PublicationTypeCard from '../../components/simple/PublicationTypeCard/PublicationTypeCard';
 import Assets from '../../../assets/Assets';
 
-const ChoosePublicationTypeScreen = () => (
+const ChoosePublicationTypeScreen = ({ navigation }) => (
     <SafeAreaView style={GlobalStyles.flex1, GlobalStyles.alignItemsCenter}>
         <View style={styles.separator} />
         <ScreenTitle>
@@ -23,13 +23,13 @@ const ChoosePublicationTypeScreen = () => (
         <ScreenSubtitle>
             Selecciona el tipo de publicación
         </ScreenSubtitle>
-        <PublicationTypeCard style={styles.darkCard}>
+        <PublicationTypeCard style={styles.darkCard} onPress={() => navigation.navigate('Next_Step', { losted: true })}>
             <Text style={[styles.cardTitle, styles.lightText]}>
                 Buscar mascota perdida
             </Text>
             <Assets.svg.CartelIcon style={styles.cardIconRight} />
         </PublicationTypeCard>
-        <PublicationTypeCard style={styles.lightCard}>
+        <PublicationTypeCard style={styles.lightCard} onPress={() => navigation.navigate('Next_Step', { losted: false })}>
             <Assets.svg.AdoptionIcon style={styles.cardIconLeft} />
             <Text style={[styles.cardTitle, styles.darkText]}>
                 Dar mascota en adopción
