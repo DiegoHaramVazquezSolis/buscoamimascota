@@ -134,6 +134,8 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+        manifestPlaceholders = [onesignal_app_id: "526bac5b-a2ab-4bcb-b813-fe1c75cd5ef3",
+                                onesignal_google_project_number: "REMOTE"]
     }
     splits {
         abi {
