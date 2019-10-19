@@ -74,5 +74,12 @@ export default styles = StyleSheet.create({
     optionIcon: {
         height: 36,
         width: 24
+    },
+    menuOptionsStyle: {
+        fontSize: 16
+    },
+    reportStyle: {
+        color: '#FF0000',
+        fontWeight: '100'
     }
 });

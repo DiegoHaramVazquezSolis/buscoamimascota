@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native';
 
-import { PRIMARY_TEXT_COLOR } from '../../../utils/Constants';
-
 export default styes = StyleSheet.create({
     listItem: {
         width: '100%',
@@ -18,7 +16,7 @@ export default styes = StyleSheet.create({
     },
     contentText: {
         textAlignVertical: 'center',
-        color: PRIMARY_TEXT_COLOR,
+        color: '#000',
         fontSize: 18,
         letterSpacing: .2
     }

@@ -3,8 +3,8 @@ import { View, TouchableHighlight, Text } from 'react-native';
 
 import styles from './styles';
 
-const ListItem = ({ onPress = () => {}, Icon = null, children = null }) => (
-    <TouchableHighlight underlayColor='rgba(0, 0, 0, .1)' onPress={onPress}>
+const ListItem = ({ onPress = () => {}, Icon = null, children = null, textStyle = {} }) => (
+    <TouchableHighlight underlayColor='rgba(0, 0, 0, .1)' activeOpacity={.6} onPress={onPress}>
         <View style={styles.listItem}>
             {Icon &&
                 <View style={styles.iconContainer}>
@@ -12,7 +12,7 @@ const ListItem = ({ onPress = () => {}, Icon = null, children = null }) => (
                 </View>
             }
             <View style={styles.contentContainer}>
-                <Text style={styles.contentText}>{children}</Text>
+                <Text style={[styles.contentText, textStyle]}>{children}</Text>
             </View>
         </View>
     </TouchableHighlight>
