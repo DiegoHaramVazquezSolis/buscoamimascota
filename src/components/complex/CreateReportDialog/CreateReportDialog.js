@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 
+import styles from './styles';
+
 import { reportPublication } from '../../../services/database';
 
 import Dialog from '../../simple/Dialog/Dialog';
 import CustomTextInput from '../../simple/CustomTextInput/CustomTextInput';
 import ContainedButton from '../../simple/ContainedButton/ContainedButton';
+
 
 const CreateReportDialog = ({ uid = '', publicationId = '', visible = false, onClose = () => {} }) => {
     const [report, setReport] = useState('');
@@ -26,8 +29,8 @@ const CreateReportDialog = ({ uid = '', publicationId = '', visible = false, onC
                 <CustomTextInput
                     onChangeText={(report) => setReport(report)}
                     placeholder='Motivo'
-                    style={{ width: '100%' }} />
-                <View style={{ marginTop: 12, alignSelf: 'flex-end' }}>
+                    style={styles.textInput} />
+                <View style={styles.buttonContainer}>
                     <ContainedButton
                         size='sm'
                         onPress={makeReport}>
