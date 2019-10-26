@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
+import { connect } from 'react-redux';
+import { withNavigation } from 'react-navigation';
 
 import styles from './styles';
 import GlobalStyles from '../../../utils/GlobalStyles';
 
-import { PRIMARY_COLOR } from '../../../utils/Constants';
+import { PRIMARY_COLOR, AUTHENTICATION_STACK_NAVIGATOR } from '../../../utils/Constants';
 import Assets from '../../../../assets/Assets';
 
 import { returnTextBasedOnMaxLengthWithLimit } from '../../../utils/Utils';
@@ -12,9 +14,9 @@ import { returnTextBasedOnMaxLengthWithLimit } from '../../../utils/Utils';
 import TextButton from '../../simple/TextButton/TextButton';
 import Menu from '../../simple/Menu/Menu';
 import ListItem from '../../simple/ListItem/ListItem';
+import { subscribeUserToPublication } from '../../../services/database';
 
-
-const PublicationCard = ({ onPublicationPress = () => {}, id = '', image = '', name = '', description = '', onSharePress = (id) => {}, onContactPress = (id) => {}, lastChild = false }) => {
+const PublicationCard = ({ navigation, onPublicationPress = () => {}, id = '', image = '', name = '', description = '', onSharePress = (id) => {}, onContactPress = (id) => {}, lastChild = false, uid = '', isLogged = false, onReportPress = (id) => {} }) => {
     const [ open, setOpen ] = useState(false);
     const [ state, setState ] = useState({ x: 0, y: 0 });
     const menuPositionRef = useRef();
@@ -23,6 +25,24 @@ const PublicationCard = ({ onPublicationPress = () => {}, id = '', image = '', n
         menuPositionRef.current.measure((x, y, width, height, pageX, pageY) => {
             setState({ x: pageX, y: pageY });
         });
+    }
+
+    subscribeToPublication = () => {
+        if (isLogged) {
+            subscribeUserToPublication(uid, id);
+        } else {
+            navigation.navigate(AUTHENTICATION_STACK_NAVIGATOR);
+        }
+        setOpen(false);
+    }
+
+    reportPublication = () => {
+        if (isLogged) {
+            onReportPress(id)
+        } else {
+            navigation.navigate(AUTHENTICATION_STACK_NAVIGATOR);
+        }
+        setOpen(false);
     }
 
     return (
@@ -57,9 +77,16 @@ const PublicationCard = ({ onPublicationPress = () => {}, id = '', image = '', n
                                         fill={PRIMARY_COLOR} />
                                 </TouchableWithoutFeedback>
                                 <Menu coords={state} onClose={() => setOpen(false)} open={open}>
-                                    <ListItem textStyle={styles.menuOptionsStyle}>Recibir notificaciones</ListItem>
-                                    <ListItem textStyle={styles.menuOptionsStyle}>Descargar</ListItem>
-                                    <ListItem textStyle={[styles.reportStyle, styles.menuOptionsStyle]}>Reportar</ListItem>
+                                    <ListItem
+                                        onPress={subscribeToPublication}
+                                        textStyle={styles.menuOptionsStyle}>
+                                        Recibir notificaciones
+                                    </ListItem>
+                                    <ListItem
+                                        onPress={reportPublication}
+                                        textStyle={[styles.reportStyle, styles.menuOptionsStyle]}>
+                                        Reportar
+                                    </ListItem>
                                 </Menu>
                             </View>
                         </View>
@@ -70,4 +97,9 @@ const PublicationCard = ({ onPublicationPress = () => {}, id = '', image = '', n
     );
 };
 
-export default PublicationCard;
+mapStateToProps = (state) => ({
+    uid: state.User.uid,
+    isLogged: state.User.isLogged
+});
+
+export default connect(mapStateToProps)(withNavigation(PublicationCard));

@@ -4,7 +4,7 @@ import { TextInput } from 'react-native';
 import { SECONDARY_TEXT_COLOR, PRIMARY_COLOR, DISABLED_COLOR } from '../../../utils/Constants';
 import styles from './styles';
 
-const CustomTextInput = ({ onChangeText = () => {}, onSubmitEditing = () => {}, placeholder = '', editable = true, secureTextEntry = false, reference = null, keyboardType = 'default' }) => {
+const CustomTextInput = ({ onChangeText = (text) => {}, onSubmitEditing = () => {}, placeholder = '', editable = true, secureTextEntry = false, reference = null, keyboardType = 'default', style = {} }) => {
     const [Focus, setFocus] = useState(false);
 
     return (
@@ -18,7 +18,7 @@ const CustomTextInput = ({ onChangeText = () => {}, onSubmitEditing = () => {}, 
             editable={editable}
             placeholder={placeholder}
             onChangeText={onChangeText}
-            style={[styles.textInput, { borderBottomColor: Focus ? PRIMARY_COLOR : DISABLED_COLOR }]}
+            style={[styles.textInput, style, { borderBottomColor: Focus ? PRIMARY_COLOR : DISABLED_COLOR }]}
             placeholderTextColor={SECONDARY_TEXT_COLOR} />
         )
 };

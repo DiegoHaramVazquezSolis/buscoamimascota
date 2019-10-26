@@ -7,10 +7,12 @@ import PublicationCard from '../PublicationCard/PublicationCard';
 import { createDynamicLink } from '../../../services/dynamicLinks';
 import { PUBLICATION_DETAILS_SCREEN } from '../../../utils/Constants';
 import PublicationContactDialog from '../PublicationContactDialog/PublicationContactDialog';
+import CreateReportDialog from '../CreateReportDialog/CreateReportDialog';
 
 const PublicationList = ({ navigation = {}, publications = {} }) => {
     const initialState = {
         openContactDialog: false,
+        openReportDialog: false,
         selectedPet: {}
     };
 
@@ -48,6 +50,10 @@ const PublicationList = ({ navigation = {}, publications = {} }) => {
         setState({ openContactDialog: true, selectedPet: publications[id] });
     }
 
+    onReportPress = (id) => {
+        setState({ openReportDialog: true, selectedPet: publications[id] });
+    }
+
     return (
         <View style={styles.listStyle}>
             <FlatList
@@ -62,12 +68,17 @@ const PublicationList = ({ navigation = {}, publications = {} }) => {
                         onSharePress={onSharePress}
                         onContactPress={onContactPress}
                         onPublicationPress={onPublicationPress}
+                        onReportPress={onReportPress}
                         lastChild={index + 1 === Object.keys(publications).length} />
                 )} />
             <PublicationContactDialog
                 visible={state.openContactDialog}
                 contactInfo={state.selectedPet.contact}
                 onClose={() => setState({ openContactDialog: false })} />
+            <CreateReportDialog
+                visible={state.openReportDialog}
+                publicationId={state.selectedPet.id}
+                onClose={() => setState({ openReportDialog: false })} />
         </View>
     );
 };
