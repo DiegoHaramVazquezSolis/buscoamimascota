@@ -8,7 +8,7 @@ import { updateUserInfo } from '../../services/database';
 /**
  * Action to call when the user is logged on the app
  */
-const userIsLogged = () => ({ type: USER_LOGGED });
+const userIsLogged = (payload) => ({ type: USER_LOGGED, payload });
 
 /**
  * Action to call when the user is NOT logged on the app
@@ -26,7 +26,7 @@ export const checkIfUserIsLogged = () => (dispatch) => {
                 updateUserInfo(user.uid, { notificationId: device.userId });
             });
             
-            return dispatch(userIsLogged());
+            return dispatch(userIsLogged({ uid: user.uid, email: user.email }));
         }
         return dispatch(userIsNotLogged());
     });
