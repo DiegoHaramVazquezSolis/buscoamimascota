@@ -32,17 +32,17 @@ const LoginScreen = ({ navigation }) => {
 
     LogInWithGoogle = async () => {
         await loginWithGoogle();
-        navigation.navigate(navigation.state.params.returnTo);
+        navigation.dismiss();
     }
 
     LogInWithFacebook = async () => {
         await loginWithFacebook();
-        navigation.navigate(navigation.state.params.returnTo);
+        navigation.dismiss();
     }
 
     LogInWithEmail = async () => {
         await logInWithEmail(state.email, state.password);
-        navigation.navigate(navigation.state.params.returnTo);
+        navigation.dismiss();
     }
 
     return (
@@ -68,14 +68,14 @@ const LoginScreen = ({ navigation }) => {
                     </View>
                     <View style={styles.buttonContainer}>
                         <ContainedButton onPress={LogInWithEmail}>
-                            Crear cuenta
+                            Iniciar sesión
                         </ContainedButton>
                     </View>
 
                     <View style={styles.dividier} />
 
                     <Text style={styles.alternative}>
-                        O inicia sesió con redes sociales
+                        O inicia sesión con redes sociales
                     </Text>
                     <View style={styles.socialMediaLoginOptions}>
                         <View style={styles.signInButtonContainer}>

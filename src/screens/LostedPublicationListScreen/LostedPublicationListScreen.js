@@ -48,7 +48,7 @@ const LostedPublicationListScreen = ({ isLoggedUser, navigation, lostedPublicati
                 onClose={() => setOpenLocationDialog(false)} />
             <FloatingActionButton
                 Icon={Assets.svg.AddIcon}
-                onPress={() => navigation.navigate(isLoggedUser ? CREATE_PUBLICATION_STACK_NAVIGATOR : AUTHENTICATION_STACK_NAVIGATOR, { returnTo: CREATE_PUBLICATION_STACK_NAVIGATOR })} />
+                onPress={() => navigation.navigate(isLoggedUser ? CREATE_PUBLICATION_STACK_NAVIGATOR : AUTHENTICATION_STACK_NAVIGATOR)} />
         </SafeAreaView>
     );
 }

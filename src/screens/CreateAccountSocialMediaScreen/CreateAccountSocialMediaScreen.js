@@ -19,12 +19,12 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
 
     signInWithGoogle = async () => {
         await loginWithGoogle();
-        navigation.navigate(navigation.state.params.returnTo);
+        navigation.dismiss();
     }
 
     signInWithFacebook = async () => {
         await loginWithFacebook();
-        navigation.navigate(navigation.state.params.returnTo);
+        navigation.dismiss();
     }
 
     return (
@@ -55,7 +55,7 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
                     <SocialMediaButton
                         backgroundColor={PRIMARY_COLOR}
                         color='#FFF'
-                        onPress={() => navigation.navigate(CREATE_ACCOUNT_EMAIL_SCREEN, { returnTo: navigation.state.params.returnTo })}>
+                        onPress={() => navigation.navigate(CREATE_ACCOUNT_EMAIL_SCREEN)}>
                         Registrarte con tu correo
                     </SocialMediaButton>
                 </View>
@@ -78,7 +78,7 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
 
                 <Text style={styles.haveAccount}>
                     ¿Ya tienes una cuenta?
-                    <Text style={styles.link} onPress={() => navigation.navigate(LOGIN_SCREEN, { returnTo: navigation.state.params.returnTo })}>
+                    <Text style={styles.link} onPress={() => navigation.navigate(LOGIN_SCREEN)}>
                         {' '}Inicia sesión
                     </Text>
                 </Text>

@@ -33,7 +33,7 @@ const CreateAccountEmailScreen = ({ navigation }) => {
             if (password === confirmPassword) {
                 try {
                     await signInWithEmail(email, password);
-                    navigation.navigate(navigation.state.params.returnTo);
+                    navigation.dismiss();
                 } catch (error) {
                     console.log(error);
                 }
