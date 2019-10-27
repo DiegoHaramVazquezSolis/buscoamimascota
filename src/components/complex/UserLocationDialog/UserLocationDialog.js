@@ -89,7 +89,8 @@ const UserLocationDialog = ({ visible = '', onClose = () => {}, removeAllPublica
         <Dialog
             visible={visible}
             title='Bienvenido'
-            description='Selecciona tu pais, estado y cuidad para continuar'>
+            description='Selecciona tu pais, estado y cuidad para continuar'
+            closeIcon={false}>
             <Picker
                 selectedValue={state.selectedCountry}
                 onValueChange={selectACountry}
