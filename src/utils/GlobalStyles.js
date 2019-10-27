@@ -8,6 +8,12 @@ export default GlobalStyles = StyleSheet.create({
     row: {
         flexDirection: 'row'
     },
+    rowReverse: {
+        flexDirection: 'row-reverse'
+    },
+    alignSelfEnd: {
+        alignSelf: 'flex-end'
+    },
     col: {
         flexDirection: 'column'
     },

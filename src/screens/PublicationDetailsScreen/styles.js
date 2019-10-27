@@ -32,17 +32,5 @@ export default styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '700',
         color: SECONDARY_TEXT_COLOR
-    },
-    checkBoxContainer: {
-        flexDirection: 'row',
-        marginTop: heightPercentageToDP(3.3),
-        width: widthPercentageToDP(92)
-    },
-    checkBoxLabel: {
-        fontSize: 14,
-        fontWeight: '700',
-        color: SECONDARY_TEXT_COLOR,
-        textAlignVertical: 'center',
-        marginLeft: 8
     }
 });

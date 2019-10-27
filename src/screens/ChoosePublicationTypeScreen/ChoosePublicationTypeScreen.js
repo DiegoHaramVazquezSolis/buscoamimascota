@@ -4,7 +4,7 @@ import { SafeAreaView, View, Text } from 'react-native';
 import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
 
-import { PRIMARY_COLOR } from '../../utils/Constants';
+import { PRIMARY_COLOR, PET_INFO_FORM_SCREEN } from '../../utils/Constants';
 
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 
@@ -23,13 +23,13 @@ const ChoosePublicationTypeScreen = ({ navigation }) => (
         <ScreenSubtitle>
             Selecciona el tipo de publicación
         </ScreenSubtitle>
-        <PublicationTypeCard style={styles.darkCard} onPress={() => navigation.navigate('Next_Step', { losted: true })}>
+        <PublicationTypeCard style={styles.darkCard} onPress={() => navigation.navigate(PET_INFO_FORM_SCREEN, { losted: true })}>
             <Text style={[styles.cardTitle, styles.lightText]}>
                 Buscar mascota perdida
             </Text>
             <Assets.svg.CartelIcon style={styles.cardIconRight} />
         </PublicationTypeCard>
-        <PublicationTypeCard style={styles.lightCard} onPress={() => navigation.navigate('Next_Step', { losted: false })}>
+        <PublicationTypeCard style={styles.lightCard} onPress={() => navigation.navigate(PET_INFO_FORM_SCREEN, { losted: false })}>
             <Assets.svg.AdoptionIcon style={styles.cardIconLeft} />
             <Text style={[styles.cardTitle, styles.darkText]}>
                 Dar mascota en adopción
@@ -45,7 +45,7 @@ ChoosePublicationTypeScreen.navigationOptions = ({ navigation }) => ({
         height: heightPercentageToDP(10)
     },
     headerTintColor: '#fff',
-    headerRight: () => <CloseRightButton onPress={() => navigation.pop()} />,
+    headerRight: () => <CloseRightButton onPress={() => navigation.dismiss()} />,
     headerBackTitle: null
 });
 

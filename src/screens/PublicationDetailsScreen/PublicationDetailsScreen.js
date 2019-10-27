@@ -1,7 +1,6 @@
 import React from 'react';
 import { SafeAreaView, Image, View, ScrollView, Text } from 'react-native';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
-import CheckBox from '@react-native-community/checkbox';
 
 import styles from './styles';
 import GlobalStyles from '../../utils/GlobalStyles';
@@ -10,6 +9,7 @@ import ContainedButton from '../../components/simple/ContainedButton/ContainedBu
 import OutlinedButton from '../../components/simple/OutlinedButton/OutlinedButton';
 import Chip from '../../components/simple/Chip/Chip';
 import PublicationDetailsRightButtons from '../../components/simple/PublicationDetailsRightButtons/PublicationDetailsRightButtons';
+import CheckBox from '../../components/simple/CheckBox/CheckBox';
 
 const PublicationDetailsScreen = ({ navigation, type = 'Perdido' }) => {
     const { image, lossPoint, contact, city, region, specie, sex, description, haveId } = navigation.state.params;
@@ -37,10 +37,10 @@ const PublicationDetailsScreen = ({ navigation, type = 'Perdido' }) => {
             <View style={styles.descriptionContainer}>
                 <Text style={styles.description}>{description.split('/n').map((paragraph) => `${paragraph.trim()}\n`)}</Text>
             </View>
-            <View style={styles.checkBoxContainer}>
-                <CheckBox value={haveId} disabled tintColors={{ true: SECONDARY_COLOR }} />
-                <Text style={styles.checkBoxLabel}>Tiene placa de identificación</Text>
-            </View>
+            <CheckBox
+                disabled
+                label='Tiene placa de identificación'
+                value={haveId} />
         </SafeAreaView>
     );
 }

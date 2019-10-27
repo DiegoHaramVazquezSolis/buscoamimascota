@@ -40,6 +40,8 @@ export const CREATE_ACCOUNT_SOCIAL_MEDIA_SCREEN = 'CreateAccountSocialMediaScree
 export const CREATE_ACCOUNT_EMAIL_SCREEN = 'CreateAccountEmailScreen';
 export const LOGIN_SCREEN = 'LoginScreen';
 export const CHOOSE_PUBLICATION_TYPE_SCREEN = 'ChoosePublicationTypeScreen';
+export const PET_INFO_FORM_SCREEN = 'PetInfoFormScreen';
+export const PET_INFO_LOCATION_SCREEN = 'PetInfoLocationScreen';
 
 // Async storage constants
 export const ON_BOARDING_VIEWED_AS = 'on_boarding_viewed';
