@@ -1,4 +1,6 @@
 import { StyleSheet } from 'react-native';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
+
 import { DARK_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, PRIMARY_TEXT_COLOR, SECONDARY_TEXT_COLOR, ERROR_COLOR, DISABLED_COLOR } from './Constants';
 
 export default GlobalStyles = StyleSheet.create({
@@ -67,5 +69,18 @@ export default GlobalStyles = StyleSheet.create({
         // Check visibility, may can change to 14
         fontSize: 16,
         fontWeight: '500'
+    },
+    mt12: {
+        marginTop: heightPercentageToDP(1.65)
+    },
+    mt24: {
+        marginTop: heightPercentageToDP(3.3)
+    },
+    mr16: {
+        marginRight: widthPercentageToDP(3.89)
+    },
+    customStackNavigatorHeaderStyle: {
+        backgroundColor: PRIMARY_COLOR,
+        height: heightPercentageToDP(10)
     }
 });

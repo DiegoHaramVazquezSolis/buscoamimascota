@@ -1,10 +1,9 @@
 import React, { useReducer } from 'react';
-import { SafeAreaView, View, Picker, ScrollView, Text } from 'react-native';
+import { SafeAreaView, View, Picker, Text } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import styles from './styles';
 import GlobalStyles from '../../utils/GlobalStyles';
-
 
 import ScreenSubtitle from '../../components/simple/ScreenSubtitle/ScreenSubtitle';
 import CustomTextInput from '../../components/simple/CustomTextInput/CustomTextInput';
@@ -12,8 +11,6 @@ import RadioGroup from '../../components/complex/RadioGroup/RadioGroup';
 import CheckBox from '../../components/simple/CheckBox/CheckBox';
 import ContainedButton from '../../components/simple/ContainedButton/ContainedButton';
 import CloseRightButton from '../../components/simple/CloseRightButton/CloseRightButton';
-import { PRIMARY_COLOR, PET_INFO_LOCATION_SCREEN } from '../../utils/Constants';
-import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 const PetInfoFormScreen = ({ navigation }) => {
     const initialState = {
@@ -32,17 +29,16 @@ const PetInfoFormScreen = ({ navigation }) => {
     const [ state, setState ] = useReducer(reducer, initialState);
 
     saveAndContinue = () => {
-        return navigation.navigate(PET_INFO_LOCATION_SCREEN);
         setState({ showError: false });
         const { name, specie, description } = state;
         if (name !== '' && specie !== '' && description !== '') {
-            
+            return navigation.navigate(PET_INFO_LOCATION_SCREEN);
         }
         setState({ showError: true });
     }
 
     return (
-        <SafeAreaView style={GlobalStyles.flex1, GlobalStyles.alignItemsCenter}>
+        <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
             <KeyboardAwareScrollView>
                 <View style={styles.separator} />
                 <ScreenSubtitle>
@@ -104,10 +100,7 @@ const PetInfoFormScreen = ({ navigation }) => {
 
 PetInfoFormScreen.navigationOptions = ({ navigation }) => ({
     title: '',
-    headerStyle: {
-        backgroundColor: PRIMARY_COLOR,
-        height: heightPercentageToDP(10)
-    },
+    headerStyle: GlobalStyles.customStackNavigatorHeaderStyle,
     headerTintColor: '#fff',
     headerRight: () => <CloseRightButton onPress={() => navigation.dismiss()} />,
     headerBackTitle: null
