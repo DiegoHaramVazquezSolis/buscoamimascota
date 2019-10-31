@@ -4,7 +4,7 @@ import { widthPercentageToDP } from 'react-native-responsive-screen';
 export default styles = StyleSheet.create({
     containerSm: {
         borderRadius: 100,
-        height: 36,
+        height: 40,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,

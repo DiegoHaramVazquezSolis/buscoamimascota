@@ -10,7 +10,7 @@ export default styles = StyleSheet.create({
         borderRadius: 100
     },
     containerSm: {
-        height: 36
+        height: 40
     },
     containerMd: {
         height: 48,
