@@ -42,6 +42,7 @@ export const LOGIN_SCREEN = 'LoginScreen';
 export const CHOOSE_PUBLICATION_TYPE_SCREEN = 'ChoosePublicationTypeScreen';
 export const PET_INFO_FORM_SCREEN = 'PetInfoFormScreen';
 export const PET_INFO_LOCATION_SCREEN = 'PetInfoLocationScreen';
+export const PET_INFO_CONTACT_SCREEN = 'PetInfoContactScreen';
 
 // Async storage constants
 export const ON_BOARDING_VIEWED_AS = 'on_boarding_viewed';

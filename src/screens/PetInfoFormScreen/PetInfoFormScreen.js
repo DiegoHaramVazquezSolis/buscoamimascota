@@ -4,6 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import styles from './styles';
 import GlobalStyles from '../../utils/GlobalStyles';
+import { PET_INFO_LOCATION_SCREEN } from '../../utils/Constants';
 
 import ScreenSubtitle from '../../components/simple/ScreenSubtitle/ScreenSubtitle';
 import CustomTextInput from '../../components/simple/CustomTextInput/CustomTextInput';

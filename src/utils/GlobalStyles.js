@@ -76,6 +76,9 @@ export default GlobalStyles = StyleSheet.create({
     mt24: {
         marginTop: heightPercentageToDP(3.3)
     },
+    mr8: {
+        marginRight: widthPercentageToDP(1.09)
+    },
     mr16: {
         marginRight: widthPercentageToDP(3.89)
     },

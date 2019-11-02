@@ -3,14 +3,15 @@ import { SafeAreaView, View } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import MapView, { PROVIDER_DEFAULT, Marker } from 'react-native-maps';
 
+import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
+import { PET_INFO_CONTACT_SCREEN } from '../../utils/Constants';
 
 import CloseRightButton from '../../components/simple/CloseRightButton/CloseRightButton';
-import GlobalStyles from '../../utils/GlobalStyles';
 import ScreenSubtitle from '../../components/simple/ScreenSubtitle/ScreenSubtitle';
 import ContainedButton from '../../components/simple/ContainedButton/ContainedButton';
 
-const PetInfoLocationScreen = () => {
+const PetInfoLocationScreen = ({ navigation }) => {
     const map = useRef();
 
     const initialState = {
@@ -72,7 +73,8 @@ const PetInfoLocationScreen = () => {
             {state.location.hasOwnProperty('latitude') && state.location.hasOwnProperty('longitude') &&
                 <View style={[GlobalStyles.alignSelfEnd, GlobalStyles.mt24, GlobalStyles.mr16]}>
                     <ContainedButton
-                        size='sm'>
+                        size='sm'
+                        onPress={() => navigation.navigate(PET_INFO_CONTACT_SCREEN)}>
                         Continuar
                     </ContainedButton>
                 </View>
