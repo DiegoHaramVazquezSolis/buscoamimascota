@@ -58,7 +58,7 @@ const PublicationList = ({ navigation = {}, publications = {} }) => {
         <View style={styles.listStyle}>
             <FlatList
                 showsVerticalScrollIndicator={false}
-                data={Object.keys(publications).map((key) => (publications[key]))}
+                data={Object.keys(publications).sort((a, b) => publications[a].timeStamp < publications[b].timeStamp).map((key) => (publications[key]))}
                 initialNumToRender={5}
                 keyExtractor={(item) => (`Publication-${item.id}`)}
                 renderItem={({ item, index }) => (
