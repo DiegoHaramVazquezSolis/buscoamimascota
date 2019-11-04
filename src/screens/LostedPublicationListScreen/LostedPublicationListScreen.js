@@ -3,15 +3,14 @@ import { SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 
 import GlobalStyles from '../../utils/GlobalStyles';
-
-import { USER_COUNTRY_AS, USER_REGION_AS, AUTHENTICATION_STACK_NAVIGATOR, CREATE_PUBLICATION_STACK_NAVIGATOR, PET_INFO_CONTACT_SCREEN } from '../../utils/Constants';
+import { USER_COUNTRY_AS, USER_REGION_AS, AUTHENTICATION_STACK_NAVIGATOR, CREATE_PUBLICATION_STACK_NAVIGATOR } from '../../utils/Constants';
+import Assets from '../../../assets/Assets';
 
 import { getAsyncStorageData } from '../../utils/LocalStorage';
 
 import PublicationList from '../../components/complex/PublicationsList/PublicationList';
 import UserLocationDialog from '../../components/complex/UserLocationDialog/UserLocationDialog';
 import FloatingActionButton from '../../components/simple/FloatingActionButton/FloatingActionButton';
-import Assets from '../../../assets/Assets';
 
 const LostedPublicationListScreen = ({ isLoggedUser, navigation, lostedPublications = {}, fetched = false }) => {
     const [ openLocationDialog, setOpenLocationDialog ] = useState(false);
@@ -48,7 +47,7 @@ const LostedPublicationListScreen = ({ isLoggedUser, navigation, lostedPublicati
                 onClose={() => setOpenLocationDialog(false)} />
             <FloatingActionButton
                 Icon={Assets.svg.AddIcon}
-                onPress={() => navigation.navigate(isLoggedUser ? PET_INFO_CONTACT_SCREEN : AUTHENTICATION_STACK_NAVIGATOR)} />
+                onPress={() => navigation.navigate(isLoggedUser ? CREATE_PUBLICATION_STACK_NAVIGATOR : AUTHENTICATION_STACK_NAVIGATOR, { losted: true })} />
         </SafeAreaView>
     );
 }
