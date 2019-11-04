@@ -21,5 +21,24 @@ export default styles = StyleSheet.create({
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
         elevation: 6
+    },
+    containerMini: {
+        position: 'absolute',
+        bottom: 16,
+        right: 16,
+        height: 40,
+        width: 40,
+        borderRadius: 100,
+        backgroundColor: PRIMARY_COLOR,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+        elevation: 6
     }
 });
