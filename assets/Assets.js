@@ -14,6 +14,7 @@ import GoogleIcon from './icons/GoogleIcon.svg';
 import AddIcon from './icons/Add.svg';
 import CartelIcon from './icons/Cartel.svg';
 import AdoptionIcon from './icons/Adoption.svg';
+import EditIcon from './icons/Edit.svg';
 
 export default Assets = {
     svg: {
@@ -32,6 +33,7 @@ export default Assets = {
         GoogleIcon,
         AddIcon,
         CartelIcon,
-        AdoptionIcon
+        AdoptionIcon,
+        EditIcon
     }
 }
