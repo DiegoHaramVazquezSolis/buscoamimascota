@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { SafeAreaView, View, Picker, Text } from 'react-native';
+import { Alert, SafeAreaView, View, Picker, Text } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import styles from './styles';
@@ -19,8 +19,7 @@ const PetInfoFormScreen = ({ navigation }) => {
         sex: 'Hembra',
         specie: '',
         description: '',
-        haveId: false,
-        showError: false
+        haveId: false
     };
 
     reducer = (prevState, state) => {
@@ -29,13 +28,22 @@ const PetInfoFormScreen = ({ navigation }) => {
 
     const [ state, setState ] = useReducer(reducer, initialState);
 
+    const losted = navigation.state.params.losted;
+
     saveAndContinue = () => {
         setState({ showError: false });
         const { name, specie, description } = state;
         if (name !== '' && specie !== '' && description !== '') {
-            return navigation.navigate(PET_INFO_LOCATION_SCREEN);
+            return navigation.navigate(PET_INFO_LOCATION_SCREEN, { formData: state, losted });
+        } else {
+            Alert.alert(
+                'Error',
+                'Asegurate de haber llenado todos los campos correctamente.',
+                [
+                    { text: 'Entendido' },
+                ]
+            );
         }
-        setState({ showError: true });
     }
 
     return (
@@ -75,7 +83,7 @@ const PetInfoFormScreen = ({ navigation }) => {
                             multiline
                             numberOfLines={5} />
                     </View>
-                    {navigation.state.params.losted &&
+                    {losted &&
                         <CheckBox
                             label='Tiene placa de identificación'
                             value={state.haveId}
@@ -88,11 +96,6 @@ const PetInfoFormScreen = ({ navigation }) => {
                             Continuar
                         </ContainedButton>
                     </View>
-                    {state.showError &&
-                        <Text style={styles.smallText}>
-                            Asegurate de haber llenado todos los campos antes de continuar.
-                        </Text>
-                    }
                 </View>
             </KeyboardAwareScrollView>
         </SafeAreaView>

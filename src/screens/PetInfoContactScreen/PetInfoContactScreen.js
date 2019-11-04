@@ -5,6 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
 import Assets from '../../../assets/Assets';
+import { PET_INFO_IMAGE_SCREEN } from '../../utils/Constants';
 
 import ScreenSubtitle from '../../components/simple/ScreenSubtitle/ScreenSubtitle';
 import CustomTextInput from '../../components/simple/CustomTextInput/CustomTextInput';
@@ -27,7 +28,10 @@ const PetInfoContactScreen = ({ navigation }) => {
 
     const [ state, setState ] = useReducer(reducer, initialState);
 
-    console.log(state);
+    saveAndContinue = () => {
+        const { formData, location, losted } = navigation.state.params;
+        return navigation.navigate(PET_INFO_IMAGE_SCREEN, { contact: state, formData, location, losted });
+    }
 
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
@@ -65,7 +69,7 @@ const PetInfoContactScreen = ({ navigation }) => {
                     <View style={[GlobalStyles.rowReverse, GlobalStyles.alignSelfEnd]}>
                         <ContainedButton
                             size='sm'
-                            onPress={() => console.log('Continue')}>
+                            onPress={saveAndContinue}>
                             Continuar
                         </ContainedButton>
                     </View>

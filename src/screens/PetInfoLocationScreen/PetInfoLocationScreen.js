@@ -49,6 +49,11 @@ const PetInfoLocationScreen = ({ navigation }) => {
         setState({ location: { latitude, longitude } });
     }
 
+    saveAndContinue = () => {
+        const { formData, losted } = navigation.state.params;
+        return navigation.navigate(PET_INFO_CONTACT_SCREEN, { location: state.location, formData, losted });
+    }
+
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
             <View style={styles.separator} />
@@ -74,7 +79,7 @@ const PetInfoLocationScreen = ({ navigation }) => {
                 <View style={[GlobalStyles.alignSelfEnd, GlobalStyles.mt24, GlobalStyles.mr16]}>
                     <ContainedButton
                         size='sm'
-                        onPress={() => navigation.navigate(PET_INFO_CONTACT_SCREEN)}>
+                        onPress={saveAndContinue}>
                         Continuar
                     </ContainedButton>
                 </View>
