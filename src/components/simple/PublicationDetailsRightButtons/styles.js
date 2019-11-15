@@ -19,5 +19,12 @@ export default styles = StyleSheet.create({
     },
     iconSeparator: {
         marginRight: 4
+    },
+    menuOptionsStyle: {
+        fontSize: 16
+    },
+    reportStyle: {
+        color: '#FF0000',
+        fontWeight: '100'
     }
 });

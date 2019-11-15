@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, Image, View, ScrollView, Text } from 'react-native';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 import styles from './styles';
 import GlobalStyles from '../../utils/GlobalStyles';
-import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../utils/Constants';
+
+import { PRIMARY_COLOR } from '../../utils/Constants';
+
 import ContainedButton from '../../components/simple/ContainedButton/ContainedButton';
 import OutlinedButton from '../../components/simple/OutlinedButton/OutlinedButton';
 import Chip from '../../components/simple/Chip/Chip';
@@ -51,7 +53,7 @@ PublicationDetailsScreen.navigationOptions = ({ navigation }) => ({
         backgroundColor: PRIMARY_COLOR,
         height: heightPercentageToDP(10)
     },
-    headerRight: () => <PublicationDetailsRightButtons />,
+    headerRight: () => <PublicationDetailsRightButtons navigation={navigation} {...navigation.state.params} />,
     headerTintColor: '#fff',
     headerBackTitle: null,
     headerTitleStyle: {
