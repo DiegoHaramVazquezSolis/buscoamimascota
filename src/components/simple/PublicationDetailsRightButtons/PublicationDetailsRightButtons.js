@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import { Share, View, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import styles from './styles';
@@ -7,12 +7,23 @@ import Assets from '../../../../assets/Assets';
 import { AUTHENTICATION_STACK_NAVIGATOR } from '../../../utils/Constants';
 
 import { createDynamicLink } from '../../../services/dynamicLinks';
+import { subscribeUserToPublication } from '../../../services/database';
 
 import Menu from '../Menu/Menu';
 import ListItem from '../ListItem/ListItem';
+import CreateReportDialog from '../../complex/CreateReportDialog/CreateReportDialog';
 
-const PublicationDetailsRightButtons = ({ navigation, id = '', contact = {}, uid = '', isLogged = false }) => {
-    const [ open, setOpen ] = useState(false);
+const PublicationDetailsRightButtons = ({ navigation, id = '', uid = '', isLogged = false }) => {
+    const initialState = {
+        openOptionsMenu: false,
+        openReportDialog: false
+    };
+
+    reducer = (prevState, state) => {
+        return {...prevState, ...state};
+    }
+
+    const [ state, setState ] = useReducer(reducer, initialState);
 
     subscribeToPublication = () => {
         if (isLogged) {
@@ -20,16 +31,16 @@ const PublicationDetailsRightButtons = ({ navigation, id = '', contact = {}, uid
         } else {
             navigation.navigate(AUTHENTICATION_STACK_NAVIGATOR);
         }
-        setOpen(false);
+        setState({ openOptionsMenu: false });
     }
 
     reportPublication = () => {
         if (isLogged) {
-            onReportPress(id)
+            setState({ openReportDialog: true });
         } else {
             navigation.navigate(AUTHENTICATION_STACK_NAVIGATOR);
         }
-        setOpen(false);
+        setState({ openOptionsMenu: false });
     }
 
     /**
@@ -40,10 +51,6 @@ const PublicationDetailsRightButtons = ({ navigation, id = '', contact = {}, uid
             message: await createDynamicLink({ type: 'losted', id }),
             title: 'Compartir publicación'
         });
-    }
-
-    onReportPress = (id) => {
-        setState({ openReportDialog: true, selectedPet: publications[id] });
     }
 
     return (
@@ -58,14 +65,14 @@ const PublicationDetailsRightButtons = ({ navigation, id = '', contact = {}, uid
             </TouchableHighlight>
             <View style={styles.iconSeparator} />
             <TouchableHighlight
-                onPress={() => setOpen(true)}
+                onPress={() => setState({ openOptionsMenu: true })}
                 underlayColor='rgba(0, 0, 0, .1)'
                 style={styles.iconContainer}>
                 <Assets.svg.MoreOptionsIcon
                     fill='#FFF'
                     style={styles.icon} />
             </TouchableHighlight>
-            <Menu onClose={() => setOpen(false)} open={open}>
+            <Menu onClose={() => setState({ openOptionsMenu: false })} open={state.openOptionsMenu}>
                 <ListItem
                     onPress={subscribeToPublication}
                     textStyle={styles.menuOptionsStyle}>
@@ -77,6 +84,11 @@ const PublicationDetailsRightButtons = ({ navigation, id = '', contact = {}, uid
                     Reportar
                 </ListItem>
             </Menu>
+            <CreateReportDialog
+                visible={state.openReportDialog}
+                onClose={() => setState({ openReportDialog: false })}
+                uid={uid}
+                publicationId={id} />
             <View style={styles.iconSeparator} />
         </View>
     )

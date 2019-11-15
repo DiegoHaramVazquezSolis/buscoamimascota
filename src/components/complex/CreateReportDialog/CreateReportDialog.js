@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import styles from './styles';
 
