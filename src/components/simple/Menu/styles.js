@@ -5,12 +5,14 @@ export default styles = StyleSheet.create({
     menuOverlay: {
         flex: 1,
         width: widthPercentageToDP(100),
-        height: heightPercentageToDP(100)
+        height: heightPercentageToDP(100),
+        backgroundColor: 'rgba(0, 0, 0, .4)',
+        justifyContent: 'center'
     },
     container: {
-        position: 'absolute',
+        alignSelf: 'center',
         borderRadius: 4,
-        width: widthPercentageToDP(60),
+        width: widthPercentageToDP(80),
         backgroundColor: '#FFF',
         shadowColor: '#000',
         shadowOffset: {

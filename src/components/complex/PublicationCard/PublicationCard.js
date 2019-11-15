@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
@@ -18,14 +18,6 @@ import { subscribeUserToPublication } from '../../../services/database';
 
 const PublicationCard = ({ navigation, onPublicationPress = () => {}, id = '', image = '', name = '', description = '', onSharePress = (id) => {}, onContactPress = (id) => {}, lastChild = false, uid = '', isLogged = false, onReportPress = (id) => {} }) => {
     const [ open, setOpen ] = useState(false);
-    const [ state, setState ] = useState({ x: 0, y: 0 });
-    const menuPositionRef = useRef();
-
-    getMenuPosition = () => {
-        menuPositionRef.current.measure((x, y, width, height, pageX, pageY) => {
-            setState({ x: pageX, y: pageY });
-        });
-    }
 
     subscribeToPublication = () => {
         if (isLogged) {
@@ -70,25 +62,23 @@ const PublicationCard = ({ navigation, onPublicationPress = () => {}, id = '', i
                                     style={styles.shareIcon}
                                     fill={PRIMARY_COLOR} />
                             </TouchableWithoutFeedback>
-                            <View ref={menuPositionRef} onLayout={getMenuPosition}>
-                                <TouchableWithoutFeedback onPress={() => setOpen(!open)}>
-                                    <Assets.svg.MoreOptionsIcon
-                                        style={styles.optionIcon}
-                                        fill={PRIMARY_COLOR} />
-                                </TouchableWithoutFeedback>
-                                <Menu coords={state} onClose={() => setOpen(false)} open={open}>
-                                    <ListItem
-                                        onPress={subscribeToPublication}
-                                        textStyle={styles.menuOptionsStyle}>
-                                        Recibir notificaciones
-                                    </ListItem>
-                                    <ListItem
-                                        onPress={reportPublication}
-                                        textStyle={[styles.reportStyle, styles.menuOptionsStyle]}>
-                                        Reportar
-                                    </ListItem>
-                                </Menu>
-                            </View>
+                            <TouchableWithoutFeedback onPress={() => setOpen(!open)}>
+                                <Assets.svg.MoreOptionsIcon
+                                    style={styles.optionIcon}
+                                    fill={PRIMARY_COLOR} />
+                            </TouchableWithoutFeedback>
+                            <Menu onClose={() => setOpen(false)} open={open}>
+                                <ListItem
+                                    onPress={subscribeToPublication}
+                                    textStyle={styles.menuOptionsStyle}>
+                                    Recibir notificaciones
+                                </ListItem>
+                                <ListItem
+                                    onPress={reportPublication}
+                                    textStyle={[styles.reportStyle, styles.menuOptionsStyle]}>
+                                    Reportar
+                                </ListItem>
+                            </Menu>
                         </View>
                     </View>
                 </View>
