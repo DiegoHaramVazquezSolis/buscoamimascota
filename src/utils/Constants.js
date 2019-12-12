@@ -22,6 +22,11 @@ export const REMOVE_ALL_LOSTED_PUBLICATIONS = 'REMOVE_ALL_LOSTED_PUBLICATIONS';
 export const USER_LOGGED = 'USER_LOGGED';
 export const USER_NOT_LOGGED = 'USER_NOT_LOGGED';
 
+/* AdoptionPublicationsReducer */
+export const GET_ADOPTION_PUBLICATION = 'GET_ADOPTION_PUBLICATION';
+export const REMOVE_ADOPTION_PUBLICATION = 'REMOVE_ADOPTION_PUBLICATION';
+export const REMOVE_ALL_ADOPTION_PUBLICATIONS = 'REMOVE_ALL_ADOPTION_PUBLICATIONS';
+
 // Navigator constants
 export const APP_STACK_NAVIGATOR = 'AppStackNavigator';
 export const MAIN_BOTTOM_NAVIGATOR = 'MainBottomNavigator';
@@ -35,6 +40,7 @@ export const CREATE_PUBLICATION_STACK_NAVIGATOR = 'CreatePublicationStackNavigat
 export const ON_BOARDING_SCREEN = 'OnBoardingIntroductionScreen';
 export const LOADING_DATA_SCREEN = 'LoadingDataScreen';
 export const LOSTED_PUBLICATIONS_LIST_SCREEN = 'LostedPublicationsListScreen';
+export const ADOPTION_PUBLICATIONS_LIST_SCREEN = 'AdoptionPublicationListScreen';
 export const PUBLICATION_DETAILS_SCREEN = 'PublicationDetailsScreen';
 export const CREATE_ACCOUNT_SOCIAL_MEDIA_SCREEN = 'CreateAccountSocialMediaScreen';
 export const CREATE_ACCOUNT_EMAIL_SCREEN = 'CreateAccountEmailScreen';

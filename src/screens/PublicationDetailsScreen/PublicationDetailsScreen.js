@@ -13,8 +13,8 @@ import Chip from '../../components/simple/Chip/Chip';
 import PublicationDetailsRightButtons from '../../components/simple/PublicationDetailsRightButtons/PublicationDetailsRightButtons';
 import CheckBox from '../../components/simple/CheckBox/CheckBox';
 
-const PublicationDetailsScreen = ({ navigation, type = 'Perdido' }) => {
-    const { image, lossPoint, contact, city, region, specie, sex, description, haveId } = navigation.state.params;
+const PublicationDetailsScreen = ({ navigation }) => {
+    const { image, contact, city, region, specie, sex, description, haveId, losted } = navigation.state.params;
 
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
@@ -33,7 +33,7 @@ const PublicationDetailsScreen = ({ navigation, type = 'Perdido' }) => {
                     <Chip tag>{city ? city : region}</Chip>
                     <Chip tag>{specie}</Chip>
                     <Chip tag>{sex}</Chip>
-                    <Chip tag>{type}</Chip>
+                    <Chip tag>{losted ? 'Perdido' : 'En adopción'}</Chip>
                 </ScrollView>
             </View>
             <View style={styles.descriptionContainer}>

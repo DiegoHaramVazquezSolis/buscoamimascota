@@ -9,7 +9,7 @@ import { PUBLICATION_DETAILS_SCREEN } from '../../../utils/Constants';
 import PublicationContactDialog from '../PublicationContactDialog/PublicationContactDialog';
 import CreateReportDialog from '../CreateReportDialog/CreateReportDialog';
 
-const PublicationList = ({ navigation = {}, publications = {} }) => {
+const PublicationList = ({ navigation = {}, publications = {}, losted = true }) => {
     const initialState = {
         openContactDialog: false,
         openReportDialog: false,
@@ -28,7 +28,7 @@ const PublicationList = ({ navigation = {}, publications = {} }) => {
       @param {string} id Identifier of the publication on the database
      */
     onPublicationPress = (id) => {
-        navigation.navigate(PUBLICATION_DETAILS_SCREEN, { ...publications[id] });
+        navigation.navigate(PUBLICATION_DETAILS_SCREEN, { ...publications[id], losted });
     }
 
     /**
@@ -37,7 +37,7 @@ const PublicationList = ({ navigation = {}, publications = {} }) => {
      */
     onSharePress = async (id) => {
         Share.share({
-            message: await createDynamicLink({ type: 'losted', id }),
+            message: await createDynamicLink({ type: losted ? 'losted' : 'adoption', id }),
             title: 'Compartir publicación'
         });
     }
