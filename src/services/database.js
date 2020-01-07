@@ -37,8 +37,14 @@ export const createPetPublication = async (losted, author, petData, image) => {
         } else {
             publication = await adoptionRef.add({ author, ...petData, timeStamp });
         }
+
         const uploadedImageUrl = await uploadPetImage(losted, publication.id, image);
-        lostedRef.doc(publication.id).update({ image: uploadedImageUrl });
+
+        if (losted) {
+            lostedRef.doc(publication.id).update({ image: uploadedImageUrl });
+        } else {
+            adoptionRef.doc(publication.id).update({ image: uploadedImageUrl });
+        }
 
         return {
             author,
