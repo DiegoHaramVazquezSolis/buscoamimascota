@@ -53,10 +53,11 @@ export const PET_INFO_IMAGE_SCREEN = 'PetInfoImageScreen';
 
 // Async storage constants
 export const ON_BOARDING_VIEWED_AS = 'on_boarding_viewed';
-export const USER_COUNTRY_AS = 'user_country';
-export const USER_REGION_AS = 'user_region';
-export const USER_CITY_AS = 'user_city';
 
 // API Key constants
 export const BATTUTA_API_KEY = 'b60ad6a578b6decda04575a54429b117';
 export const WEB_CLIENT_GOOGLE_AUTH = '1021296714116-l90pno6dch9snp6d1tlnlrmg4h7rlpto.apps.googleusercontent.com';
+
+// Location constants
+export const DEGREES_LATITUDE_PER_MILE = 0.0144927536231884;
+export const DEGREES_LONGITUDE_PER_MILE = 0.0181818181818182;

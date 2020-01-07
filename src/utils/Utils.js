@@ -1,4 +1,35 @@
+import geohash from 'ngeohash';
+
 import { firestoreValues } from '../services/firebase';
+import { DEGREES_LATITUDE_PER_MILE, DEGREES_LONGITUDE_PER_MILE } from './Constants';
+
+/**
+ * Return the geo hash of the given location
+ * @param {string | number} latitude Latitude of the location
+ * @param {string | number} longitude Longitude of the location
+ */
+export function encodeLocation({ latitude, longitude }) {
+    return geohash.encode(latitude, longitude, 10);
+}
+
+/**
+ * @description Return an object with the lower and upper valid geo hashes based on a location and a given distance in miles
+ * @param {string | number} latitude Longitude at the center of the range
+ * @param {string | number} longitude Longitude at the center of the range
+ * @param {string | number} distance Distance of the range (in miles) Default: 3.10686 or ~5 kilometers
+ * @returns {Object} { lowerGeoHash: string, upperGeoHash: string }
+ */
+export function getGeohashRange(latitude = 20.6725076, longitude = -103.3866236, distance = 3.10686) {
+    const lowerLat = latitude - DEGREES_LATITUDE_PER_MILE * distance;
+    const lowerLon = longitude - DEGREES_LONGITUDE_PER_MILE * distance;
+    const upperLat = latitude + DEGREES_LATITUDE_PER_MILE * distance;
+    const upperLon = longitude + DEGREES_LONGITUDE_PER_MILE * distance;
+
+    return {
+        lowerGeoHash: geohash.encode(lowerLat, lowerLon, 10),
+        upperGeoHash: geohash.encode(upperLat, upperLon, 10)
+    };
+  };
 
 /**
  * @description Truncate a string if the length of the string is greater or equal than maxLength
