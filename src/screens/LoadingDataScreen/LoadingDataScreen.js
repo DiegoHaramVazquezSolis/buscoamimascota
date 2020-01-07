@@ -12,7 +12,7 @@ const LoadingDataScreen = ({ navigation }) => {
      */
     useEffect(() => {
         async function checkOnBoarding() {
-            
+
             /**
              * On the first time (after installation) the user must be
              * the onboarding, in any other initialization of the app

@@ -6,11 +6,10 @@ import { connect } from 'react-redux';
 import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
 import Assets from '../../../assets/Assets';
-import { USER_COUNTRY_AS, USER_REGION_AS, USER_CITY_AS, PUBLICATION_DETAILS_SCREEN } from '../../utils/Constants';
+import { PUBLICATION_DETAILS_SCREEN } from '../../utils/Constants';
 
-import { getAsyncStorageData } from '../../utils/LocalStorage';
 import { createPetPublication } from '../../services/database';
-import { createFirestoreGeoPoint } from '../../utils/Utils';
+import { createFirestoreGeoPoint, encodeLocation } from '../../utils/Utils';
 
 import ScreenSubtitle from '../../components/simple/ScreenSubtitle/ScreenSubtitle';
 import CloseRightButton from '../../components/simple/CloseRightButton/CloseRightButton';
@@ -58,17 +57,12 @@ const PetInfoImageScreen = ({ navigation, uid = '' }) => {
 
     publishAndContinue = async () => {
         if (image.data !== '') {
-            const country = await getAsyncStorageData(USER_COUNTRY_AS);
-            const region = await getAsyncStorageData(USER_REGION_AS);
-            const city = await getAsyncStorageData(USER_CITY_AS);
             const { location, contact, formData, losted } = navigation.state.params;
             const GeoPointLocation = createFirestoreGeoPoint(location);
             const petData = {
-                country,
-                region,
-                city,
                 location: GeoPointLocation,
                 contact,
+                geohash: encodeLocation(location),
                 ...formData
             };
 
