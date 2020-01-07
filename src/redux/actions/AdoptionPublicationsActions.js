@@ -1,8 +1,10 @@
-import { USER_CITY_AS, USER_COUNTRY_AS, GET_ADOPTION_PUBLICATION, REMOVE_ADOPTION_PUBLICATION, REMOVE_ALL_ADOPTION_PUBLICATIONS, USER_REGION_AS } from '../../utils/Constants';
+import Geolocation from '@react-native-community/geolocation';
+
+import { GET_ADOPTION_PUBLICATION, REMOVE_ADOPTION_PUBLICATION, REMOVE_ALL_ADOPTION_PUBLICATIONS } from '../../utils/Constants';
 
 import { adoptionRef } from '../../services/database';
 
-import { getAsyncStorageData } from '../../utils/LocalStorage';
+import { getGeohashRange } from '../../utils/Utils';
 
 /**
  * Action of redux for set a publication of on adoption pets in the global state
@@ -27,50 +29,41 @@ export const removeAllPublicationsSuccess = () => ({ type: REMOVE_ALL_ADOPTION_P
  */
 export const getAdoptionPublications = () => async (dispatch) => {
     try {
-        const country = await getAsyncStorageData(USER_COUNTRY_AS);
-        const region = await getAsyncStorageData(USER_REGION_AS);
-
-        if (country && region) {
-            const city = await getAsyncStorageData(USER_CITY_AS);
-
-            if (city) {
-
-                /**
-                 * If the user have a selected country, region and city we use that information to filter the publications
-                 */
-                adoptionRef.where('country', '==', country).where('region', '==', region).where('city', '==', city).orderBy('timeStamp', 'asc').limit(25)
-                .onSnapshot((lostedPublicationsSnap) => {
-
-                    return dispatch(manageAdoptionPublications(lostedPublicationsSnap.docChanges()));
-                }, (error) => {
-                    console.error('[OnAdoptionPublicationsActios => Publication listener]:', error);
-                });
-            } else {
-
-                /**
-                 * If the user have a selected country and region we use that information to filter the publications
-                 */
-                adoptionRef.where('country', '==', country).where('region', '==', region).orderBy('timeStamp', 'asc').limit(25)
-                .onSnapshot((lostedPublicationsSnap) => {
-
-                    return dispatch(manageAdoptionPublications(lostedPublicationsSnap.docChanges()));
-                }, (error) => {
-                    console.error('[OnAdoptionPublicationsActios => Publication listener]:', error);
-                });
-            }
-        } else {
+        Geolocation.getCurrentPosition((locationInfo) => {
+            const geoHashRange = getGeohashRange(locationInfo.coords.latitude, locationInfo.coords.longitude);
 
             /**
-             * If the user don't have a selected country and city we just filter the last publications
+             * If the location of the user is available we use it to filter only the 25 closest publications
+             * Closest: In a range of 5km or less
              */
-            adoptionRef.orderBy('timeStamp', 'asc').limit(10)
-                .onSnapshot((lostedPublicationsSnap) => {
+            adoptionRef.where("geohash", ">=",geoHashRange.lowerGeoHash).where("geohash", "<=", geoHashRange.upperGeoHash).limit(25)
+            .onSnapshot((adoptionPublicationsSnap) => {
+                const sortedAdoptionPublications = adoptionPublicationsSnap.docChanges().sort((a, b) => a.doc.data().timeStamp > b.doc.data().timeStamp);
 
-                    return dispatch(manageAdoptionPublications(lostedPublicationsSnap.docChanges));
+                return dispatch(manageAdoptionPublications(sortedAdoptionPublications));
             }, (error) => {
-                console.error('[OnAdoptionPublicationsActios => Publication listener]:', error);
+                console.error('[AdoptionPublicationsActions => Publication listener]:', error);
             });
-        }
+        }, (error) => {
+            if (error.code === 1) {
+                console.log('Here put a cool Dialog or Snackbar telling to the user that we don`t have permission to use their location');
+            } else if (error.code === 2) {
+                console.log('Here put a cool Dialog or Snackbar telling to the user that enable their location');
+            } else if (error.code === 3) {
+                console.log('Here put a cool Dialog or Snackbar telling to the user that we can`t determine their location');
+            }
+
+            /**
+             * If the location of the user isn't available we just take the 25 most recent publications
+             */
+            adoptionRef.orderBy('timeStamp').limit(25)
+            .onSnapshot((adoptionPublicationsSnap) => {
+
+                return dispatch(manageAdoptionPublications(adoptionPublicationsSnap.docChanges()));
+            }, (error) => {
+                console.error('[AdoptionPublicationsActions => Publication listener]:', error);
+            });
+        });
     } catch (error) {
         console.error(error);
     }

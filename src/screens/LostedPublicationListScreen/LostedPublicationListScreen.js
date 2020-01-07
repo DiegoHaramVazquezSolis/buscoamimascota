@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { SafeAreaView } from 'react-native';
-import Geolocation from '@react-native-community/geolocation';
 import { connect } from 'react-redux';
 
 import GlobalStyles from '../../utils/GlobalStyles';

@@ -1,8 +1,10 @@
-import { USER_CITY_AS, USER_COUNTRY_AS, GET_LOSTED_PUBLICATION, REMOVE_LOSTED_PUBLICATION, REMOVE_ALL_LOSTED_PUBLICATIONS, USER_REGION_AS } from '../../utils/Constants';
+import Geolocation from '@react-native-community/geolocation';
+
+import { GET_LOSTED_PUBLICATION, REMOVE_LOSTED_PUBLICATION, REMOVE_ALL_LOSTED_PUBLICATIONS } from '../../utils/Constants';
 
 import { lostedRef } from '../../services/database';
 
-import { getAsyncStorageData } from '../../utils/LocalStorage';
+import { getGeohashRange } from '../../utils/Utils';
 
 /**
  * Action of redux for set a publication of losted pets in the global state
@@ -27,50 +29,41 @@ export const removeAllPublicationsSuccess = () => ({ type: REMOVE_ALL_LOSTED_PUB
  */
 export const getLostedPublications = () => async (dispatch) => {
     try {
-        const country = await getAsyncStorageData(USER_COUNTRY_AS);
-        const region = await getAsyncStorageData(USER_REGION_AS);
-
-        if (country && region) {
-            const city = await getAsyncStorageData(USER_CITY_AS);
-
-            if (city) {
-
-                /**
-                 * If the user have a selected country, region and city we use that information to filter the publications
-                 */
-                lostedRef.where('country', '==', country).where('region', '==', region).where('city', '==', city).orderBy('timeStamp', 'asc').limit(25)
-                .onSnapshot((lostedPublicationsSnap) => {
-
-                    return dispatch(manageLostedPublications(lostedPublicationsSnap.docChanges()));
-                }, (error) => {
-                    console.error('[LostedPublicationsActios => Publication listener]:', error);
-                });
-            } else {
-
-                /**
-                 * If the user have a selected country and region we use that information to filter the publications
-                 */
-                lostedRef.where('country', '==', country).where('region', '==', region).orderBy('timeStamp', 'asc').limit(25)
-                .onSnapshot((lostedPublicationsSnap) => {
-
-                    return dispatch(manageLostedPublications(lostedPublicationsSnap.docChanges()));
-                }, (error) => {
-                    console.error('[LostedPublicationsActios => Publication listener]:', error);
-                });
-            }
-        } else {
+        Geolocation.getCurrentPosition((locationInfo) => {
+            const geoHashRange = getGeohashRange(locationInfo.coords.latitude, locationInfo.coords.longitude);
 
             /**
-             * If the user don't have a selected country and city we just filter the last publications
+             * If the location of the user is available we use it to filter only the 25 closest publications
+             * Closest: In a range of 5km or less
              */
-            lostedRef.orderBy('timeStamp', 'asc').limit(10)
-                .onSnapshot((lostedPublicationsSnap) => {
+            lostedRef.where("geohash", ">=",geoHashRange.lowerGeoHash).where("geohash", "<=", geoHashRange.upperGeoHash).limit(25)
+            .onSnapshot((lostedPublicationsSnap) => {
+                const sortedLostedPublications = lostedPublicationsSnap.docChanges().sort((a, b) => a.doc.data().timeStamp > b.doc.data().timeStamp);
 
-                    return dispatch(manageLostedPublications(lostedPublicationsSnap.docChanges));
+                return dispatch(manageLostedPublications(sortedLostedPublications));
             }, (error) => {
-                console.error('[LostedPublicationsActios => Publication listener]:', error);
+                console.error('[LostedPublicationsActions => Publication listener]:', error);
             });
-        }
+        }, (error) => {
+            if (error.code === 1) {
+                console.log('Here put a cool Dialog or Snackbar telling to the user that we don`t have permission to use their location');
+            } else if (error.code === 2) {
+                console.log('Here put a cool Dialog or Snackbar telling to the user that enable their location');
+            } else if (error.code === 3) {
+                console.log('Here put a cool Dialog or Snackbar telling to the user that we can`t determine their location');
+            }
+
+            /**
+             * If the location of the user isn't available we just take the 25 most recent publications
+             */
+            lostedRef.orderBy('timeStamp').limit(25)
+            .onSnapshot((lostedPublicationsSnap) => {
+
+                return dispatch(manageLostedPublications(lostedPublicationsSnap.docChanges()));
+            }, (error) => {
+                console.error('[LostedPublicationsActions => Publication listener]:', error);
+            });
+        });
     } catch (error) {
         console.error(error);
     }
@@ -78,7 +71,7 @@ export const getLostedPublications = () => async (dispatch) => {
 
 /**
  * Manage the docChanges of the firestore query
- * @param {object} docChanges Doc changes of the query on firestore
+ * @param {Array} docChanges Doc changes of the query on firestore
  * @param {function} dispatch Redux dispatch
  */
 const manageLostedPublications = (docChanges) => (dispatch) => {
