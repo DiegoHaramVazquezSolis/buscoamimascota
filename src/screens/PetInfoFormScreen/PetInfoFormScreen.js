@@ -1,10 +1,12 @@
 import React, { useReducer } from 'react';
-import { Alert, SafeAreaView, View, Picker, Text } from 'react-native';
+import { Alert, SafeAreaView, View, Picker } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import styles from './styles';
 import GlobalStyles from '../../utils/GlobalStyles';
 import { PET_INFO_LOCATION_SCREEN } from '../../utils/Constants';
+
+import { translate } from '../../services/i18n';
 
 import ScreenSubtitle from '../../components/simple/ScreenSubtitle/ScreenSubtitle';
 import CustomTextInput from '../../components/simple/CustomTextInput/CustomTextInput';
@@ -16,7 +18,7 @@ import CloseRightButton from '../../components/simple/CloseRightButton/CloseRigh
 const PetInfoFormScreen = ({ navigation }) => {
     const initialState = {
         name: '',
-        sex: 'Hembra',
+        sex: translate('PetInfoFormScreen.female'),
         specie: '',
         description: '',
         haveId: false
@@ -30,17 +32,17 @@ const PetInfoFormScreen = ({ navigation }) => {
 
     const losted = navigation.state.params.losted;
 
-    saveAndContinue = () => {
+    const saveAndContinue = () => {
         setState({ showError: false });
         const { name, specie, description } = state;
         if (name !== '' && specie !== '' && description !== '') {
             return navigation.navigate(PET_INFO_LOCATION_SCREEN, { formData: state, losted });
         } else {
             Alert.alert(
-                'Error',
-                'Asegurate de haber llenado todos los campos correctamente.',
+                translate('PetInfoFormScreen.errorMessage.title'),
+                translate('PetInfoFormScreen.errorMessage.description'),
                 [
-                    { text: 'Entendido' },
+                    { text: translate('PetInfoFormScreen.errorMessage.acceptButton') },
                 ]
             );
         }
@@ -51,19 +53,19 @@ const PetInfoFormScreen = ({ navigation }) => {
             <KeyboardAwareScrollView>
                 <View style={styles.separator} />
                 <ScreenSubtitle>
-                    Completa la siguiente información
+                    {translate('PetInfoFormScreen.subtitle')}
                 </ScreenSubtitle>
                 <View style={[styles.formContainer, GlobalStyles.alignItemsCenter, GlobalStyles.justifyContentCenter, GlobalStyles.flex1]}>
                     <CustomTextInput
-                        placeholder='Nombre'
+                        placeholder={translate('PetInfoFormScreen.namePlaceholder')}
                         onChangeText={(name) => setState({ name })}
                         style={styles.textInput} />
                     <View style={styles.standardMargin}>
                         <RadioGroup
                             selected={state.sex}
                             options={[
-                                'Hembra',
-                                'Macho'
+                                translate('PetInfoFormScreen.female'),
+                                translate('PetInfoFormScreen.male')
                             ]}
                             onChangeSelection={(sex) => setState({ sex })} />
                     </View>
@@ -71,13 +73,13 @@ const PetInfoFormScreen = ({ navigation }) => {
                         style={[styles.picker, styles.standardMargin]}
                         selectedValue={state.specie}
                         onValueChange={(specie) => setState({ specie })}>
-                        <Picker.Item label='Especie' value='' />
-                        <Picker.Item label='Perro' value='Perro' />
-                        <Picker.Item label='Gato' value='Gato' />
+                        <Picker.Item label={translate('PetInfoFormScreen.pickerOptions.species')} value='' />
+                        <Picker.Item label={translate('PetInfoFormScreen.pickerOptions.dog')} value='dog' />
+                        <Picker.Item label={translate('PetInfoFormScreen.pickerOptions.cat')} value='cat' />
                     </Picker>
                     <View style={styles.standardMargin}>
                         <CustomTextInput
-                            placeholder='Descripción'
+                            placeholder={translate('PetInfoFormScreen.descriptionPlaceholder')}
                             onChangeText={(description) => setState({ description })}
                             style={styles.textInput}
                             multiline
@@ -85,7 +87,7 @@ const PetInfoFormScreen = ({ navigation }) => {
                     </View>
                     {losted &&
                         <CheckBox
-                            label='Tiene placa de identificación'
+                            label={translate('PetInfoFormScreen.haveIdLabel')}
                             value={state.haveId}
                             onChange={() => setState({ haveId: !state.haveId })} />
                     }
@@ -93,7 +95,7 @@ const PetInfoFormScreen = ({ navigation }) => {
                         <ContainedButton
                             size='sm'
                             onPress={saveAndContinue}>
-                            Continuar
+                            {translate('PetInfoFormScreen.continueButton')}
                         </ContainedButton>
                     </View>
                 </View>
@@ -106,7 +108,7 @@ PetInfoFormScreen.navigationOptions = ({ navigation }) => ({
     title: '',
     headerStyle: GlobalStyles.customStackNavigatorHeaderStyle,
     headerTintColor: '#fff',
-    headerRight: () => <CloseRightButton onPress={() => navigation.dismiss()} />,
+    headerRight: () => <CloseRightButton onPress={navigation.dismiss} />,
     headerBackTitle: null
 });
 

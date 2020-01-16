@@ -6,6 +6,7 @@ import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
 
 import { loginWithFacebook, loginWithGoogle, logInWithEmail, setupGoogleSignin } from '../../services/auth';
+import { translate } from '../../services/i18n';
 
 import CustomTextInput from '../../components/simple/CustomTextInput/CustomTextInput';
 import ContainedButton from '../../components/simple/ContainedButton/ContainedButton';
@@ -24,23 +25,23 @@ const LoginScreen = ({ navigation }) => {
         password: ''
     };
 
-    reducer = (prevState, nextState) => {
+    const reducer = (prevState, nextState) => {
         return { ...prevState, ...nextState };
     }
 
     const [ state, setState ] = useReducer(reducer, initialState);
 
-    LogInWithGoogle = async () => {
+    const LogInWithGoogle = async () => {
         await loginWithGoogle();
         navigation.dismiss();
     }
 
-    LogInWithFacebook = async () => {
+    const LogInWithFacebook = async () => {
         await loginWithFacebook();
         navigation.dismiss();
     }
 
-    LogInWithEmail = async () => {
+    const LogInWithEmail = async () => {
         await logInWithEmail(state.email, state.password);
         navigation.dismiss();
     }
@@ -48,7 +49,7 @@ const LoginScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
             <ScreenTitle>
-                Inicia sesión para continuar
+                {translate('LoginScreen.title')}
             </ScreenTitle>
             <KeyboardAwareScrollView>
                 <View style={styles.contentContainer}>
@@ -56,26 +57,26 @@ const LoginScreen = ({ navigation }) => {
                         <CustomTextInput
                             keyboardType='email-address'
                             onSubmitEditing={() => passwordRef.current.focus()}
-                            placeholder='Email'
+                            placeholder={translate('LoginScreen.emailPlaceholder')}
                             onChangeText={(email) => setState({ email })} />
                     </View>
                     <View style={styles.fieldContainer}>
                         <CustomTextInput
                             reference={passwordRef}
                             secureTextEntry
-                            placeholder='Contraseña'
+                            placeholder={translate('LoginScreen.passwordPlaceholder')}
                             onChangeText={(password) => setState({ password })} />
                     </View>
                     <View style={styles.buttonContainer}>
                         <ContainedButton onPress={LogInWithEmail}>
-                            Iniciar sesión
+                            {translate('LoginScreen.continueButton')}
                         </ContainedButton>
                     </View>
 
                     <View style={styles.dividier} />
 
                     <Text style={styles.alternative}>
-                        O inicia sesión con redes sociales
+                        {translate('LoginScreen.alternative')}
                     </Text>
                     <View style={styles.socialMediaLoginOptions}>
                         <View style={styles.signInButtonContainer}>
@@ -84,7 +85,7 @@ const LoginScreen = ({ navigation }) => {
                                 color='rgba(0, 0, 0, .54)'
                                 onPress={LogInWithGoogle}
                                 Icon={Assets.svg.GoogleIcon}>
-                                Continuar con google
+                                {translate('LoginScreen.continueWithGoogleButton')}
                             </SocialMediaButton>
                         </View>
                         <View style={styles.signInButtonContainer}>
@@ -93,7 +94,7 @@ const LoginScreen = ({ navigation }) => {
                                 color='#FFF'
                                 onPress={LogInWithFacebook}
                                 Icon={Assets.svg.FIconFacebookIcon}>
-                                Continuar con facebook
+                                {translate('LoginScreen.continueWithFacebookButton')}
                             </SocialMediaButton>
                         </View>
                     </View>

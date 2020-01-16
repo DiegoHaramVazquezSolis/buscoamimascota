@@ -7,6 +7,8 @@ import styles from './styles';
 import Assets from '../../../assets/Assets';
 import { PET_INFO_IMAGE_SCREEN } from '../../utils/Constants';
 
+import { translate } from '../../services/i18n';
+
 import ScreenSubtitle from '../../components/simple/ScreenSubtitle/ScreenSubtitle';
 import CustomTextInput from '../../components/simple/CustomTextInput/CustomTextInput';
 import CloseRightButton from '../../components/simple/CloseRightButton/CloseRightButton';
@@ -28,7 +30,7 @@ const PetInfoContactScreen = ({ navigation }) => {
 
     const [ state, setState ] = useReducer(reducer, initialState);
 
-    saveAndContinue = () => {
+    const saveAndContinue = () => {
         const { formData, location, losted } = navigation.state.params;
         return navigation.navigate(PET_INFO_IMAGE_SCREEN, { contact: state, formData, location, losted });
     }
@@ -38,19 +40,19 @@ const PetInfoContactScreen = ({ navigation }) => {
             <KeyboardAwareScrollView>
                 <View style={styles.separator} />
                 <ScreenSubtitle>
-                    Agrega los medios de contacto que desees
+                    {translate('PetInfoContactScreen.subtitle')}
                 </ScreenSubtitle>
                 <View style={[GlobalStyles.alignItemsCenter, GlobalStyles.justifyContentCenter, GlobalStyles.flex1, styles.formContainer]}>
                     <CustomTextInput
                         Icon={Assets.svg.WhatsappIcon}
-                        placeholder='Whatsapp'
+                        placeholder={translate('PetInfoContactScreen.whatsappPlaceholder')}
                         style={[GlobalStyles.mt24, styles.textInput]}
                         keyboardType='phone-pad'
                         onSubmitEditing={() => mobilePhoneRef.current.focus()}
                         onChangeText={(whatsapp) => setState({ whatsapp })} />
                     <CustomTextInput
                         Icon={Assets.svg.MobileIcon}
-                        placeholder='Telefono celular'
+                        placeholder={translate('PetInfoContactScreen.cellphonePlaceholder')}
                         style={[GlobalStyles.mt24, styles.textInput]}
                         keyboardType='phone-pad'
                         reference={mobilePhoneRef}
@@ -58,19 +60,19 @@ const PetInfoContactScreen = ({ navigation }) => {
                         onChangeText={(cellphone) => setState({ cellphone })} />
                     <CustomTextInput
                         Icon={Assets.svg.PhoneIcon}
-                        placeholder='Telefono fijo'
+                        placeholder={translate('PetInfoContactScreen.phonePlaceholder')}
                         style={[GlobalStyles.mt24, styles.textInput]}
                         keyboardType='phone-pad'
                         reference={homePhoneRef}
                         onChangeText={(phone) => setState({ phone })} />
                     <Text style={[GlobalStyles.mt12, styles.smallText]}>
-                        Agregar medios de contacto es opcional sin embargo puede ser de de gran ayuda durante el proceso.
+                        {translate('PetInfoContactScreen.smallText')}
                     </Text>
                     <View style={[GlobalStyles.rowReverse, GlobalStyles.alignSelfEnd]}>
                         <ContainedButton
                             size='sm'
                             onPress={saveAndContinue}>
-                            Continuar
+                            {translate('PetInfoContactScreen.continueButton')}
                         </ContainedButton>
                     </View>
                 </View>
@@ -83,7 +85,7 @@ PetInfoContactScreen.navigationOptions = ({ navigation }) => ({
     title: '',
     headerStyle: GlobalStyles.customStackNavigatorHeaderStyle,
     headerTintColor: '#fff',
-    headerRight: () => <CloseRightButton onPress={() => navigation.dismiss()} />,
+    headerRight: () => <CloseRightButton onPress={navigation.dismiss} />,
     headerBackTitle: null
 });
 

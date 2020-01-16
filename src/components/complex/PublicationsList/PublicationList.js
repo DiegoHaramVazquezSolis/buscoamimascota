@@ -3,9 +3,12 @@ import { Share, View, FlatList } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 import styles from './styles';
-import PublicationCard from '../PublicationCard/PublicationCard';
 import { createDynamicLink } from '../../../services/dynamicLinks';
 import { PUBLICATION_DETAILS_SCREEN } from '../../../utils/Constants';
+
+import { translate } from '../../../services/i18n';
+
+import PublicationCard from '../PublicationCard/PublicationCard';
 import PublicationContactDialog from '../PublicationContactDialog/PublicationContactDialog';
 import CreateReportDialog from '../CreateReportDialog/CreateReportDialog';
 
@@ -38,7 +41,7 @@ const PublicationList = ({ navigation = {}, publications = {}, losted = true }) 
     onSharePress = async (id) => {
         Share.share({
             message: await createDynamicLink({ type: losted ? 'losted' : 'adoption', id }),
-            title: 'Compartir publicación'
+            title: translate('PublicationList.share.title')
         });
     }
 

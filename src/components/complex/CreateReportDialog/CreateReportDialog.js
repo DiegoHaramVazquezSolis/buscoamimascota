@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import styles from './styles';
 
 import { reportPublication } from '../../../services/database';
+import { translate } from '../../../services/i18n';
 
 import Dialog from '../../simple/Dialog/Dialog';
 import CustomTextInput from '../../simple/CustomTextInput/CustomTextInput';
 import ContainedButton from '../../simple/ContainedButton/ContainedButton';
-
 
 const CreateReportDialog = ({ uid = '', publicationId = '', visible = false, onClose = () => {} }) => {
     const [report, setReport] = useState('');
@@ -24,18 +23,18 @@ const CreateReportDialog = ({ uid = '', publicationId = '', visible = false, onC
         <Dialog
             visible={visible}
             onClose={onClose}
-            title='Reportar'
-            description='Escribe aqui el motivo del reporte'>
+            title={translate('CreateReportDialog.title')}
+            description={translate('CreateReportDialog.description')}>
             <View>
                 <CustomTextInput
                     onChangeText={(report) => setReport(report)}
-                    placeholder='Motivo'
+                    placeholder={translate('CreateReportDialog.reportTextFieldPlaceholder')}
                     style={styles.textInput} />
                 <View style={styles.buttonContainer}>
                     <ContainedButton
                         size='sm'
                         onPress={makeReport}>
-                            Reportar!
+                            {translate('CreateReportDialog.sendReportButton')}
                     </ContainedButton>
                 </View>
             </View>

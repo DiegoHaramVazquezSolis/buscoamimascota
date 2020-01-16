@@ -7,6 +7,8 @@ import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
 import { PET_INFO_CONTACT_SCREEN } from '../../utils/Constants';
 
+import { translate } from '../../services/i18n';
+
 import CloseRightButton from '../../components/simple/CloseRightButton/CloseRightButton';
 import ScreenSubtitle from '../../components/simple/ScreenSubtitle/ScreenSubtitle';
 import ContainedButton from '../../components/simple/ContainedButton/ContainedButton';
@@ -45,11 +47,11 @@ const PetInfoLocationScreen = ({ navigation }) => {
         });
     }, []);
 
-    setLastKnownLocation = ({ latitude, longitude }) => {
+    const setLastKnownLocation = ({ latitude, longitude }) => {
         setState({ location: { latitude, longitude } });
     }
 
-    saveAndContinue = () => {
+    const saveAndContinue = () => {
         const { formData, losted } = navigation.state.params;
         return navigation.navigate(PET_INFO_CONTACT_SCREEN, { location: state.location, formData, losted });
     }
@@ -58,7 +60,7 @@ const PetInfoLocationScreen = ({ navigation }) => {
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
             <View style={styles.separator} />
             <ScreenSubtitle>
-                Selecciona el lugar aproximado en donde viste a tu mascota por ultima vez
+                {translate('PetInfoLocationScreen.subtitle')}
             </ScreenSubtitle>
             <View style={[GlobalStyles.mt12, styles.map]}>
                 <MapView
@@ -80,7 +82,7 @@ const PetInfoLocationScreen = ({ navigation }) => {
                     <ContainedButton
                         size='sm'
                         onPress={saveAndContinue}>
-                        Continuar
+                        {translate('PetInfoLocationScreen.continueButton')}
                     </ContainedButton>
                 </View>
             }
@@ -92,7 +94,7 @@ PetInfoLocationScreen.navigationOptions = ({ navigation }) => ({
     title: '',
     headerStyle: GlobalStyles.customStackNavigatorHeaderStyle,
     headerTintColor: '#fff',
-    headerRight: () => <CloseRightButton onPress={() => navigation.dismiss()} />,
+    headerRight: () => <CloseRightButton onPress={navigation.dismiss} />,
     headerBackTitle: null
 });
 

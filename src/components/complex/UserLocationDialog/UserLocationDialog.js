@@ -9,6 +9,10 @@ import { storeAsyncStorageData } from '../../../utils/LocalStorage';
 import { USER_COUNTRY_AS, USER_CITY_AS, USER_REGION_AS, BATTUTA_API_KEY } from '../../../utils/Constants';
 import { removeAllPublicationsSuccess, getLostedPublications } from '../../../redux/actions/LostedPublicationsActions';
 
+/**
+ * @deprecated
+ * @description Unused component, replaced by the user location system to bring better publications and improve the UX of the app
+ */
 const UserLocationDialog = ({ visible = '', onClose = () => {}, removeAllPublications = () => {}, loadPublicationsWithCityAndCountry = () => {} }) => {
     const initialState = {
         countries: {},
@@ -21,7 +25,6 @@ const UserLocationDialog = ({ visible = '', onClose = () => {}, removeAllPublica
 
     /**
      * Update the state
-     * 
      * @param {object} prevState Previous value of the state
      * @param {object} state New values to update on state
      */

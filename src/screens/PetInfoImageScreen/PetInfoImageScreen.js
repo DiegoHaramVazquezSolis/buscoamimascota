@@ -10,34 +10,34 @@ import { PUBLICATION_DETAILS_SCREEN } from '../../utils/Constants';
 
 import { createPetPublication } from '../../services/database';
 import { createFirestoreGeoPoint, encodeLocation } from '../../utils/Utils';
+import { translate } from '../../services/i18n';
 
 import ScreenSubtitle from '../../components/simple/ScreenSubtitle/ScreenSubtitle';
 import CloseRightButton from '../../components/simple/CloseRightButton/CloseRightButton';
 import FloatingActionButton from '../../components/simple/FloatingActionButton/FloatingActionButton';
 import ContainedButton from '../../components/simple/ContainedButton/ContainedButton';
 
-
 const imagePickerOptions = {
-    title: 'Selecciona una imagen de tu mascota',
-    takePhotoButtonTitle: 'Tomar foto',
-    chooseFromLibraryButtonTitle: 'Escoger una foto de galeria',
-    chooseWhichLibraryTitle: 'Escoger galeria',
-    cancelButtonTitle: 'cancelar',
+    title: translate('PetInfoImageScreen.imagePickerOptions.title'),
+    takePhotoButtonTitle: translate('PetInfoImageScreen.imagePickerOptions.takePhotoButtonTitle'),
+    chooseFromLibraryButtonTitle: translate('PetInfoImageScreen.imagePickerOptions.chooseFromLibraryButtonTitle'),
+    chooseWhichLibraryTitle: translate('PetInfoImageScreen.imagePickerOptions.chooseWhichLibraryTitle'),
+    cancelButtonTitle: translate('PetInfoImageScreen.imagePickerOptions.cancelButtonTitle'),
     storageOptions: {
       skipBackup: true
     },
     permissionDenied: {
-        title: 'Permiso denegado',
-        text: 'Para poder subir una foto de tu mascota requerimos de permiso para acceder a tu camara y/o galeria de imagenes.',
-        reTryTitle: 'Conceder permisos',
-        okTitle: ''
+        title: translate('PetInfoImageScreen.imagePickerOptions.permissionDenied.title'),
+        text: translate('PetInfoImageScreen.imagePickerOptions.permissionDenied.text'),
+        reTryTitle: translate('PetInfoImageScreen.imagePickerOptions.permissionDenied.reTryTitle'),
+        okTitle: translate('PetInfoImageScreen.imagePickerOptions.permissionDenied.okTitle')
     }
 };
 
 const PetInfoImageScreen = ({ navigation, uid = '' }) => {
     const [image, setImage] = useState({ uri: '', data: '' });
 
-    getImage = () => {
+    const getImage = () => {
         if (navigation.state.params.losted) {
             ImagePicker.launchImageLibrary(imagePickerOptions, checkAndSaveImage);
         } else {
@@ -45,7 +45,7 @@ const PetInfoImageScreen = ({ navigation, uid = '' }) => {
         }
     }
 
-    checkAndSaveImage = (response) => {
+    const checkAndSaveImage = (response) => {
         if (response.didCancel) {
             console.log('User cancelled image picker');
         } else if (response.error) {
@@ -55,7 +55,7 @@ const PetInfoImageScreen = ({ navigation, uid = '' }) => {
         }
     }
 
-    publishAndContinue = async () => {
+    const publishAndContinue = async () => {
         if (image.data !== '') {
             const { location, contact, formData, losted } = navigation.state.params;
             const GeoPointLocation = createFirestoreGeoPoint(location);
@@ -71,10 +71,10 @@ const PetInfoImageScreen = ({ navigation, uid = '' }) => {
             navigation.navigate(PUBLICATION_DETAILS_SCREEN, { ...publicationData });
         } else {
             Alert.alert(
-                'Error',
-                'Para continuar debes seleccionar una imagen.',
+                translate('PetInfoImageScreen.errorMessage.title'),
+                translate('PetInfoImageScreen.errorMessage.description'),
                 [
-                    { text: 'Entendido' },
+                    { text: translate('PetInfoImageScreen.errorMessage.acceptButton') },
                 ]
             );
         }
@@ -84,7 +84,7 @@ const PetInfoImageScreen = ({ navigation, uid = '' }) => {
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
             <View style={styles.separator} />
             <ScreenSubtitle>
-                Para terminar selecciona una imagen de tu mascota
+                {translate('PetInfoImageScreen.subtitle')}
             </ScreenSubtitle>
             <View style={styles.separator} />
             <View style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
@@ -92,7 +92,7 @@ const PetInfoImageScreen = ({ navigation, uid = '' }) => {
                     <View style={[GlobalStyles.alignItemsCenter, styles.imagePickerContainer]}>
                         {image.uri === '' ?
                             <Text style={[GlobalStyles.mt24, styles.imagePickerText]}>
-                                Presiona para seleccionar la imagen
+                                {translate('PetInfoImageScreen.description')}
                             </Text>
                             :
                             <Image source={{ uri: image.uri }} style={styles.imagePicker} />
@@ -107,7 +107,7 @@ const PetInfoImageScreen = ({ navigation, uid = '' }) => {
                     <ContainedButton
                         size='md'
                         onPress={publishAndContinue}>
-                        Terminar y ver publicación
+                        {translate('PetInfoImageScreen.continueButton')}
                     </ContainedButton>
                 </View>
             </View>
@@ -119,7 +119,7 @@ PetInfoImageScreen.navigationOptions = ({ navigation }) => ({
     title: '',
     headerStyle: GlobalStyles.customStackNavigatorHeaderStyle,
     headerTintColor: '#fff',
-    headerRight: () => <CloseRightButton onPress={() => navigation.dismiss()} />,
+    headerRight: () => <CloseRightButton onPress={navigation.dismiss} />,
     headerBackTitle: null
 });
 

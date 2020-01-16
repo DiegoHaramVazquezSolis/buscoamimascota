@@ -8,6 +8,7 @@ import { AUTHENTICATION_STACK_NAVIGATOR } from '../../../utils/Constants';
 
 import { createDynamicLink } from '../../../services/dynamicLinks';
 import { subscribeUserToPublication } from '../../../services/database';
+import { translate } from '../../../services/i18n';
 
 import Menu from '../Menu/Menu';
 import ListItem from '../ListItem/ListItem';
@@ -49,7 +50,7 @@ const PublicationDetailsRightButtons = ({ navigation, id = '', uid = '', isLogge
     onSharePress = async () => {
         Share.share({
             message: await createDynamicLink({ type: 'losted', id }),
-            title: 'Compartir publicación'
+            title: translate('PublicationDetailsRightButtons.share.title')
         });
     }
 
@@ -76,12 +77,12 @@ const PublicationDetailsRightButtons = ({ navigation, id = '', uid = '', isLogge
                 <ListItem
                     onPress={subscribeToPublication}
                     textStyle={styles.menuOptionsStyle}>
-                    Recibir notificaciones
+                    {translate('PublicationDetailsRightButtons.subscribe')}
                 </ListItem>
                 <ListItem
                     onPress={reportPublication}
                     textStyle={[styles.reportStyle, styles.menuOptionsStyle]}>
-                    Reportar
+                    {translate('PublicationDetailsRightButtons.report')}
                 </ListItem>
             </Menu>
             <CreateReportDialog

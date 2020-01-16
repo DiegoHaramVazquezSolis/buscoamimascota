@@ -18,7 +18,7 @@ const LoadingDataScreen = ({ navigation }) => {
              * the onboarding, in any other initialization of the app
              * the user must be redirected to the MainBottomNavigator
              */
-            if(await getAsyncStorageData(ON_BOARDING_VIEWED_AS) === 'true'){
+            if(await getAsyncStorageData(ON_BOARDING_VIEWED_AS) === 'true') {
                 Orientation.lockToPortrait();
 
                 const initialLink = await firebaseDynamicLinksGenerator.getInitialLink();

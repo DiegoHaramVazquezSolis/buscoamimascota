@@ -7,14 +7,19 @@ import GlobalStyles from '../../utils/GlobalStyles';
 
 import { PRIMARY_COLOR } from '../../utils/Constants';
 
+import { translate } from '../../services/i18n';
+
 import ContainedButton from '../../components/simple/ContainedButton/ContainedButton';
 import OutlinedButton from '../../components/simple/OutlinedButton/OutlinedButton';
 import Chip from '../../components/simple/Chip/Chip';
 import PublicationDetailsRightButtons from '../../components/simple/PublicationDetailsRightButtons/PublicationDetailsRightButtons';
 import CheckBox from '../../components/simple/CheckBox/CheckBox';
+import PublicationContactDialog from '../../components/complex/PublicationContactDialog/PublicationContactDialog';
 
 const PublicationDetailsScreen = ({ navigation }) => {
-    const { image, contact, city, region, specie, sex, description, haveId, losted } = navigation.state.params;
+    const [openContactDialog, setOpenContactDialog] = useState(false);
+
+    const { image, contact, specie, sex, description, haveId, losted } = navigation.state.params;
 
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
@@ -22,18 +27,23 @@ const PublicationDetailsScreen = ({ navigation }) => {
                 style={styles.imageStyle}
                 source={{ uri: image }} />
             <View style={styles.buttoToolbar}>
-                <OutlinedButton size='sm'>Ultima Ubicación</OutlinedButton>
+                <OutlinedButton size='sm'>
+                    {translate('PublicationDetailsScreen.locationButton')}
+                </OutlinedButton>
                 <View style={styles.buttonSeparator} />
-                <ContainedButton size='sm'>Contactar</ContainedButton>
+                <ContainedButton
+                    size='sm'
+                    onPress={() => setOpenContactDialog(true)}>
+                    {translate('PublicationDetailsScreen.contactButton')}
+                </ContainedButton>
             </View>
             <View style={styles.chipsContainer}>
                 <ScrollView
                     horizontal
                     showsHorizontalScrollIndicator={false}>
-                    <Chip tag>{city ? city : region}</Chip>
-                    <Chip tag>{specie}</Chip>
+                    <Chip tag>{specie === 'dog' ? translate('PublicationDetailsScreen.dog') : translate('PublicationDetailsScreen.cat')}</Chip>
                     <Chip tag>{sex}</Chip>
-                    <Chip tag>{losted ? 'Perdido' : 'En adopción'}</Chip>
+                    <Chip tag>{losted ? translate('PublicationDetailsScreen.losted') : translate('PublicationDetailsScreen.adoption')}</Chip>
                 </ScrollView>
             </View>
             <View style={styles.descriptionContainer}>
@@ -41,8 +51,12 @@ const PublicationDetailsScreen = ({ navigation }) => {
             </View>
             <CheckBox
                 disabled
-                label='Tiene placa de identificación'
+                label={translate('PublicationDetailsScreen.haveIdLabel')}
                 value={haveId} />
+            <PublicationContactDialog
+                visible={openContactDialog}
+                onClose={() => setOpenContactDialog(false)}
+                contactInfo={contact} />
         </SafeAreaView>
     );
 }

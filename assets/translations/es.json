@@ -1,2 +1,184 @@
 {
+    "Navigators": {
+        "MainBottomNavigator": {
+            "PublicationsStackNavigator": "Mascotas"
+        },
+        "PetsTopTabNavigator": {
+            "LostedPublicationsListScreen": "Perdidas",
+            "AdoptionPublicationsListScreen": "En Adopción"
+        }
+    },
+    "CarouselOnBoardingIntroduction": {
+        "search": {
+            "title": "Busca",
+            "description": "Publica a tu mascota para que otras personas te ayuden a buscarla."
+        },
+        "find": {
+            "title": "Encuentra",
+            "description": "Ayuda a buscar mascotas perdidas en tu colonia o ciudad."
+        },
+        "donate": {
+            "title": "Dona",
+            "description": "Las donaciones nos ayudan a seguir operando, ademas se usan para apoyar a las mascotas adoptadas a traves de la app."
+        }
+    },
+    "CreateReportDialog": {
+        "title": "Reportar",
+        "description": "Escribe aqui el motivo del reporte",
+        "reportTextFieldPlaceholder": "Motivo",
+        "sendReportButton": "¡Reportar!"
+    },
+    "PublicationCard": {
+        "contact": "Contactar",
+        "subscribe": "Recibir notificaciones",
+        "report": "Reportar"
+    },
+    "PublicationContactDialog": {
+        "title": "Contactar",
+        "description": "Selecciona el medio de contacto",
+        "whatsapp": "Whatsapp",
+        "cellphone": "Telefono celular",
+        "phone": "Telefono fijo",
+        "errorMessage": {
+            "title": "Ocurrio un problema",
+            "description": "No se encontro la información necesaria, prueba con otra opción",
+            "acceptButton": "Entendido"
+        }
+    },
+    "PublicationList": {
+        "share": {
+            "title": "Compartir publicación"
+        }
+    },
+    "OnBoardingIntroductionScreen": {
+        "continueButton": "Comenzar ahora"
+    },
+    "PublicationDetailsRightButtons": {
+        "subscribe":"Recibir notificaciones",
+        "report": "Reportar",
+        "share": {
+            "title": "Compartir publicación"
+        }
+    },
+    "ChoosePublicationTypeScreen": {
+        "title": "Publicar",
+        "subtitle": "Selecciona el tipo de publicación",
+        "lostedPetTitle": "Buscar mascota perdida",
+        "adoptionPetTitle": "Dar mascota en adopción"
+    },
+    "PetInfoFormScreen": {
+        "subtitle": "Completa la siguiente información",
+        "namePlaceholder": "Nombre",
+        "female": "Hembra",
+        "male": "Macho",
+        "pickerOptions": {
+            "species": "Especie",
+            "dog": "Perro",
+            "cat": "Gato"
+        },
+        "descriptionPlaceholder": "Descripción",
+        "haveIdLabel": "Tiene placa de identificación",
+        "continueButton": "Continuar",
+        "errorMessage": {
+            "title": "Error",
+            "description": "Asegurate de haber llenado todos los campos correctamente.",
+            "acceptButton": "Entendido"
+        }
+    },
+    "PetInfoLocationScreen": {
+        "subtitle": "Selecciona el lugar aproximado en donde viste a tu mascota por ultima vez",
+        "continueButton": "Continuar"
+    },
+    "PetInfoContactScreen": {
+        "subtitle": "Agrega los medios de contacto que desees",
+        "smallText": "Agregar medios de contacto es opcional sin embargo puede ser de de gran ayuda durante el proceso.",
+        "whatsappPlaceholder": "Whatsapp",
+        "cellphonePlaceholder": "Telefono celular",
+        "phonePlaceholder": "Telefono fijo",
+        "continueButton": "Continuar"
+    },
+    "PetInfoImageScreen": {
+        "subtitle": "Para terminar selecciona una imagen de tu mascota",
+        "description": "Presiona para seleccionar la imagen",
+        "continueButton": "Terminar y ver publicación",
+        "imagePickerOptions": {
+            "title": "Selecciona una imagen de tu mascota",
+            "takePhotoButtonTitle": "Tomar foto",
+            "chooseFromLibraryButtonTitle": "Escoger una foto de galeria",
+            "chooseWhichLibraryTitle": "Escoger galeria",
+            "cancelButtonTitle": "cancelar",
+            "permissionDenied": {
+                "title": "Permiso denegado",
+                "text": "Para poder subir una foto de tu mascota requerimos de permiso para acceder a tu camara y/o galeria de imagenes.",
+                "reTryTitle": "Conceder permisos",
+                "okTitle": ""
+            }
+        },
+        "errorMessage": {
+            "title": "Error",
+            "description": "Para continuar debes seleccionar una imagen.",
+            "acceptButton": "Entendido"
+        }
+    },
+    "CreateAccountEmailScreen": {
+        "title": "Registrate para continuar",
+        "emailPlaceholder": "Email",
+        "passwordPlaceholder": "Contraseña",
+        "confirmPasswordPlaceholder": "Confirmar contraseña",
+        "advertisment": {
+            "firstPart": "Al continuar aceptas las",
+            "firstLink": "Condiciones del servicio",
+            "secondPart": "y la",
+            "secondLink": "Politica de privacidad",
+            "thirdPart": "de Busco a mi mascota"
+        },
+        "continueButton": "Crear cuenta",
+        "errorMessage": {
+            "passwordError": {
+                "title": "Error",
+                "description": "Las contraseñas no coinciden",
+                "acceptButton": "Entendido"
+            },
+            "emptyFieldsError": {
+                "title": "Error",
+                "description": "Antes de continuar llena todos los campos",
+                "acceptButton": "Entendido"
+            }
+        }
+    },
+    "CreateAccountSocialMediaScreen": {
+        "title": "Registrate o inicia sesión para continuar",
+        "continueWithGoogleButton": "Continuar con google",
+        "continueWithFacebookButton": "Continuar con facebook",
+        "continueWithEmailButton": "Registrarte con tu correo",
+        "alreadyHaveAccount": {
+            "text": "¿Ya tienes una cuenta?",
+            "link": "Inicia sesión"
+        },
+        "advertisment": {
+            "firstPart": "Al continuar aceptas las",
+            "firstLink": "Condiciones del servicio",
+            "secondPart": "y la",
+            "secondLink": "Politica de privacidad",
+            "thirdPart": "de Busco a mi mascota"
+        }
+    },
+    "LoginScreen": {
+        "title": "Inicia sesión para continuar",
+        "emailPlaceholder": "Email",
+        "passwordPlaceholder": "Contraseña",
+        "continueButton": "Iniciar sesión",
+        "alternative": "O inicia sesión con redes sociales",
+        "continueWithGoogleButton": "Continuar con google",
+        "continueWithFacebookButton": "Continuar con facebook"
+    },
+    "PublicationDetailsScreen": {
+        "locationButton": "Ultima Ubicación",
+        "contactButton": "Contactar",
+        "dog": "Perro",
+        "cat": "Gato",
+        "losted": "Perdido",
+        "adoption": "En adopción",
+        "haveIdLabel": "Tiene placa de identificación"
+    }
 }

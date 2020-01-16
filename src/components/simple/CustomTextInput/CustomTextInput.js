@@ -5,7 +5,7 @@ import { SECONDARY_TEXT_COLOR, PRIMARY_COLOR, DISABLED_COLOR } from '../../../ut
 import styles from './styles';
 import GlobalStyles from '../../../utils/GlobalStyles';
 
-const CustomTextInput = ({ onChangeText = (text) => {}, onSubmitEditing = () => {}, placeholder = '', editable = true, secureTextEntry = false, reference = null, keyboardType = 'default', style = {}, multiline = false, numberOfLines = 1, Icon = null }) => {
+const CustomTextInput = ({ onChangeText = (text) => {}, onSubmitEditing = () => {}, placeholder = '', editable = true, secureTextEntry = false, reference = null, keyboardType = 'default', style = {}, multiline = false, numberOfLines = 1, Icon = null, returnKeyType = 'done' }) => {
     const [Focus, setFocus] = useState(false);
 
     if (!Icon) {
@@ -23,7 +23,8 @@ const CustomTextInput = ({ onChangeText = (text) => {}, onSubmitEditing = () => 
                 style={[styles.textInput, style, { borderBottomColor: Focus ? PRIMARY_COLOR : DISABLED_COLOR }]}
                 placeholderTextColor={SECONDARY_TEXT_COLOR}
                 multiline={multiline}
-                numberOfLines={numberOfLines} />
+                numberOfLines={numberOfLines}
+                returnKeyType={returnKeyType} />
         );
     } else {
         return (
@@ -45,7 +46,8 @@ const CustomTextInput = ({ onChangeText = (text) => {}, onSubmitEditing = () => 
                         style={[styles.textInput, style, { borderBottomColor: Focus ? PRIMARY_COLOR : DISABLED_COLOR }]}
                         placeholderTextColor={SECONDARY_TEXT_COLOR}
                         multiline={multiline}
-                        numberOfLines={numberOfLines} />
+                        numberOfLines={numberOfLines}
+                        returnKeyType={returnKeyType} />
                 </View>
             </View>
         );

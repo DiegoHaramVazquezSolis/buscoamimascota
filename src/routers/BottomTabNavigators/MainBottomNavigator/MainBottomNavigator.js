@@ -4,6 +4,8 @@ import { View } from 'react-native';
 
 import { PUBLICATIONS_STACK_NAVIGATOR, SECONDARY_COLOR, DISABLED_COLOR, DARK_COLOR } from './../../../utils/Constants';
 
+import { translate } from '../../../services/i18n';
+
 // Navigators
 import PublicationsStackNavigator from '../../StackNavigators/PublicationsStackNavigator/PublicationsStackNavigator';
 
@@ -14,7 +16,7 @@ const routesConfig = {
     [PUBLICATIONS_STACK_NAVIGATOR]: {
         screen: PublicationsStackNavigator,
         navigationOptions:{
-            tabBarLabel:'Mascotas',
+            tabBarLabel: translate('Navigators.MainBottomNavigator.PublicationsStackNavigator'),
             tabBarIcon:({tintColor}) => <View style={{ marginTop: 8, height: 24, width: 24, backgroundColor: tintColor, borderRadius: 100 }} />
         }
     },

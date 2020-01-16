@@ -2,29 +2,32 @@ import React from 'react';
 import { View, ScrollView } from 'react-native';
 
 import Assets from '../../../../assets/Assets';
-import OnBoardingScreenTemplate from './OnBoardingScreenTemplate';
 import styles from './styles';
 
-const CarouselOnBoardingIntroduction = ({ determineIndexWithScrollPosition }) => (
+import { translate } from '../../../services/i18n';
+
+import OnBoardingScreenTemplate from './OnBoardingScreenTemplate';
+
+const CarouselOnBoardingIntroduction = ({ determineIndexWithScrollPosition = () => {} }) => (
     <View style={styles.carouselHeight}>
         <ScrollView
             horizontal
-            pagingEnabled 
+            pagingEnabled
             onScroll={determineIndexWithScrollPosition}
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.flexGrow1}>
                 <OnBoardingScreenTemplate
                     Icon={Assets.svg.HomeIcon}
-                    title='Busca'
-                    description='Publica a tu mascota para que otras personas te ayuden a buscarla.' />
+                    title={translate('CarouselOnBoardingIntroduction.search.title')}
+                    description={translate('CarouselOnBoardingIntroduction.search.description')} />
                 <OnBoardingScreenTemplate
                     Icon={Assets.svg.FootPrintIcon}
-                    title='Encuentra'
-                    description='Ayuda a buscar mascotas perdidas en tu colonia o ciudad.' />
+                    title={translate('CarouselOnBoardingIntroduction.find.title')}
+                    description={translate('CarouselOnBoardingIntroduction.find.description')} />
                 <OnBoardingScreenTemplate
                     Icon={Assets.svg.DonateIcon}
-                    title='Dona'
-                    description='Las donaciones nos ayudan a seguir operando, ademas se usan para apoyar a las mascotas adoptadas a traves de la app.' />
+                    title={translate('CarouselOnBoardingIntroduction.donate.title')}
+                    description={translate('CarouselOnBoardingIntroduction..donate.description')} />
         </ScrollView>
     </View>
 )

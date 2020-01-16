@@ -8,6 +8,7 @@ import { PRIMARY_COLOR, CREATE_ACCOUNT_EMAIL_SCREEN, LOGIN_SCREEN } from '../../
 import Assets from '../../../assets/Assets';
 
 import { loginWithFacebook, setupGoogleSignin, loginWithGoogle } from '../../services/auth';
+import { translate } from '../../services/i18n';
 
 import SocialMediaButton from '../../components/simple/SocialMediaButton/SocialMediaButton';
 import ScreenTitle from '../../components/simple/ScreenTitle/ScreenTitle';
@@ -17,12 +18,12 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
         setupGoogleSignin();
     }, []);
 
-    signInWithGoogle = async () => {
+    const signInWithGoogle = async () => {
         await loginWithGoogle();
         navigation.dismiss();
     }
 
-    signInWithFacebook = async () => {
+    const signInWithFacebook = async () => {
         await loginWithFacebook();
         navigation.dismiss();
     }
@@ -30,7 +31,7 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
             <ScreenTitle>
-                Registrate o inicia sesión para continuar
+                {translate('CreateAccountSocialMediaScreen.title')}
             </ScreenTitle>
             <View style={styles.contentContainer}>
                 <View style={styles.signInButtonContainer}>
@@ -39,7 +40,7 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
                         color='rgba(0, 0, 0, .54)'
                         onPress={signInWithGoogle}
                         Icon={Assets.svg.GoogleIcon}>
-                        Continuar con google
+                        {translate('CreateAccountSocialMediaScreen.continueWithGoogleButton')}
                     </SocialMediaButton>
                 </View>
                 <View style={styles.signInButtonContainer}>
@@ -48,7 +49,7 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
                         color='#FFF'
                         onPress={signInWithFacebook}
                         Icon={Assets.svg.FIconFacebookIcon}>
-                        Continuar con facebook
+                        {translate('CreateAccountSocialMediaScreen.continueWithFacebookButton')}
                     </SocialMediaButton>
                 </View>
                 <View style={styles.signInButtonContainer}>
@@ -56,30 +57,30 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
                         backgroundColor={PRIMARY_COLOR}
                         color='#FFF'
                         onPress={() => navigation.navigate(CREATE_ACCOUNT_EMAIL_SCREEN)}>
-                        Registrarte con tu correo
+                        {translate('CreateAccountSocialMediaScreen.continueWithEmailButton')}
                     </SocialMediaButton>
                 </View>
 
                 <View style={styles.advertismentContainer}>
                     <Text style={styles.advertismentText}>
-                        Al continuar aceptas las
+                        {translate('CreateAccountSocialMediaScreen.advertisment.firstPart')}
                         <Text style={styles.link}>
-                            {' '}Condiciones del servicio
+                            {` ${translate('CreateAccountSocialMediaScreen.advertisment.firstLink')}`}
                         </Text>
-                        {' '}y la
+                        {` ${translate('CreateAccountSocialMediaScreen.advertisment.secondPart')}`}
                         <Text style={styles.link}>
-                            {' '}Politica de privacidad
+                            {` ${translate('CreateAccountSocialMediaScreen.advertisment.secondLink')}`}
                         </Text>
-                        {' '}de Busco a mi mascota
+                        {` ${translate('CreateAccountSocialMediaScreen.advertisment.thirdPart')}`}
                     </Text>
                 </View>
 
                 <View style={styles.dividier} />
 
                 <Text style={styles.haveAccount}>
-                    ¿Ya tienes una cuenta?
+                    {translate('CreateAccountSocialMediaScreen.alreadyHaveAccount.text')}
                     <Text style={styles.link} onPress={() => navigation.navigate(LOGIN_SCREEN)}>
-                        {' '}Inicia sesión
+                        {` ${translate('CreateAccountSocialMediaScreen.alreadyHaveAccount.link')}`}
                     </Text>
                 </Text>
 

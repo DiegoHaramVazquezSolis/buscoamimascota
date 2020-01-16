@@ -1,9 +1,12 @@
 import React from 'react';
 import { View, Linking, Alert } from 'react-native';
 
+import Assets from '../../../../assets/Assets';
+
+import { translate } from '../../../services/i18n';
+
 import Dialog from '../../simple/Dialog/Dialog';
 import ListItem from '../../simple/ListItem/ListItem';
-import Assets from '../../../../assets/Assets';
 
 const PublicationContactDialog = ({ visible = false, onClose = () => {}, contactInfo = {} }) => {
 
@@ -12,10 +15,10 @@ const PublicationContactDialog = ({ visible = false, onClose = () => {}, contact
      */
     notifyInformationError = () => {
         Alert.alert(
-            'Ocurrio un problema',
-            'No se encontro la información necesaria, prueba con otra opción',
+            translate('PublicationContactDialog.errorMessage.title'),
+            translate('PublicationContactDialog.errorMessage.description'),
             [
-                { text: 'Entendido' },
+                { text: translate('PublicationContactDialog.errorMessage.acceptButton') },
             ]
         );
     }
@@ -57,12 +60,18 @@ const PublicationContactDialog = ({ visible = false, onClose = () => {}, contact
         <Dialog
             visible={visible}
             onClose={onClose}
-            title='Contactar'
-            description='Selecciona el medio de contacto'>
+            title={translate('PublicationContactDialog.title')}
+            description={translate('PublicationContactDialog.description')}>
             <View>
-                <ListItem onPress={onWhatsappPress} Icon={Assets.svg.WhatsappIcon}>Whatsapp</ListItem>
-                <ListItem onPress={onCellPhonePress} Icon={Assets.svg.MobileIcon}>Telefono celular</ListItem>
-                <ListItem onPress={onHomePhonePress} Icon={Assets.svg.PhoneIcon}>Telefono fijo</ListItem>
+                <ListItem onPress={onWhatsappPress} Icon={Assets.svg.WhatsappIcon}>
+                    {translate('PublicationContactDialog.whatsapp')}
+                </ListItem>
+                <ListItem onPress={onCellPhonePress} Icon={Assets.svg.MobileIcon}>
+                    {translate('PublicationContactDialog.cellphone')}
+                </ListItem>
+                <ListItem onPress={onHomePhonePress} Icon={Assets.svg.PhoneIcon}>
+                    {translate('PublicationContactDialog.phone')}
+                </ListItem>
             </View>
         </Dialog>
     );

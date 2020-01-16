@@ -10,6 +10,7 @@ import { PRIMARY_COLOR, AUTHENTICATION_STACK_NAVIGATOR } from '../../../utils/Co
 import Assets from '../../../../assets/Assets';
 
 import { returnTextBasedOnMaxLengthWithLimit } from '../../../utils/Utils';
+import { translate } from '../../../services/i18n';
 
 import TextButton from '../../simple/TextButton/TextButton';
 import Menu from '../../simple/Menu/Menu';
@@ -55,7 +56,7 @@ const PublicationCard = ({ navigation, onPublicationPress = () => {}, id = '', i
                         </Text>
                     </View>
                     <View style={styles.actionsContainer}>
-                        <TextButton onPress={() => onContactPress(id)}>Contactar</TextButton>
+                        <TextButton onPress={() => onContactPress(id)}>{translate('PublicationCard.contact')}</TextButton>
                         <View style={styles.iconsContainer}>
                             <TouchableWithoutFeedback onPress={() => onSharePress(id)}>
                                 <Assets.svg.ShareIcon
@@ -71,12 +72,12 @@ const PublicationCard = ({ navigation, onPublicationPress = () => {}, id = '', i
                                 <ListItem
                                     onPress={subscribeToPublication}
                                     textStyle={styles.menuOptionsStyle}>
-                                    Recibir notificaciones
+                                    {translate('PublicationCard.subscribe')}
                                 </ListItem>
                                 <ListItem
                                     onPress={reportPublication}
                                     textStyle={[styles.reportStyle, styles.menuOptionsStyle]}>
-                                    Reportar
+                                    {translate('PublicationCard.report')}
                                 </ListItem>
                             </Menu>
                         </View>

@@ -2,6 +2,8 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
 import { SECONDARY_COLOR, DISABLED_COLOR, PRIMARY_COLOR, LOSTED_PUBLICATIONS_LIST_SCREEN, ADOPTION_PUBLICATIONS_LIST_SCREEN } from '../../../utils/Constants';
 
+import { translate } from '../../../services/i18n';
+
 // Screens
 import LostedPublicationListScreen from '../../../screens/LostedPublicationListScreen/LostedPublicationListScreen';
 import AdoptionPublicationListScreen from '../../../screens/AdoptionPublicationListScreen/AdoptionPublicationListScreen';
@@ -10,13 +12,13 @@ const routesConfig = {
     [LOSTED_PUBLICATIONS_LIST_SCREEN]: {
         screen: LostedPublicationListScreen,
         navigationOptions: {
-            tabBarLabel:'Perdidas',
+            tabBarLabel: translate('Navigators.PetsTopTabNavigator.LostedPublicationsListScreen'),
         }
     },
     [ADOPTION_PUBLICATIONS_LIST_SCREEN]: {
         screen: AdoptionPublicationListScreen,
         navigationOptions:{
-            tabBarLabel:'En Adopción',
+            tabBarLabel: translate('Navigators.PetsTopTabNavigator.AdoptionPublicationsListScreen'),
         }
     }
 };

@@ -6,6 +6,7 @@ import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
 
 import { signInWithEmail } from '../../services/auth';
+import { translate } from './../../services/i18n';
 
 import CustomTextInput from '../../components/simple/CustomTextInput/CustomTextInput';
 import ContainedButton from '../../components/simple/ContainedButton/ContainedButton';
@@ -21,13 +22,13 @@ const CreateAccountEmailScreen = ({ navigation }) => {
         confirmPassword: ''
     };
 
-    reducer = (prevState, nextState) => {
+    const reducer = (prevState, nextState) => {
         return { ...prevState, ...nextState };
     }
 
     const [ state, setState ] = useReducer(reducer, initialState);
 
-    createAccountWithEmail = async () => {
+    const createAccountWithEmail = async () => {
         const { email, password, confirmPassword } = state;
         if (email !== '' && password !== '' && confirmPassword !== '') {
             if (password === confirmPassword) {
@@ -39,19 +40,19 @@ const CreateAccountEmailScreen = ({ navigation }) => {
                 }
             } else {
                 Alert.alert(
-                    'Error',
-                    'Las contraseñas no coinciden',
+                    translate('CreateAccountEmailScreen.errorMessage.passwordError.title'),
+                    translate('CreateAccountEmailScreen.errorMessage.passwordError.description'),
                     [
-                        { text: 'Entendido' }
+                        { text: translate('CreateAccountEmailScreen.errorMessage.passwordError.acceptButton') }
                     ]
                 );
             }
         } else {
             Alert.alert(
-                'Error',
-                'Antes de continuar llena todos los campos',
+                translate('CreateAccountEmailScreen.errorMessage.emptyFieldsError.title'),
+                translate('CreateAccountEmailScreen.errorMessage.emptyFieldsError.description'),
                 [
-                    { text: 'Entendido' }
+                    { text: translate('CreateAccountEmailScreen.errorMessage.emptyFieldsError.acceptButton') }
                 ]
             );
         }
@@ -60,7 +61,7 @@ const CreateAccountEmailScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
             <ScreenTitle>
-                Registrate para continuar
+                {translate('CreateAccountEmailScreen.title')}
             </ScreenTitle>
             <KeyboardAwareScrollView>
                 <View style={styles.contentContainer}>
@@ -68,42 +69,45 @@ const CreateAccountEmailScreen = ({ navigation }) => {
                         <CustomTextInput
                             keyboardType='email-address'
                             onSubmitEditing={() => passwordRef.current.focus()}
-                            placeholder='Email'
-                            onChangeText={(email) => setState({ email })} />
+                            placeholder={translate('CreateAccountEmailScreen.emailPlaceholder')}
+                            onChangeText={(email) => setState({ email })}
+                            returnKeyType='next' />
                     </View>
                     <View style={styles.fieldContainer}>
                         <CustomTextInput
                             reference={passwordRef}
                             onSubmitEditing={() => confirmPasswordRef.current.focus()}
                             secureTextEntry
-                            placeholder='Contraseña'
-                            onChangeText={(password) => setState({ password })} />
+                            placeholder={translate('CreateAccountEmailScreen.passwordPlaceholder')}
+                            onChangeText={(password) => setState({ password })}
+                            returnKeyType='next' />
                     </View>
                     <View style={styles.fieldContainer}>
                         <CustomTextInput
                             reference={confirmPasswordRef}
                             secureTextEntry
-                            placeholder='Repetir contraseña'
-                            onChangeText={(confirmPassword) => setState({ confirmPassword })} />
+                            placeholder={translate('CreateAccountEmailScreen.confirmPasswordPlaceholder')}
+                            onChangeText={(confirmPassword) => setState({ confirmPassword })}
+                            onSubmitEditing={createAccountWithEmail} />
                     </View>
 
                     <View style={styles.advertismentContainer}>
                         <Text style={styles.advertismentText}>
-                            Al continuar aceptas las
+                            {translate('CreateAccountEmailScreen.advertisment.firstPart')}
                             <Text style={styles.link}>
-                                {' '}Condiciones del servicio
+                                {` ${translate('CreateAccountEmailScreen.advertisment.firstLink')}`}
                             </Text>
-                            {' '}y la
+                            {` ${translate('CreateAccountEmailScreen.advertisment.secondPart')}`}
                             <Text style={styles.link}>
-                                {' '}Politica de privacidad
+                                {` ${translate('CreateAccountEmailScreen.advertisment.secondLink')}`}
                             </Text>
-                            {' '}de Busco a mi mascota
+                            {` ${translate('CreateAccountEmailScreen.advertisment.thirdPart')}`}
                         </Text>
                     </View>
 
                     <View style={styles.buttonContainer}>
                         <ContainedButton onPress={createAccountWithEmail}>
-                            Crear cuenta
+                            {translate('CreateAccountEmailScreen.continueButton')}
                         </ContainedButton>
                     </View>
                 </View>
