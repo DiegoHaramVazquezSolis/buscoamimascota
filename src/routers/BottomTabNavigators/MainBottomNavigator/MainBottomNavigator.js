@@ -37,7 +37,8 @@ const navigatorConfig = {
         keyboardHidesTabBar: false,
         style: {
             backgroundColor: DARK_COLOR,
-            height: 56
+            height: 56,
+            borderTopColor: DARK_COLOR
         },
         labelStyle: {
             fontSize: 14,
