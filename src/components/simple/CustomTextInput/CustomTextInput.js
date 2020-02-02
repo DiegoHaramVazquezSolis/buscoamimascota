@@ -5,7 +5,7 @@ import { SECONDARY_TEXT_COLOR, PRIMARY_COLOR, DISABLED_COLOR } from '../../../ut
 import styles from './styles';
 import GlobalStyles from '../../../utils/GlobalStyles';
 
-const CustomTextInput = ({ onChangeText = (text) => {}, onSubmitEditing = () => {}, placeholder = '', editable = true, secureTextEntry = false, reference = null, keyboardType = 'default', style = {}, multiline = false, numberOfLines = 1, Icon = null, returnKeyType = 'done' }) => {
+const CustomTextInput = ({ onChangeText = (text) => {}, onSubmitEditing = () => {}, placeholder = '', editable = true, secureTextEntry = false, reference = null, keyboardType = 'default', style = {}, multiline = false, numberOfLines = 1, Icon = null, returnKeyType = 'done', autoCapitalize='sentences' }) => {
     const [Focus, setFocus] = useState(false);
 
     if (!Icon) {
@@ -24,7 +24,8 @@ const CustomTextInput = ({ onChangeText = (text) => {}, onSubmitEditing = () => 
                 placeholderTextColor={SECONDARY_TEXT_COLOR}
                 multiline={multiline}
                 numberOfLines={numberOfLines}
-                returnKeyType={returnKeyType} />
+                returnKeyType={returnKeyType}
+                autoCapitalize={autoCapitalize} />
         );
     } else {
         return (
