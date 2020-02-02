@@ -4,7 +4,7 @@ import { withNavigation } from 'react-navigation';
 
 import styles from './styles';
 import { createDynamicLink } from '../../../services/dynamicLinks';
-import { PUBLICATION_DETAILS_SCREEN } from '../../../utils/Constants';
+import { PUBLICATION_DETAILS_STACK_NAVIGATOR } from '../../../utils/Constants';
 
 import { translate } from '../../../services/i18n';
 
@@ -31,7 +31,7 @@ const PublicationList = ({ navigation = {}, publications = {}, losted = true }) 
       @param {string} id Identifier of the publication on the database
      */
     onPublicationPress = (id) => {
-        navigation.navigate(PUBLICATION_DETAILS_SCREEN, { ...publications[id], losted });
+        navigation.navigate(PUBLICATION_DETAILS_STACK_NAVIGATOR, { ...publications[id], losted });
     }
 
     /**

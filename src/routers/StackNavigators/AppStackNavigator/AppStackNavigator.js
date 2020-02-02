@@ -1,11 +1,12 @@
 import { createStackNavigator } from 'react-navigation-stack';
 
-import { MAIN_BOTTOM_NAVIGATOR, AUTHENTICATION_STACK_NAVIGATOR, CREATE_PUBLICATION_STACK_NAVIGATOR } from '../../../utils/Constants';
+import { MAIN_BOTTOM_NAVIGATOR, AUTHENTICATION_STACK_NAVIGATOR, CREATE_PUBLICATION_STACK_NAVIGATOR, PUBLICATION_DETAILS_STACK_NAVIGATOR } from '../../../utils/Constants';
 
 import MainBottomNavigator from '../../BottomTabNavigators/MainBottomNavigator/MainBottomNavigator';
 
 import AuthenticationStackNavigator from '../AuthenticationStackNavigator/AuthenticationStackNavigator';
 import CreatePublicationStackNavigator from '../CreatePublicationStackNavigator/CreatePublicationStackNavigator';
+import PublicationDetailsStackNavigator from '../PublicationDetailsStackNavigator/PublicationDetailsStackNavigator';
 
 const routesConfig = {
     [MAIN_BOTTOM_NAVIGATOR]: {
@@ -22,6 +23,12 @@ const routesConfig = {
     },
     [CREATE_PUBLICATION_STACK_NAVIGATOR]: {
         screen: CreatePublicationStackNavigator,
+        navigationOptions: {
+            header: null
+        }
+    },
+    [PUBLICATION_DETAILS_STACK_NAVIGATOR]: {
+        screen: PublicationDetailsStackNavigator,
         navigationOptions: {
             header: null
         }

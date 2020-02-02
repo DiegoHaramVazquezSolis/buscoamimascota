@@ -5,7 +5,7 @@ import { heightPercentageToDP } from 'react-native-responsive-screen';
 import styles from './styles';
 import GlobalStyles from '../../utils/GlobalStyles';
 
-import { PRIMARY_COLOR } from '../../utils/Constants';
+import { PRIMARY_COLOR, PUBLICATION_DETAILS_LOCATION_SCREEN } from '../../utils/Constants';
 
 import { translate } from '../../services/i18n';
 
@@ -19,7 +19,7 @@ import PublicationContactDialog from '../../components/complex/PublicationContac
 const PublicationDetailsScreen = ({ navigation }) => {
     const [openContactDialog, setOpenContactDialog] = useState(false);
 
-    const { image, contact, specie, sex, description, haveId, losted } = navigation.state.params;
+    const { image, location, name, specie, sex, description, losted, haveId, contact } = navigation.state.params;
 
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
@@ -27,8 +27,14 @@ const PublicationDetailsScreen = ({ navigation }) => {
                 style={styles.imageStyle}
                 source={{ uri: image }} />
             <View style={styles.buttoToolbar}>
-                <OutlinedButton size='sm'>
-                    {translate('PublicationDetailsScreen.locationButton')}
+                <OutlinedButton
+                    size='sm'
+                    onPress={() => navigation.navigate(PUBLICATION_DETAILS_LOCATION_SCREEN, { location, name, losted })}>
+                    {losted ?
+                        translate('PublicationDetailsScreen.lostedLocationButton')
+                        :
+                        translate('PublicationDetailsScreen.adoptionLocationButton')
+                    }
                 </OutlinedButton>
                 <View style={styles.buttonSeparator} />
                 <ContainedButton

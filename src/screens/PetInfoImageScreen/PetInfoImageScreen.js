@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
 import Assets from '../../../assets/Assets';
-import { PUBLICATION_DETAILS_SCREEN } from '../../utils/Constants';
+import { PUBLICATION_DETAILS_STACK_NAVIGATOR } from '../../utils/Constants';
 
 import { createPetPublication } from '../../services/database';
 import { createFirestoreGeoPoint, encodeLocation } from '../../utils/Utils';
@@ -68,7 +68,7 @@ const PetInfoImageScreen = ({ navigation, uid = '' }) => {
 
             const publicationData = await createPetPublication(losted, uid, petData, image.data);
 
-            navigation.navigate(PUBLICATION_DETAILS_SCREEN, { ...publicationData });
+            navigation.navigate(PUBLICATION_DETAILS_STACK_NAVIGATOR, { ...publicationData });
         } else {
             Alert.alert(
                 translate('PetInfoImageScreen.errorMessage.title'),

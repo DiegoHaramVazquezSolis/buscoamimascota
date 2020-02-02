@@ -73,7 +73,7 @@ const PetInfoLocationScreen = ({ navigation }) => {
                     {state.location.hasOwnProperty('latitude') && state.location.hasOwnProperty('longitude') &&
                         <Marker
                             coordinate={state.location}
-                            title='Ultima ubicación conocida' />
+                            title={translate('PetInfoLocationScreen.lastKnownLocation')} />
                     }
                 </MapView>
             </View>

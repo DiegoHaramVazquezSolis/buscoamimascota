@@ -42,6 +42,7 @@ export const LOADING_DATA_SCREEN = 'LoadingDataScreen';
 export const LOSTED_PUBLICATIONS_LIST_SCREEN = 'LostedPublicationsListScreen';
 export const ADOPTION_PUBLICATIONS_LIST_SCREEN = 'AdoptionPublicationListScreen';
 export const PUBLICATION_DETAILS_SCREEN = 'PublicationDetailsScreen';
+export const PUBLICATION_DETAILS_LOCATION_SCREEN = 'PublicationDetailsLocationScreen';
 export const CREATE_ACCOUNT_SOCIAL_MEDIA_SCREEN = 'CreateAccountSocialMediaScreen';
 export const CREATE_ACCOUNT_EMAIL_SCREEN = 'CreateAccountEmailScreen';
 export const LOGIN_SCREEN = 'LoginScreen';
