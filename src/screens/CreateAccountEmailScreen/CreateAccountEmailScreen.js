@@ -71,7 +71,8 @@ const CreateAccountEmailScreen = ({ navigation }) => {
                             onSubmitEditing={() => passwordRef.current.focus()}
                             placeholder={translate('CreateAccountEmailScreen.emailPlaceholder')}
                             onChangeText={(email) => setState({ email })}
-                            returnKeyType='next' />
+                            returnKeyType='next'
+                            autoCapitalize='none' />
                     </View>
                     <View style={styles.fieldContainer}>
                         <CustomTextInput

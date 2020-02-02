@@ -58,14 +58,16 @@ const LoginScreen = ({ navigation }) => {
                             keyboardType='email-address'
                             onSubmitEditing={() => passwordRef.current.focus()}
                             placeholder={translate('LoginScreen.emailPlaceholder')}
-                            onChangeText={(email) => setState({ email })} />
+                            onChangeText={(email) => setState({ email })}
+                            autoCapitalize='none' />
                     </View>
                     <View style={styles.fieldContainer}>
                         <CustomTextInput
                             reference={passwordRef}
                             secureTextEntry
                             placeholder={translate('LoginScreen.passwordPlaceholder')}
-                            onChangeText={(password) => setState({ password })} />
+                            onChangeText={(password) => setState({ password })}
+                            onSubmitEditing={LogInWithEmail} />
                     </View>
                     <View style={styles.buttonContainer}>
                         <ContainedButton onPress={LogInWithEmail}>
