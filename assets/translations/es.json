@@ -1,4 +1,23 @@
 {
+    "auth": {
+        "signInWithEmail": {
+            "defaultErrorMessage": "Hubo un error, revisa los campos o intentalo mas tarde",
+            "invalidEmail": "La direccion de correo electronico no es valida",
+            "emailUsed": "Ya existe una cuenta con este correo",
+            "weakPassword": "La contraseña debe tener al menos 6 caracteres",
+            "errorMessage": {
+                "title": "Error",
+                "acceptButton": "Entendido"
+            }
+        },
+        "logInWithEmail": {
+            "errorMessage": {
+                "title": "Error",
+                "description": "Correo o contraseña incorrectos",
+                "acceptButton": "Entendido"
+            }
+        }
+    },
     "Navigators": {
         "MainBottomNavigator": {
             "PublicationsStackNavigator": "Mascotas"
@@ -50,15 +69,15 @@
             "title": "Compartir publicación"
         }
     },
-    "OnBoardingIntroductionScreen": {
-        "continueButton": "Comenzar ahora"
-    },
     "PublicationDetailsRightButtons": {
         "subscribe":"Recibir notificaciones",
         "report": "Reportar",
         "share": {
             "title": "Compartir publicación"
         }
+    },
+    "OnBoardingIntroductionScreen": {
+        "continueButton": "Comenzar ahora"
     },
     "ChoosePublicationTypeScreen": {
         "title": "Publicar",
@@ -87,6 +106,7 @@
     },
     "PetInfoLocationScreen": {
         "subtitle": "Selecciona el lugar aproximado en donde viste a tu mascota por ultima vez",
+        "lastKnownLocation": "Ultima ubicación conocida",
         "continueButton": "Continuar"
     },
     "PetInfoContactScreen": {
@@ -173,12 +193,18 @@
         "continueWithFacebookButton": "Continuar con facebook"
     },
     "PublicationDetailsScreen": {
-        "locationButton": "Ultima Ubicación",
+        "lostedLocationButton": "Ultima Ubicación",
+        "adoptionLocationButton": "Ubicación",
         "contactButton": "Contactar",
         "dog": "Perro",
         "cat": "Gato",
         "losted": "Perdido",
         "adoption": "En adopción",
         "haveIdLabel": "Tiene placa de identificación"
+    },
+    "PublicationDetailsLocationScreen": {
+        "subtitleLosted": "Ultima ubicación conocida de %{name}",
+        "subtitleAdoption": "Ubicación de %{name}",
+        "lastKnownLocation": "Ultima ubicación conocida de %{name}"
     }
 }

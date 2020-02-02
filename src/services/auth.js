@@ -4,6 +4,7 @@ import { Alert } from 'react-native';
 
 import { auth, FacebookAuthProvider, GoogleAuthProvider } from './firebase';
 import { WEB_CLIENT_GOOGLE_AUTH } from '../utils/Constants';
+import { translate } from './i18n';
 
 /**
  * Create an account or log a user if already have account with facebook
@@ -30,7 +31,7 @@ export const loginWithFacebook = async () => {
 
 /**
  * Create an account or log a user if already have account with google
- * (always use afther of setupGoogleSignin())
+ * (always use after of setupGoogleSignin())
  */
 export const loginWithGoogle = async () => {
     try {
@@ -71,25 +72,25 @@ export const signInWithEmail = async (email, password) => {
     try {
         return await auth.createUserWithEmailAndPassword(email, password);
     } catch (error) {
-        let message = 'Hubo un error, revisa los campos o intentalo mas tarde';
+        let message = translate('auth.signInWithEmail.defaultErrorMessage');;
         switch (error.code) {
             case 'auth/invalid-email':
-                message = 'La direccion de correo electronico no es valida';
+                message = translate('auth.signInWithEmail.invalidEmail');
                 break;
             case 'auth/email-already-in-use':
-                message = 'Ya existe una cuenta con este correo';
+                message = translate('auth.signInWithEmail.emailUsed');
                 break;
             case 'auth/weak-password':
-                    message = 'La contraseña debe tener al menos 6 caracteres';
+                message = translate('auth.signInWithEmail.weakPassword');
                 break;
             default:
                 break;
         }
         Alert.alert(
-            'Error',
+            translate('auth.signInWithEmail.errorMessage.title'),
             message,
             [
-                { text: 'Entendido' }
+                { text: translate('auth.signInWithEmail.errorMessage.acceptButton') }
             ]
         );
         return Promise.reject(error);
@@ -106,10 +107,10 @@ export const logInWithEmail = async (email, password) => {
         return await auth.signInWithEmailAndPassword(email, password);
     } catch (error) {
         Alert.alert(
-            'Error',
-            'Correo o contraseña incorrectos',
+            translate('auth.logInWithEmail.errorMessage.title'),
+            translate('auth.logInWithEmail.errorMessage.description'),
             [
-                { text: 'Entendido' }
+                { text: translate('auth.logInWithEmail.errorMessage.acceptButton') }
             ]
         );
         return Promise.reject(error);
