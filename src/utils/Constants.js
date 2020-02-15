@@ -21,11 +21,16 @@ export const REMOVE_ALL_LOSTED_PUBLICATIONS = 'REMOVE_ALL_LOSTED_PUBLICATIONS';
 /* UserReducer */
 export const USER_LOGGED = 'USER_LOGGED';
 export const USER_NOT_LOGGED = 'USER_NOT_LOGGED';
+export const USER_SIGN_OUT = 'USER_SIGN_OUT';
 
 /* AdoptionPublicationsReducer */
 export const GET_ADOPTION_PUBLICATION = 'GET_ADOPTION_PUBLICATION';
 export const REMOVE_ADOPTION_PUBLICATION = 'REMOVE_ADOPTION_PUBLICATION';
 export const REMOVE_ALL_ADOPTION_PUBLICATIONS = 'REMOVE_ALL_ADOPTION_PUBLICATIONS';
+
+/* ScreensReducer */
+export const SET_CURRENT_SCREEN = 'SET_CURRENT_SCREEN';
+export const SET_PREVIOUS_SCREEN = 'SET_PREVIOUS_SCREEN';
 
 // Navigator constants
 export const APP_STACK_NAVIGATOR = 'AppStackNavigator';
@@ -37,20 +42,31 @@ export const AUTHENTICATION_STACK_NAVIGATOR = 'AuthenticationStackNavigator';
 export const CREATE_PUBLICATION_STACK_NAVIGATOR = 'CreatePublicationStackNavigator';
 
 // Screen constants
-export const ON_BOARDING_SCREEN = 'OnBoardingIntroductionScreen';
-export const LOADING_DATA_SCREEN = 'LoadingDataScreen';
+
+/* Publications screens constants */
 export const LOSTED_PUBLICATIONS_LIST_SCREEN = 'LostedPublicationsListScreen';
 export const ADOPTION_PUBLICATIONS_LIST_SCREEN = 'AdoptionPublicationListScreen';
 export const PUBLICATION_DETAILS_SCREEN = 'PublicationDetailsScreen';
 export const PUBLICATION_DETAILS_LOCATION_SCREEN = 'PublicationDetailsLocationScreen';
-export const CREATE_ACCOUNT_SOCIAL_MEDIA_SCREEN = 'CreateAccountSocialMediaScreen';
-export const CREATE_ACCOUNT_EMAIL_SCREEN = 'CreateAccountEmailScreen';
-export const LOGIN_SCREEN = 'LoginScreen';
 export const CHOOSE_PUBLICATION_TYPE_SCREEN = 'ChoosePublicationTypeScreen';
+
+/* Pet info screens constants */
 export const PET_INFO_FORM_SCREEN = 'PetInfoFormScreen';
 export const PET_INFO_LOCATION_SCREEN = 'PetInfoLocationScreen';
 export const PET_INFO_CONTACT_SCREEN = 'PetInfoContactScreen';
 export const PET_INFO_IMAGE_SCREEN = 'PetInfoImageScreen';
+
+/* Auth screens constants */
+export const CREATE_ACCOUNT_SOCIAL_MEDIA_SCREEN = 'CreateAccountSocialMediaScreen';
+export const CREATE_ACCOUNT_EMAIL_SCREEN = 'CreateAccountEmailScreen';
+export const LOGIN_SCREEN = 'LoginScreen';
+
+/* User screens constants */
+export const USER_SETTINGS_SCREEN = 'UserSettingsScreen';
+
+/* Other screens constants */
+export const ON_BOARDING_SCREEN = 'OnBoardingIntroductionScreen';
+export const LOADING_DATA_SCREEN = 'LoadingDataScreen';
 
 // Async storage constants
 export const ON_BOARDING_VIEWED_AS = 'on_boarding_viewed';
@@ -62,3 +78,8 @@ export const WEB_CLIENT_GOOGLE_AUTH = '1021296714116-l90pno6dch9snp6d1tlnlrmg4h7
 // Location constants
 export const DEGREES_LATITUDE_PER_MILE = 0.0144927536231884;
 export const DEGREES_LONGITUDE_PER_MILE = 0.0181818181818182;
+
+// Firebase auth error codes
+export const WRONG_PASSWORD = 'auth/wrong-password';
+export const WEAK_PASSWORD = 'auth/weak-password';
+export const REQUIRES_RECENT_LOGIN = 'auth/requires-recent-login';
