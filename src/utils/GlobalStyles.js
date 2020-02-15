@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 import { DARK_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, PRIMARY_TEXT_COLOR, SECONDARY_TEXT_COLOR, ERROR_COLOR, DISABLED_COLOR } from './Constants';
 
@@ -24,6 +24,9 @@ export default GlobalStyles = StyleSheet.create({
     },
     justifyContentSpaceAround: {
         justifyContent: 'space-around'
+    },
+    justifyContentSpaceBetween: {
+        justifyContent: 'space-between'
     },
     alignItemsCenter: {
         alignItems: 'center'
@@ -68,22 +71,50 @@ export default GlobalStyles = StyleSheet.create({
         color: SECONDARY_TEXT_COLOR,
         // Check visibility, may can change to 14
         fontSize: 16,
-        fontWeight: '500'
+        fontWeight: '700'
     },
-    mt12: {
-        marginTop: heightPercentageToDP(1.65)
-    },
-    mt24: {
-        marginTop: heightPercentageToDP(3.3)
+    mt8: {
+        marginTop: 8
     },
     mr8: {
-        marginRight: widthPercentageToDP(1.09)
+        marginRight: 8
+    },
+    ml8: {
+        marginLeft: 8
+    },
+    mt12: {
+        marginTop: 12
+    },
+    mr12: {
+        marginRight: 12
+    },
+    ml12: {
+        marginLeft: 12
+    },
+    mt16: {
+        marginTop: 16
     },
     mr16: {
-        marginRight: widthPercentageToDP(3.89)
+        marginRight: 16
+    },
+    ml16: {
+        marginLeft: 16
+    },
+    mt24: {
+        marginTop: 24
+    },
+    mr24: {
+        marginRight: 24
+    },
+    ml24: {
+        marginLeft: 24
     },
     customStackNavigatorHeaderStyle: {
         backgroundColor: PRIMARY_COLOR,
         height: heightPercentageToDP(10)
+    },
+    link: {
+        color: PRIMARY_COLOR,
+        fontWeight: '700'
     }
 });
