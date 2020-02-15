@@ -1,4 +1,4 @@
-import { USER_LOGGED, USER_NOT_LOGGED } from '../../utils/Constants';
+import { USER_LOGGED, USER_NOT_LOGGED, USER_SIGN_OUT } from '../../utils/Constants';
 
 const initialState = {
     isLogged: null,
@@ -12,6 +12,8 @@ function User(state = initialState, action) {
             return { ...state, ...action.payload, isLogged: true };
         case USER_NOT_LOGGED:
             return { ...state, isLogged: false };
+        case USER_SIGN_OUT:
+            return initialState;
         default:
             return state;
     }

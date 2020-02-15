@@ -1,9 +1,9 @@
 import OneSignal from 'react-native-onesignal';
 
-import { USER_LOGGED, USER_NOT_LOGGED } from '../../utils/Constants';
+import { USER_LOGGED, USER_NOT_LOGGED, USER_SIGN_OUT } from '../../utils/Constants';
 
 import { auth } from '../../services/firebase';
-import { updateUserInfo } from '../../services/database';
+import { updateUserInfo, userRef } from '../../services/database';
 
 /**
  * Action to call when the user is logged on the app
@@ -16,18 +16,37 @@ const userIsLogged = (payload) => ({ type: USER_LOGGED, payload });
 const userIsNotLogged = () => ({ type: USER_NOT_LOGGED });
 
 /**
+ * Action to call when the user sign out of the app
+ */
+const userSignOut = () => ({ type: USER_SIGN_OUT });
+
+/**
  * Check and put a listener to listen the changes in the authentication
  * status of the user
  */
 export const checkIfUserIsLogged = () => (dispatch) => {
     auth.onAuthStateChanged((user) => {
         if (user) {
-            OneSignal.addEventListener('ids', (device) => {
-                updateUserInfo(user.uid, { notificationId: device.userId });
+
+            /**
+             * Inmediatly notify that the user is logged and send the data that we have
+             */
+            dispatch(userIsLogged({ uid: user.uid, email: user.email, authProvider: user.providerData[0].providerId }));
+
+            /**
+             * Get the user profile and add that info the the local data
+             */
+            return userRef.child(user.uid).on('value', (userData) => {
+                dispatch(userIsLogged({
+                        ...userData.val()
+                    }));
             });
-            
-            return dispatch(userIsLogged({ uid: user.uid, email: user.email }));
         }
+
         return dispatch(userIsNotLogged());
     });
+}
+
+export const signOut = () => (dispatch) => {
+    dispatch(userSignOut());
 }
