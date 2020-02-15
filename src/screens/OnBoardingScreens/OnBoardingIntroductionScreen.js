@@ -35,7 +35,6 @@ const OnBoardingIntroductionScreen = ({ navigation = {} }) => {
         navigation.navigate(MAIN_BOTTOM_NAVIGATOR);
     }
 
-
     return (
         <SafeAreaView style={[ GlobalStyles.flex1, GlobalStyles.alignItemsCenter ]}>
             <CarouselOnBoardingIntroduction determineIndexWithScrollPosition={determineIndexWithScrollPosition} />

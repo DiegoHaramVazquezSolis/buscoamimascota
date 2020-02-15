@@ -27,7 +27,7 @@ const CarouselOnBoardingIntroduction = ({ determineIndexWithScrollPosition = () 
                 <OnBoardingScreenTemplate
                     Icon={Assets.svg.DonateIcon}
                     title={translate('CarouselOnBoardingIntroduction.donate.title')}
-                    description={translate('CarouselOnBoardingIntroduction..donate.description')} />
+                    description={translate('CarouselOnBoardingIntroduction.donate.description')} />
         </ScrollView>
     </View>
 )
