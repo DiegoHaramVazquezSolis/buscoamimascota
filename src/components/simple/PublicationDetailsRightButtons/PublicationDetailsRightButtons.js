@@ -20,13 +20,13 @@ const PublicationDetailsRightButtons = ({ navigation, id = '', uid = '', isLogge
         openReportDialog: false
     };
 
-    reducer = (prevState, state) => {
+    const reducer = (prevState, state) => {
         return {...prevState, ...state};
     }
 
     const [ state, setState ] = useReducer(reducer, initialState);
 
-    subscribeToPublication = () => {
+    const subscribeToPublication = () => {
         if (isLogged) {
             subscribeUserToPublication(uid, id);
         } else {
@@ -35,7 +35,7 @@ const PublicationDetailsRightButtons = ({ navigation, id = '', uid = '', isLogge
         setState({ openOptionsMenu: false });
     }
 
-    reportPublication = () => {
+    const reportPublication = () => {
         if (isLogged) {
             setState({ openReportDialog: true });
         } else {
@@ -47,7 +47,7 @@ const PublicationDetailsRightButtons = ({ navigation, id = '', uid = '', isLogge
     /**
      * Set the selected pet and open the share publication dialog
      */
-    onSharePress = async () => {
+    const onSharePress = async () => {
         Share.share({
             message: await createDynamicLink({ type: 'losted', id }),
             title: translate('PublicationDetailsRightButtons.share.title')

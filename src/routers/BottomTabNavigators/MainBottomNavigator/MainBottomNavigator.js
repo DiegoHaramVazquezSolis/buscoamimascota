@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { View } from 'react-native';
 
-import { PUBLICATIONS_STACK_NAVIGATOR, SECONDARY_COLOR, DISABLED_COLOR, DARK_COLOR } from './../../../utils/Constants';
+import { PUBLICATIONS_STACK_NAVIGATOR, SECONDARY_COLOR, DISABLED_COLOR, DARK_COLOR, USER_SETTINGS_SCREEN } from './../../../utils/Constants';
 
 import { translate } from '../../../services/i18n';
 
@@ -10,21 +10,21 @@ import { translate } from '../../../services/i18n';
 import PublicationsStackNavigator from '../../StackNavigators/PublicationsStackNavigator/PublicationsStackNavigator';
 
 // Screens
-import Mock1 from './../../../screens/Mock1';
+import UserSettingsScreen from '../../../screens/UserSettingsScreen/UserSettingsScreen';
 
 const routesConfig = {
     [PUBLICATIONS_STACK_NAVIGATOR]: {
         screen: PublicationsStackNavigator,
         navigationOptions:{
             tabBarLabel: translate('Navigators.MainBottomNavigator.PublicationsStackNavigator'),
-            tabBarIcon:({tintColor}) => <View style={{ marginTop: 8, height: 24, width: 24, backgroundColor: tintColor, borderRadius: 100 }} />
+            tabBarIcon:({tintColor}) => <View style={[styles.bottomTab, { backgroundColor: tintColor }]} />
         }
     },
-    Mock2: {
-        screen: Mock1,
+    [USER_SETTINGS_SCREEN]: {
+        screen: UserSettingsScreen,
         navigationOptions:{
-            tabBarLabel:'Home 2',
-            tabBarIcon:({tintColor}) => <View style={{ marginTop: 8, height: 24, width: 24, backgroundColor: tintColor, borderRadius: 100 }} />
+            tabBarLabel:'Ajustes',
+            tabBarIcon:({tintColor}) => <View style={[styles.bottomTab, { backgroundColor: tintColor }]} />
         }
     }
 };
@@ -34,7 +34,7 @@ const navigatorConfig = {
     tabBarOptions: {
         activeTintColor: SECONDARY_COLOR,
         inactiveTintColor: DISABLED_COLOR,
-        keyboardHidesTabBar: false,
+        keyboardHidesTabBar: true,
         style: {
             backgroundColor: DARK_COLOR,
             height: 56,
@@ -49,3 +49,12 @@ const navigatorConfig = {
 };
 
 export default MainBottomNavigator = createBottomTabNavigator(routesConfig, navigatorConfig);
+
+const styles = {
+    bottomTab: {
+        marginTop: 8,
+        height: 24,
+        width: 24,
+        borderRadius: 100
+    }
+};
