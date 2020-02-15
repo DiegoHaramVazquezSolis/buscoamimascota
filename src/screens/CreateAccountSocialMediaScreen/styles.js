@@ -9,7 +9,7 @@ export default styles = StyleSheet.create({
         fontWeight: '700',
         textAlign: 'center',
         color: PRIMARY_TEXT_COLOR,
-        marginTop: heightPercentageToDP(5),
+        marginTop: 24,
         marginLeft: widthPercentageToDP(6),
         marginRight: widthPercentageToDP(6)
     },

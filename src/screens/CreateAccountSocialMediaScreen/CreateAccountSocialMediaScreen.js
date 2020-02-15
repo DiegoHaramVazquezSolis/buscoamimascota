@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import { BackHandler, SafeAreaView, Text, View } from 'react-native';
+import { connect } from 'react-redux';
 
 import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
 
-import { PRIMARY_COLOR, CREATE_ACCOUNT_EMAIL_SCREEN, LOGIN_SCREEN } from '../../utils/Constants';
+import { PRIMARY_COLOR, CREATE_ACCOUNT_EMAIL_SCREEN, LOGIN_SCREEN, USER_SETTINGS_SCREEN, LOSTED_PUBLICATIONS_LIST_SCREEN } from '../../utils/Constants';
 import Assets from '../../../assets/Assets';
 
 import { loginWithFacebook, setupGoogleSignin, loginWithGoogle } from '../../services/auth';
@@ -13,19 +14,44 @@ import { translate } from '../../services/i18n';
 import SocialMediaButton from '../../components/simple/SocialMediaButton/SocialMediaButton';
 import ScreenTitle from '../../components/simple/ScreenTitle/ScreenTitle';
 
-const CreateAccountSocialMediaScreen = ({ navigation }) => {
+const CreateAccountSocialMediaScreen = ({ navigation, screens }) => {
     useEffect(() => {
         setupGoogleSignin();
+
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', androidBackButton);
+
+        return function clean(){
+            backHandler.remove();
+        }
     }, []);
 
+    const androidBackButton = () => {
+        /**
+         * For some reason sometimes when you come from another screen to settings and then open
+         * this screen (because you are not logged) the current screens is USER_SETTINGS_SCREEN, thats why
+         * we use the second condition on the if
+         */
+        if (screens.previous === USER_SETTINGS_SCREEN || screens.current === USER_SETTINGS_SCREEN) {
+            navigation.navigate(LOSTED_PUBLICATIONS_LIST_SCREEN);
+
+            return true;
+        }
+
+        return false;
+    }
+
     const signInWithGoogle = async () => {
-        await loginWithGoogle();
-        navigation.dismiss();
+        handleSignIn(await loginWithGoogle());
     }
 
     const signInWithFacebook = async () => {
-        await loginWithFacebook();
-        navigation.dismiss();
+        handleSignIn(await loginWithFacebook());
+    }
+
+    const handleSignIn = (user) => {
+        if (user && user.user) {
+            navigation.dismiss();
+        }
     }
 
     return (
@@ -89,4 +115,8 @@ const CreateAccountSocialMediaScreen = ({ navigation }) => {
     );
 }
 
-export default CreateAccountSocialMediaScreen;
+mapStateToProps = ({ Screens }) => ({
+    screens: Screens
+});
+
+export default connect(mapStateToProps)(CreateAccountSocialMediaScreen);

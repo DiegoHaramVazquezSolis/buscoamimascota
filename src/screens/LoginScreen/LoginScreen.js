@@ -32,18 +32,21 @@ const LoginScreen = ({ navigation }) => {
     const [ state, setState ] = useReducer(reducer, initialState);
 
     const LogInWithGoogle = async () => {
-        await loginWithGoogle();
-        navigation.dismiss();
+        handleLogIn(await loginWithGoogle());
     }
 
     const LogInWithFacebook = async () => {
-        await loginWithFacebook();
-        navigation.dismiss();
+        handleLogIn(await loginWithFacebook());
     }
 
     const LogInWithEmail = async () => {
-        await logInWithEmail(state.email, state.password);
-        navigation.dismiss();
+        handleLogIn(await logInWithEmail(state.email, state.password));
+    }
+
+    const handleLogIn = (user) => {
+        if (user && user.user) {
+            navigation.dismiss();
+        }
     }
 
     return (
@@ -59,7 +62,8 @@ const LoginScreen = ({ navigation }) => {
                             onSubmitEditing={() => passwordRef.current.focus()}
                             placeholder={translate('LoginScreen.emailPlaceholder')}
                             onChangeText={(email) => setState({ email })}
-                            autoCapitalize='none' />
+                            autoCapitalize='none'
+                            returnKeyType='next' />
                     </View>
                     <View style={styles.fieldContainer}>
                         <CustomTextInput
