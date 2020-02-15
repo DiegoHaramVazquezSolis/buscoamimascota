@@ -1,10 +1,11 @@
 import Geolocation from '@react-native-community/geolocation';
 
-import { GET_ADOPTION_PUBLICATION, REMOVE_ADOPTION_PUBLICATION, REMOVE_ALL_ADOPTION_PUBLICATIONS } from '../../utils/Constants';
+import { GET_ADOPTION_PUBLICATION, REMOVE_ADOPTION_PUBLICATION, REMOVE_ALL_ADOPTION_PUBLICATIONS, ON_BOARDING_VIEWED_AS } from '../../utils/Constants';
 
 import { adoptionRef } from '../../services/database';
 
 import { getGeohashRange } from '../../utils/Utils';
+import { getAsyncStorageData } from '../../utils/LocalStorage';
 
 /**
  * Action of redux for set a publication of on adoption pets in the global state
@@ -29,30 +30,43 @@ export const removeAllPublicationsSuccess = () => ({ type: REMOVE_ALL_ADOPTION_P
  */
 export const getAdoptionPublications = () => async (dispatch) => {
     try {
-        Geolocation.getCurrentPosition((locationInfo) => {
-            const geoHashRange = getGeohashRange(locationInfo.coords.latitude, locationInfo.coords.longitude);
+        if (await getAsyncStorageData(ON_BOARDING_VIEWED_AS) === 'true') {
+            Geolocation.getCurrentPosition((locationInfo) => {
+                const geoHashRange = getGeohashRange(locationInfo.coords.latitude, locationInfo.coords.longitude);
 
-            /**
-             * If the location of the user is available we use it to filter only the 25 closest publications
-             * Closest: In a range of 5km or less
-             */
-            adoptionRef.where("geohash", ">=",geoHashRange.lowerGeoHash).where("geohash", "<=", geoHashRange.upperGeoHash).limit(25)
-            .onSnapshot((adoptionPublicationsSnap) => {
-                const sortedAdoptionPublications = adoptionPublicationsSnap.docChanges().sort((a, b) => a.doc.data().timeStamp > b.doc.data().timeStamp);
+                /**
+                 * If the location of the user is available we use it to filter only the 25 closest publications
+                 * Closest: In a range of 5km or less
+                 */
+                adoptionRef.where("geohash", ">=",geoHashRange.lowerGeoHash).where("geohash", "<=", geoHashRange.upperGeoHash).limit(25)
+                .onSnapshot((adoptionPublicationsSnap) => {
+                    const sortedAdoptionPublications = adoptionPublicationsSnap.docChanges().sort((a, b) => a.doc.data().timeStamp > b.doc.data().timeStamp);
 
-                return dispatch(manageAdoptionPublications(sortedAdoptionPublications));
+                    return dispatch(manageAdoptionPublications(sortedAdoptionPublications));
+                }, (error) => {
+                    console.error('[AdoptionPublicationsActions => Publication listener]:', error);
+                });
             }, (error) => {
-                console.error('[AdoptionPublicationsActions => Publication listener]:', error);
-            });
-        }, (error) => {
-            if (error.code === 1) {
-                console.log('Here put a cool Dialog or Snackbar telling to the user that we don`t have permission to use their location');
-            } else if (error.code === 2) {
-                console.log('Here put a cool Dialog or Snackbar telling to the user that enable their location');
-            } else if (error.code === 3) {
-                console.log('Here put a cool Dialog or Snackbar telling to the user that we can`t determine their location');
-            }
+                if (error.code === 1) {
+                    console.log('Here put a cool Dialog or Snackbar telling to the user that we don`t have permission to use their location');
+                } else if (error.code === 2) {
+                    console.log('Here put a cool Dialog or Snackbar telling to the user that enable their location');
+                } else if (error.code === 3) {
+                    console.log('Here put a cool Dialog or Snackbar telling to the user that we can`t determine their location');
+                }
 
+                /**
+                 * If the location of the user isn't available we just take the 25 most recent publications
+                 */
+                adoptionRef.orderBy('timeStamp').limit(25)
+                .onSnapshot((adoptionPublicationsSnap) => {
+
+                    return dispatch(manageAdoptionPublications(adoptionPublicationsSnap.docChanges()));
+                }, (error) => {
+                    console.error('[AdoptionPublicationsActions => Publication listener]:', error);
+                });
+            });
+        } else {
             /**
              * If the location of the user isn't available we just take the 25 most recent publications
              */
@@ -63,7 +77,7 @@ export const getAdoptionPublications = () => async (dispatch) => {
             }, (error) => {
                 console.error('[AdoptionPublicationsActions => Publication listener]:', error);
             });
-        });
+        }
     } catch (error) {
         console.error(error);
     }
