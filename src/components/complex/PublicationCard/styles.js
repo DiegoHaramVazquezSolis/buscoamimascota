@@ -8,20 +8,7 @@ const CARD_HEIGHT = heightPercentageToDP(20);
 export default styles = StyleSheet.create({
     card: {
         marginTop: 12,
-        height: CARD_HEIGHT,
-        backgroundColor: '#FFF',
-        alignSelf: 'center',
-        width: widthPercentageToDP(92),
-        borderRadius: 4,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: .18,
-        shadowRadius: 1,
-        elevation: 1,
-        flexDirection: 'row'
+        height: CARD_HEIGHT
     },
     image: {
         borderTopLeftRadius: 4,

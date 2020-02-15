@@ -11,16 +11,17 @@ import Assets from '../../../../assets/Assets';
 
 import { returnTextBasedOnMaxLengthWithLimit } from '../../../utils/Utils';
 import { translate } from '../../../services/i18n';
+import { subscribeUserToPublication } from '../../../services/database';
 
 import TextButton from '../../simple/TextButton/TextButton';
 import Menu from '../../simple/Menu/Menu';
 import ListItem from '../../simple/ListItem/ListItem';
-import { subscribeUserToPublication } from '../../../services/database';
+import Card from '../../simple/Card/Card';
 
 const PublicationCard = ({ navigation, onPublicationPress = () => {}, id = '', image = '', name = '', description = '', onSharePress = (id) => {}, onContactPress = (id) => {}, lastChild = false, uid = '', isLogged = false, onReportPress = (id) => {} }) => {
     const [ open, setOpen ] = useState(false);
 
-    subscribeToPublication = () => {
+    const subscribeToPublication = () => {
         if (isLogged) {
             subscribeUserToPublication(uid, id);
         } else {
@@ -29,7 +30,7 @@ const PublicationCard = ({ navigation, onPublicationPress = () => {}, id = '', i
         setOpen(false);
     }
 
-    reportPublication = () => {
+    const reportPublication = () => {
         if (isLogged) {
             onReportPress(id)
         } else {
@@ -40,7 +41,7 @@ const PublicationCard = ({ navigation, onPublicationPress = () => {}, id = '', i
 
     return (
         <TouchableWithoutFeedback onPress={() => onPublicationPress(id)}>
-            <View style={[GlobalStyles.alignItemsCenter, styles.card, { marginBottom: lastChild ? 12 : 0}]}>
+            <Card style={[GlobalStyles.alignItemsCenter, styles.card, { marginBottom: lastChild ? 12 : 0}]}>
                 <View>
                     <Image
                         style={styles.image}
@@ -83,7 +84,7 @@ const PublicationCard = ({ navigation, onPublicationPress = () => {}, id = '', i
                         </View>
                     </View>
                 </View>
-            </View>
+            </Card>
         </TouchableWithoutFeedback>
     );
 };
