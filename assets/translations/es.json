@@ -16,6 +16,20 @@
                 "description": "Correo o contraseña incorrectos",
                 "acceptButton": "Entendido"
             }
+        },
+        "updateUserPassword": {
+            "errorMessage": {
+                "weakPassword": {
+                    "title": "Error",
+                    "description": "La nueva contraseña debe tener al menos 6 caracteres de longitud",
+                    "acceptButton": "Entendido"
+                },
+                "wrongPassword": {
+                    "title": "Error",
+                    "description": "Contraseña actual incorrecta",
+                    "acceptButton": "Entendido"
+                }
+            }
         }
     },
     "Navigators": {
@@ -206,5 +220,27 @@
         "subtitleLosted": "Ultima ubicación conocida de %{name}",
         "subtitleAdoption": "Ubicación de %{name}",
         "lastKnownLocation": "Ultima ubicación conocida de %{name}"
+    },
+    "UserSettingsScreen": {
+        "title": "Ajustes y permisos",
+        "errorMessage": {
+            "title": "Actualizar permiso",
+            "description": "Para desactivar esta opción debes ir a la configuración de tu dispositivo y hacerlo manualmente despues reinicia la app para ver reflejado el cambio",
+            "acceptButton": "Entendido"
+        },
+        "notificationsSection": {
+            "title": "Notificaciones",
+            "lostedPetsNotifications": "Recibir notificaciones de mascotas perdidas cerca de mi",
+            "adoptionPetsNotifications": "Recibir notificaciones de mascotas en adopción cerca de mi"
+        },
+        "locationSection": {
+            "title": "Ubicación",
+            "shareMyLocation": "Compartir mi ubicación"
+        },
+        "sessionSection": {
+            "title": "Sesión",
+            "changePassword": "Cambiar contraseña",
+            "closeSession": "Cerrar sesión"
+        }
     }
 }
