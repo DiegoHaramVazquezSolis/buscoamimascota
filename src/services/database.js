@@ -7,11 +7,35 @@ export const adoptionRef = firestoreDatabase.collection('Adoption');
 export const userRef = realTimeDatabase.ref('/User');
 export const reportRef = realTimeDatabase.ref('/Report');
 
+/**
+ * Create the basic profile for a new user
+ * @param {string} uid User identifier
+ * @param {string} email email direction of the new user
+ * @param {string | null} photoURL Url from the profile image of the user
+ */
+export const createUserProfile = (uid, email, photoURL) => {
+    try {
+        userRef.child(uid).update({
+            email,
+            photoURL,
+            lostedPetsNotifications: true,
+            adoptionPetsNotifications: true
+        });
+    } catch (error) {
+        console.error('[Create User Profile]', error);
+    }
+}
+
+/**
+ * Add or update the userInfo object to the user profile
+ * @param {string} uid User identifier
+ * @param {Object} userInfo Data to update
+ */
 export const updateUserInfo = async (uid, userInfo) => {
     try {
-    return await userRef.child(uid).update(userInfo);
+        return await userRef.child(uid).update(userInfo);
     } catch (error) {
-        console.error(error);
+        console.error('[Update User Info]', error);
     }
 }
 
