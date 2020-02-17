@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View } from 'react-native';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 
@@ -9,6 +9,7 @@ import { ON_BOARDING_VIEWED_AS, MAIN_BOTTOM_NAVIGATOR } from '../../utils/Consta
 
 import { storeAsyncStorageData } from './../../utils/LocalStorage';
 import { translate } from '../../services/i18n';
+import { loginAnonymously } from '../../services/auth';
 
 import CarouselOnBoardingIntroduction from './../../components/complex/CarouselOnBoardingIntroduction/CarouselOnBoardingIntroduction';
 import StepsProgressIndicator from './../../components/complex/StepsProgressIndicator/StepsProgressIndicator';
@@ -16,6 +17,19 @@ import ContainedButton from './../../components/simple/ContainedButton/Contained
 
 const OnBoardingIntroductionScreen = ({ navigation = {} }) => {
     const [ currentIndex, setState ] = useState(0);
+    const [starting, setStarting] = useState(false);
+
+    useEffect(() => {
+        async function setInitialConfiguration() {
+            storeAsyncStorageData(ON_BOARDING_VIEWED_AS, 'true');
+            await loginAnonymously();
+            navigation.navigate(MAIN_BOTTOM_NAVIGATOR);
+        }
+
+        if (starting) {
+            setInitialConfiguration();
+        }
+    }, [starting]);
 
     /**
      * Set the current index based on scroll position of the carrousel to show on the progress icons
@@ -30,9 +44,8 @@ const OnBoardingIntroductionScreen = ({ navigation = {} }) => {
     /**
      * Set the onboarding as seen an navigate to the principal screen
      */
-    const getStarted = () => {
-        storeAsyncStorageData(ON_BOARDING_VIEWED_AS, 'true');
-        navigation.navigate(MAIN_BOTTOM_NAVIGATOR);
+    const getStarted = async () => {
+        setStarting(true);
     }
 
 
@@ -40,7 +53,10 @@ const OnBoardingIntroductionScreen = ({ navigation = {} }) => {
         <SafeAreaView style={[ GlobalStyles.flex1, GlobalStyles.alignItemsCenter ]}>
             <CarouselOnBoardingIntroduction determineIndexWithScrollPosition={determineIndexWithScrollPosition} />
             <View style={styles.marginButton}>
-                <ContainedButton size='md' onPress={getStarted}>
+                <ContainedButton
+                    size='md'
+                    onPress={getStarted}
+                    disabled={starting}>
                     {translate('OnBoardingIntroductionScreen.continueButton')}
                 </ContainedButton>
             </View>
