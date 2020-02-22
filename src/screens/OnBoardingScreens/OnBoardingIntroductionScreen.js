@@ -17,9 +17,13 @@ import ContainedButton from './../../components/simple/ContainedButton/Contained
 
 const OnBoardingIntroductionScreen = ({ navigation = {} }) => {
     const [ currentIndex, setState ] = useState(0);
-    const [starting, setStarting] = useState(false);
+    const [ starting, setStarting ] = useState(false);
 
     useEffect(() => {
+        /**
+         * Set the onboarding as seen, log the user with an anonymous account
+         * and navigate to the principal screen
+         */
         async function setInitialConfiguration() {
             storeAsyncStorageData(ON_BOARDING_VIEWED_AS, 'true');
             await loginAnonymously();
@@ -42,12 +46,12 @@ const OnBoardingIntroductionScreen = ({ navigation = {} }) => {
     }
 
     /**
-     * Set the onboarding as seen an navigate to the principal screen
+     * Set the staring variable to true, this action triggers the setInitialConfiguration on
+     * the useEffect hook
      */
     const getStarted = async () => {
         setStarting(true);
     }
-
 
     return (
         <SafeAreaView style={[ GlobalStyles.flex1, GlobalStyles.alignItemsCenter ]}>

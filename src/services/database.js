@@ -10,7 +10,7 @@ export const reportRef = realTimeDatabase.ref('/Report');
 /**
  * Create the basic profile for a new user
  * @param {string} uid User identifier
- * @param {string} email email direction of the new user
+ * @param {string | null} email email direction of the new user
  * @param {string | null} photoURL Url from the profile image of the user
  */
 export const createUserProfile = (uid, email, photoURL) => {
@@ -27,6 +27,14 @@ export const createUserProfile = (uid, email, photoURL) => {
 }
 
 /**
+ * Remove the user profile from database
+ * @param {string} uid User identifier
+ */
+export const removeUserProfile = (uid) => {
+    userRef.child(uid).remove();
+}
+
+/**
  * Add or update the userInfo object to the user profile
  * @param {string} uid User identifier
  * @param {Object} userInfo Data to update
@@ -37,6 +45,25 @@ export const updateUserInfo = async (uid, userInfo) => {
     } catch (error) {
         console.error('[Update User Info]', error);
     }
+}
+
+/**
+ * Update the publication author in all the publications of the user with the oldUis
+ * LIMITED TO BE USED ONLY WHEN WE ARE MERGING AN ANONYMOUS ACCOUNT WITH A PROVIDER ACCOUNT
+ * @param {string} oldUid User identifier of the author of the publications to merge
+ * @param {string} newUid User identifier of the author of the publications where are going to be merged
+ */
+export const mergeUserPublications = async (oldUid, newUid) => {
+    const lostedPublications = await lostedRef.where('author', '==', oldUid).get({ source: 'server' });
+    const adoptionPublications = await adoptionRef.where('author', '==', oldUid).get({ source: 'server' });
+
+    lostedPublications.docs.forEach((lostedPublication) => {
+        lostedRef.doc(lostedPublication.id).update({ author: newUid });
+    });
+
+    adoptionPublications.docs.forEach((adoptionPublication) => {
+        adoptionRef.doc(adoptionPublication.id).update({ author: newUid });
+    });
 }
 
 export const subscribeUserToPublication = async (uid, publicationId) => {
