@@ -1,11 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BackHandler, SafeAreaView, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
 
-import { PRIMARY_COLOR, CREATE_ACCOUNT_EMAIL_SCREEN, LOGIN_SCREEN, USER_SETTINGS_SCREEN, LOSTED_PUBLICATIONS_LIST_SCREEN } from '../../utils/Constants';
+import {
+    PRIMARY_COLOR,
+    CREATE_ACCOUNT_EMAIL_SCREEN,
+    LOGIN_SCREEN,
+    USER_SETTINGS_SCREEN,
+    LOSTED_PUBLICATIONS_LIST_SCREEN,
+    CREATE_ACCOUNT_SOCIAL_MEDIA_SCREEN
+} from '../../utils/Constants';
 import Assets from '../../../assets/Assets';
 
 import { loginWithFacebook, setupGoogleSignin, loginWithGoogle } from '../../services/auth';
@@ -15,29 +22,45 @@ import SocialMediaButton from '../../components/simple/SocialMediaButton/SocialM
 import ScreenTitle from '../../components/simple/ScreenTitle/ScreenTitle';
 
 const CreateAccountSocialMediaScreen = ({ navigation, screens }) => {
+    const [previousScreen, setPreviousScreen] = useState('');
+
     useEffect(() => {
         setupGoogleSignin();
 
-        const backHandler = BackHandler.addEventListener('hardwareBackPress', androidBackButton);
-
-        return function clean(){
-            backHandler.remove();
+        let backHandler;
+        if (screens.previous === USER_SETTINGS_SCREEN || screens.current === USER_SETTINGS_SCREEN) {
+            setPreviousScreen(USER_SETTINGS_SCREEN);
         }
-    }, []);
+
+        if (previousScreen === USER_SETTINGS_SCREEN) {
+            backHandler = BackHandler.addEventListener('hardwareBackPress', androidBackButton);
+        }
+
+        if (backHandler && screens.current === LOGIN_SCREEN || screens.current === CREATE_ACCOUNT_EMAIL_SCREEN) {
+            try {
+                backHandler.remove();
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        return function clean() {
+            if (backHandler) {
+                try {
+                    backHandler.remove();
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        }
+    }, [previousScreen, screens]);
 
     const androidBackButton = () => {
-        /**
-         * For some reason sometimes when you come from another screen to settings and then open
-         * this screen (because you are not logged) the current screens is USER_SETTINGS_SCREEN, thats why
-         * we use the second condition on the if
-         */
-        if (screens.previous === USER_SETTINGS_SCREEN || screens.current === USER_SETTINGS_SCREEN) {
+        if (screens.current === CREATE_ACCOUNT_SOCIAL_MEDIA_SCREEN) {
             navigation.navigate(LOSTED_PUBLICATIONS_LIST_SCREEN);
 
             return true;
         }
-
-        return false;
     }
 
     const signInWithGoogle = async () => {
@@ -115,8 +138,8 @@ const CreateAccountSocialMediaScreen = ({ navigation, screens }) => {
     );
 }
 
-mapStateToProps = ({ Screens }) => ({
-    screens: Screens
+const mapStateToProps = (state) => ({
+    screens: state.Screens
 });
 
 export default connect(mapStateToProps)(CreateAccountSocialMediaScreen);
