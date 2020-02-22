@@ -18,4 +18,8 @@ const routesConfig = {
     }
 };
 
-export default PublicationsStackNavigator = createNativeStackNavigator(routesConfig);
+const navigatorConfig = {
+    headerMode: 'screen'
+};
+
+export default PublicationsStackNavigator = createNativeStackNavigator(routesConfig, navigatorConfig);
