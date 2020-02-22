@@ -1,13 +1,17 @@
 import React from 'react';
-import { View, ViewPropTypes } from 'react-native';
+import { View, TouchableWithoutFeedback } from 'react-native';
 
 import styles from './styles';
 
-const Card = ({ children = <View />, style = {} }) => {
+const Card = ({ children = <View />, style = {}, onPress = null }) => {
     return (
-        <View style={[styles.card, style]}>
-            {children}
-        </View>
+        <TouchableWithoutFeedback
+            disabled={!onPress}
+            onPress={onPress}>
+            <View style={[styles.card, style]}>
+                {children}
+            </View>
+        </TouchableWithoutFeedback>
     );
 }
 

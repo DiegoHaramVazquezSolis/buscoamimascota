@@ -33,6 +33,9 @@ export default styles = StyleSheet.create({
         marginLeft: widthPercentageToDP(2),
         width: widthPercentageToDP(45)
     },
+    descriptionContainer: {
+        height: heightPercentageToDP(8)
+    },
     description: {
         color: SECONDARY_TEXT_COLOR,
         fontSize: 12,
@@ -43,7 +46,8 @@ export default styles = StyleSheet.create({
     },
     actionsContainer: {
         flexDirection: 'row',
-        marginBottom: widthPercentageToDP(2),
+        position: 'absolute',
+        bottom: 4,
         justifyContent: 'space-between',
         width: widthPercentageToDP(54)
     },

@@ -3,7 +3,6 @@ import { TouchableWithoutFeedback, View, Text } from 'react-native';
 
 import styles from './styles';
 import { returnTextBasedOnMaxLengthWithLimit } from '../../../utils/Utils';
-import { DISABLED_COLOR } from '../../../utils/Constants';
 
 const Chip = ({ onPress = () => {}, children = '', maxLength = 0, limit = 0, tag = false }) => (
         <TouchableWithoutFeedback onPress={onPress}>
