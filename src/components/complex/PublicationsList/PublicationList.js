@@ -19,7 +19,7 @@ const PublicationList = ({ navigation = {}, publications = {}, losted = true }) 
         selectedPet: {}
     };
 
-    reducer = (prevState, nextState) => {
+    const reducer = (prevState, nextState) => {
         return { ...prevState, ...nextState };
     }
 
@@ -30,7 +30,7 @@ const PublicationList = ({ navigation = {}, publications = {}, losted = true }) 
      * params of the selected pet
       @param {string} id Identifier of the publication on the database
      */
-    onPublicationPress = (id) => {
+    const onPublicationPress = (id) => {
         navigation.navigate(PUBLICATION_DETAILS_STACK_NAVIGATOR, { ...publications[id], losted });
     }
 
@@ -38,7 +38,7 @@ const PublicationList = ({ navigation = {}, publications = {}, losted = true }) 
      * Set the selected pet and open the share publication dialog
      * @param {string} id Identifier of the publication on the database
      */
-    onSharePress = async (id) => {
+    const onSharePress = async (id) => {
         Share.share({
             message: await createDynamicLink({ type: losted ? 'losted' : 'adoption', id }),
             title: translate('PublicationList.share.title')
@@ -49,11 +49,11 @@ const PublicationList = ({ navigation = {}, publications = {}, losted = true }) 
      * Open the contact dialog and set the selected pet (to show the right info)
      * @param {string} id Identifier of the publication on the database
      */
-    onContactPress = async (id) => {
+    const onContactPress = async (id) => {
         setState({ openContactDialog: true, selectedPet: publications[id] });
     }
 
-    onReportPress = (id) => {
+    const onReportPress = (id) => {
         setState({ openReportDialog: true, selectedPet: publications[id] });
     }
 

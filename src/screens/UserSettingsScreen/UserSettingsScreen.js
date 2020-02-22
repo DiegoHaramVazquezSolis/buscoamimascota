@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
-import { PermissionsAndroid, Alert, SafeAreaView, ScrollView, View, Text, TouchableWithoutFeedback, Switch, TouchableOpacity } from 'react-native';
+import { PermissionsAndroid, Alert, SafeAreaView, ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationEvents } from 'react-navigation';
 
@@ -7,6 +7,7 @@ import GlobalStyles from '../../utils/GlobalStyles';
 import styles from './styles';
 
 import { PUBLICATIONS_STACK_NAVIGATOR, AUTHENTICATION_STACK_NAVIGATOR } from '../../utils/Constants';
+import { ANONYMOUS_PROVIDER, PASSWORD_PROVIDER } from '../../services/firebase';
 
 import { updateUserInfo } from '../../services/database';
 import { closeSession } from '../../services/auth';
@@ -18,9 +19,11 @@ import ChangePasswordDialog from '../../components/complex/ChangePasswordDialog/
 import SettingSection from '../../components/complex/SettingSection/SettingSection';
 import Setting from '../../components/complex/Setting/Setting';
 
-const UserSettingsScreen = ({ isLoggedUser = false, userAuthProvider='', uid='', lostedPetsNotifications = false, adoptionPetsNotifications = false, navigation }) => {
+const UserSettingsScreen = ({ isLoggedUser = false, userAuthProvider='', uid='', lostedPetsNotifications, adoptionPetsNotifications, navigation }) => {
     const initialState = {
         shareLocation: false,
+        lostedPetsNotifications,
+        adoptionPetsNotifications,
         showChangePasswordDialog: false
     };
 
@@ -33,7 +36,7 @@ const UserSettingsScreen = ({ isLoggedUser = false, userAuthProvider='', uid='',
         checkLocationPermissions();
     }, []);
 
-    reducer = (prevState, state) => {
+    const reducer = (prevState, state) => {
         return {...prevState, ...state};
     }
 
@@ -57,10 +60,12 @@ const UserSettingsScreen = ({ isLoggedUser = false, userAuthProvider='', uid='',
 
     const updateLostedNotificationsSetting = (lostedPetsNotifications) => {
         updateUserInfo(uid, { lostedPetsNotifications });
+        setState({ lostedPetsNotifications });
     }
 
     const updateAdoptionNotificationsSetting = (adoptionPetsNotifications) => {
         updateUserInfo(uid, { adoptionPetsNotifications });
+        setState({ adoptionPetsNotifications });
     }
 
     const signOut = async () => {
@@ -92,18 +97,20 @@ const UserSettingsScreen = ({ isLoggedUser = false, userAuthProvider='', uid='',
                     <View style={GlobalStyles.col}>
                         <SettingSection title={translate('UserSettingsScreen.notificationsSection.title')} firstChild>
                             <Setting
-                                value={lostedPetsNotifications}
+                                value={state.lostedPetsNotifications}
                                 onValueChange={updateLostedNotificationsSetting}>
                                 {translate('UserSettingsScreen.notificationsSection.lostedPetsNotifications')}
                             </Setting>
                             <Setting
-                                value={adoptionPetsNotifications}
+                                value={state.adoptionPetsNotifications}
                                 onValueChange={updateAdoptionNotificationsSetting}>
                                 {translate('UserSettingsScreen.notificationsSection.adoptionPetsNotifications')}
                             </Setting>
                         </SettingSection>
 
-                        <SettingSection title={translate('UserSettingsScreen.locationSection.title')}>
+                        <SettingSection
+                            title={translate('UserSettingsScreen.locationSection.title')}
+                            style={{ marginBottom: (!isLoggedUser || userAuthProvider === ANONYMOUS_PROVIDER) ? 16 : 0 }}>
                             <Setting
                                 value={state.shareLocation}
                                 onValueChange={askForLocationPermission}>
@@ -111,27 +118,48 @@ const UserSettingsScreen = ({ isLoggedUser = false, userAuthProvider='', uid='',
                             </Setting>
                         </SettingSection>
 
-                        <SettingSection title={translate('UserSettingsScreen.sessionSection.title')}>
-                            <View style={[GlobalStyles.col, GlobalStyles.justifyContentSpaceBetween, GlobalStyles.mt12, GlobalStyles.ml24]}>
-                                {userAuthProvider === 'password' &&
+                        {userAuthProvider === ANONYMOUS_PROVIDER ?
+                            <SettingSection title={translate('UserSettingsScreen.accountSection.title')}>
+                                <View style={[GlobalStyles.col, GlobalStyles.justifyContentSpaceBetween, GlobalStyles.mt12, GlobalStyles.ml24]}>
                                     <TouchableOpacity
                                         activeOpacity={.6}
-                                        onPress={() => setState({ showChangePasswordDialog: true })}>
+                                        style={[userAuthProvider === PASSWORD_PROVIDER && GlobalStyles.mt16, { marginBottom: 16 }]}
+                                        onPress={() => navigation.navigate(AUTHENTICATION_STACK_NAVIGATOR)}>
                                         <Text style={[GlobalStyles.colorParagraphText, styles.actions]}>
-                                            {translate('UserSettingsScreen.sessionSection.changePassword')}
+                                            {translate('UserSettingsScreen.accountSection.createAccount')}
                                         </Text>
                                     </TouchableOpacity>
+                                </View>
+                            </SettingSection>
+                            :
+                            <>
+                                {isLoggedUser ?
+                                    <SettingSection title={translate('UserSettingsScreen.sessionSection.title')}>
+                                        <View style={[GlobalStyles.col, GlobalStyles.justifyContentSpaceBetween, GlobalStyles.mt12, GlobalStyles.ml24]}>
+                                            {userAuthProvider === PASSWORD_PROVIDER &&
+                                                <TouchableOpacity
+                                                    activeOpacity={.6}
+                                                    onPress={() => setState({ showChangePasswordDialog: true })}>
+                                                    <Text style={[GlobalStyles.colorParagraphText, styles.actions]}>
+                                                        {translate('UserSettingsScreen.sessionSection.changePassword')}
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            }
+                                            <TouchableOpacity
+                                                activeOpacity={.6}
+                                                style={[userAuthProvider === PASSWORD_PROVIDER && GlobalStyles.mt16, { marginBottom: 16 }]}
+                                                onPress={signOut}>
+                                                <Text style={[GlobalStyles.colorParagraphText, styles.actions]}>
+                                                    {translate('UserSettingsScreen.sessionSection.closeSession')}
+                                                </Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </SettingSection>
+                                    :
+                                    null
                                 }
-                                <TouchableOpacity
-                                    activeOpacity={.6}
-                                    style={[userAuthProvider === 'password' && GlobalStyles.mt16, { marginBottom: 16 }]}
-                                    onPress={signOut}>
-                                    <Text style={[GlobalStyles.colorParagraphText, styles.actions]}>
-                                        {translate('UserSettingsScreen.sessionSection.closeSession')}
-                                    </Text>
-                                </TouchableOpacity>
-                            </View>
-                        </SettingSection>
+                            </>
+                        }
                     </View>
                 </Card>
             </ScrollView>

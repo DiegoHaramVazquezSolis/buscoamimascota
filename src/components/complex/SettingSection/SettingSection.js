@@ -4,8 +4,8 @@ import { View, Text } from 'react-native';
 import GlobalStyles from '../../../utils/GlobalStyles';
 import styles from './styles';
 
-const SettingSection = ({ title, children, firstChild }) => (
-    <View>
+const SettingSection = ({ title, children, firstChild = false, style = {} }) => (
+    <View style={style}>
         <Text style={[GlobalStyles.colorTitleText, GlobalStyles.ml12, firstChild ? GlobalStyles.mt12 : GlobalStyles.mt16, styles.sectionTitle]}>
             {title}
         </Text>

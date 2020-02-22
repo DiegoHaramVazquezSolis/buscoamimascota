@@ -36,7 +36,8 @@ const routesConfig = {
 };
 
 const navigatorConfig = {
-    initialRouteName: MAIN_BOTTOM_NAVIGATOR
+    initialRouteName: MAIN_BOTTOM_NAVIGATOR,
+    headerMode: 'screen'
 };
 
 export default AppStackNavigator = createStackNavigator(routesConfig, navigatorConfig);

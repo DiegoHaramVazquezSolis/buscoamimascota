@@ -155,7 +155,7 @@
         }
     },
     "CreateAccountEmailScreen": {
-        "title": "Registrate para continuar",
+        "title": "Registrate",
         "emailPlaceholder": "Email",
         "passwordPlaceholder": "Contraseña",
         "confirmPasswordPlaceholder": "Confirmar contraseña",
@@ -181,7 +181,7 @@
         }
     },
     "CreateAccountSocialMediaScreen": {
-        "title": "Registrate o inicia sesión para continuar",
+        "title": "Registrate o inicia sesión",
         "continueWithGoogleButton": "Continuar con google",
         "continueWithFacebookButton": "Continuar con facebook",
         "continueWithEmailButton": "Registrarte con tu correo",
@@ -198,7 +198,7 @@
         }
     },
     "LoginScreen": {
-        "title": "Inicia sesión para continuar",
+        "title": "Inicia sesión",
         "emailPlaceholder": "Email",
         "passwordPlaceholder": "Contraseña",
         "continueButton": "Iniciar sesión",
@@ -236,6 +236,10 @@
         "locationSection": {
             "title": "Ubicación",
             "shareMyLocation": "Compartir mi ubicación"
+        },
+        "accountSection": {
+            "title": "Cuenta",
+            "createAccount": "Crear cuenta / Iniciar sesión"
         },
         "sessionSection": {
             "title": "Sesión",

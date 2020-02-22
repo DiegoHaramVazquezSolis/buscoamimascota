@@ -15,7 +15,8 @@ const routesConfig = {
 };
 
 const navigatorConfig = {
-    initialRouteName: PUBLICATION_DETAILS_SCREEN
+    initialRouteName: PUBLICATION_DETAILS_SCREEN,
+    headerMode: 'screen'
 };
 
 export default PublicationDetailsStackNavigator = createNativeStackNavigator(routesConfig, navigatorConfig);

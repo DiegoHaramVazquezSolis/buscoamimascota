@@ -2,14 +2,19 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { Alert } from 'react-native';
 
-import { WEB_CLIENT_GOOGLE_AUTH, WEAK_PASSWORD } from '../utils/Constants';
+import { WEB_CLIENT_GOOGLE_AUTH, WEAK_PASSWORD, CREDENTIAL_ALREADY_IN_USE } from '../utils/Constants';
 
 import store from '../redux/configureStore';
 
-import { auth, FacebookAuthProvider, GoogleAuthProvider } from './firebase';
+import { auth, FacebookAuthProvider, GoogleAuthProvider, EmailAuthProvider, GOOGLE_PROVIDER, FACEBOOK_PROVIDER, PASSWORD_PROVIDER } from './firebase';
 import { translate } from './i18n';
-import { createUserProfile, userRef } from './database';
-import { signOut } from '../redux/actions/UserActions';
+import { createUserProfile, userRef, updateUserInfo, removeUserProfile, mergeUserPublications } from './database';
+import { signOut, userIsLogged } from '../redux/actions/UserActions';
+
+export const loginAnonymously = async () => {
+    const { user } = await auth.signInAnonymously();
+    createUserProfile(user.uid, null, null);
+}
 
 /**
  * Create an account or log a user if already have account with facebook
@@ -22,17 +27,36 @@ export const loginWithFacebook = async () => {
         } else {
             const accessToken = (await AccessToken.getCurrentAccessToken()).accessToken;
             const credential = FacebookAuthProvider.credential(accessToken);
-            const loginWithCredentialResult = await auth.signInWithCredential(credential);
-            if (loginWithCredentialResult.additionalUserInfo.isNewUser) {
-                createUserProfile(loginWithCredentialResult.user.uid, loginWithCredentialResult.user.email, loginWithCredentialResult.user.photoURL);
+            let loginWithCredentialResult;
+
+            if (auth.currentUser) {
+                loginWithCredentialResult = await auth.currentUser.linkWithCredential(credential);
             } else {
-                console.log('Old user', loginWithCredentialResult.user.uid);
+                loginWithCredentialResult = await auth.signInWithCredential(credential);
+                createUserProfile(loginWithCredentialResult.user.uid);
             }
+
+            const { uid, email } = loginWithCredentialResult.user;
+            store.dispatch(userIsLogged({ email, authProvider: FACEBOOK_PROVIDER }));
+            updateUserInfo(uid, { email });
 
             return loginWithCredentialResult;
         }
     } catch (error) {
-        console.error('[Login with facebook error]', error);
+        if (error.code === CREDENTIAL_ALREADY_IN_USE) {
+            const oldUid = auth.currentUser.uid;
+            await deleteUserAccount();
+            const accessToken = (await AccessToken.getCurrentAccessToken()).accessToken;
+            const credential = FacebookAuthProvider.credential(accessToken);
+            const loginWithCredentialResult = await auth.signInWithCredential(credential);
+            store.dispatch(userIsLogged({ authProvider: FACEBOOK_PROVIDER }));
+
+            mergeUserPublications(oldUid, loginWithCredentialResult.user.uid);
+
+            return loginWithCredentialResult;
+        } else {
+            console.error('[Login with facebook error]', error);
+        }
     }
 }
 
@@ -44,16 +68,35 @@ export const loginWithGoogle = async () => {
     try {
         const googleLoginResult = await GoogleSignin.signIn();
         const credential = GoogleAuthProvider.credential(googleLoginResult.idToken, googleLoginResult.accessToken);
-        const loginWithCredentialResult = await auth.signInWithCredential(credential);
-        if (loginWithCredentialResult.additionalUserInfo.isNewUser) {
-            createUserProfile(loginWithCredentialResult.user.uid, loginWithCredentialResult.user.email, loginWithCredentialResult.user.photoURL);
+        let loginWithCredentialResult;
+
+        if (auth.currentUser) {
+            loginWithCredentialResult = await auth.currentUser.linkWithCredential(credential);
         } else {
-            console.log('Old user', loginWithCredentialResult.user.uid);
+            loginWithCredentialResult = await auth.signInWithCredential(credential);
+            createUserProfile(loginWithCredentialResult.user.uid);
         }
+
+        const { uid, email } = loginWithCredentialResult.user;
+        store.dispatch(userIsLogged({ email, authProvider: GOOGLE_PROVIDER }));
+        updateUserInfo(uid, { email });
 
         return loginWithCredentialResult;
     } catch (error) {
-        console.error('[Login with google error]', error);
+        if (error.code === CREDENTIAL_ALREADY_IN_USE) {
+            const oldUid = auth.currentUser.uid;
+            await deleteUserAccount();
+            const googleLoginResult = await GoogleSignin.signIn();
+            const credential = GoogleAuthProvider.credential(googleLoginResult.idToken, googleLoginResult.accessToken);
+            const loginWithCredentialResult = await auth.signInWithCredential(credential);
+            store.dispatch(userIsLogged({ authProvider: GOOGLE_PROVIDER }));
+
+            mergeUserPublications(oldUid, loginWithCredentialResult.user.uid);
+
+            return loginWithCredentialResult;
+        } else {
+            console.error('[Login with google error]', error);
+        }
     }
 }
 
@@ -79,10 +122,20 @@ export const setupGoogleSignin = () => {
  */
 export const signInWithEmail = async (email, password) => {
     try {
-        const result = await auth.createUserWithEmailAndPassword(email, password);
-        createUserProfile(result.user.uid, result.user.email, result.user.photoURL);
+        let linkedCredentials;
 
-        return result;
+        if (auth.currentUser) {
+            const credential = EmailAuthProvider.credential(email, password);
+            linkedCredentials = await auth.currentUser.linkWithCredential(credential);
+        } else {
+            linkedCredentials = await auth.createUserWithEmailAndPassword(email, password);
+            createUserProfile(linkedCredentials.user.uid);
+        }
+
+        updateUserInfo(linkedCredentials.user.uid, { email });
+        store.dispatch(userIsLogged({ email, authProvider: PASSWORD_PROVIDER }));
+
+        return linkedCredentials;
     } catch (error) {
         let message = translate('auth.signInWithEmail.defaultErrorMessage');;
         switch (error.code) {
@@ -116,7 +169,20 @@ export const signInWithEmail = async (email, password) => {
  */
 export const logInWithEmail = async (email, password, showError = true) => {
     try {
-        return await auth.signInWithEmailAndPassword(email, password);
+        let loginWithCredentialResult;
+
+        if (auth.currentUser) {
+            const oldUid = auth.currentUser.uid;
+            await deleteUserAccount();
+            loginWithCredentialResult = await auth.signInWithEmailAndPassword(email, password);
+            mergeUserPublications(oldUid, loginWithCredentialResult.user.uid);
+        } else {
+            loginWithCredentialResult = await auth.signInWithEmailAndPassword(email, password);
+        }
+
+        store.dispatch(userIsLogged({ authProvider: PASSWORD_PROVIDER }));
+
+        return loginWithCredentialResult;
     } catch (error) {
         if (showError) {
             Alert.alert(
@@ -178,4 +244,9 @@ export const closeSession = async () => {
     } catch (error) {
         console.error('[Close ession error]', error);
     }
+}
+
+export const deleteUserAccount = async () => {
+    removeUserProfile(auth.currentUser.uid);
+    return await auth.currentUser.delete();
 }
