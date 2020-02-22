@@ -83,3 +83,4 @@ export const DEGREES_LONGITUDE_PER_MILE = 0.0181818181818182;
 export const WRONG_PASSWORD = 'auth/wrong-password';
 export const WEAK_PASSWORD = 'auth/weak-password';
 export const REQUIRES_RECENT_LOGIN = 'auth/requires-recent-login';
+export const CREDENTIAL_ALREADY_IN_USE = 'auth/credential-already-in-use';
