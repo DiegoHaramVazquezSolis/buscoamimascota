@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Image, View, ScrollView, Text } from 'react-native';
+import { SafeAreaView, Image, View, ScrollView, TextInput } from 'react-native';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 import styles from './styles';
@@ -53,7 +53,13 @@ const PublicationDetailsScreen = ({ navigation }) => {
                 </ScrollView>
             </View>
             <View style={styles.descriptionContainer}>
-                <Text style={styles.description}>{description.split('/n').map((paragraph) => `${paragraph.trim()}\n`)}</Text>
+                <ScrollView>
+                    <TextInput
+                        style={styles.description}
+                        editable={false}
+                        multiline
+                        value={description} />
+                </ScrollView>
             </View>
             <CheckBox
                 disabled
