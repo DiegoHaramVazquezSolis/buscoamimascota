@@ -27,6 +27,7 @@ const navigatorConfig = {
     initialRouteName: LOSTED_PUBLICATIONS_LIST_SCREEN,
     lazy: true,
     tabBarOptions: {
+        upperCaseLabel: false,
         activeTintColor: '#FFF',
         inactiveTintColor: DISABLED_COLOR,
         backBehavior: 'order',
