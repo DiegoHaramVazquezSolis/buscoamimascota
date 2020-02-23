@@ -41,6 +41,13 @@
             "AdoptionPublicationsListScreen": "En Adopción"
         }
     },
+    "LostedPublicationsActions": {
+        "PermissionsDialog": {
+            "title": "Permisos necesarios",
+            "message": "Para mostrarte mascotas perdidas y en adopción cerca de ti, así como para notificarte de nuevos casos Busco a mi mascota requiere tu permiso para acceder a tu ubicación",
+            "acceptButton": "Aceptar"
+        }
+    },
     "CarouselOnBoardingIntroduction": {
         "search": {
             "title": "Busca",

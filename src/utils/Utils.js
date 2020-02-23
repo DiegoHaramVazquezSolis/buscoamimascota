@@ -1,7 +1,10 @@
-import geohash from 'ngeohash';
+import Geolocation from '@react-native-community/geolocation';
+import geohash, { decode } from 'ngeohash';
 
-import { firestoreValues } from '../services/firebase';
+import { firestoreValues, auth } from '../services/firebase';
 import { DEGREES_LATITUDE_PER_MILE, DEGREES_LONGITUDE_PER_MILE } from './Constants';
+
+import { userRef } from '../services/database';
 
 /**
  * Return the geo hash of the given location
@@ -113,4 +116,37 @@ export function getCurrentUTCDate() {
  */
 export function convertUTCDateToLocalDate(UTCDate) {
     return new Date(UTCDate.getTime() - UTCDate.getTimezoneOffset() * 60 * 1000);
+}
+
+export function loadPublicationsBasedOnLocation(userGeoHash, onGetGeoHashSuccess, onFail) {
+
+    /**
+     * If we know the location of the user we use it to show the nearest publications
+     */
+    if (userGeoHash) {
+        const decodedUserGeoHash = decode(userGeoHash);
+        onGetGeoHashSuccess(getGeohashRange(decodedUserGeoHash.latitude, decodedUserGeoHash.longitude, 10));
+
+    } else {
+        Geolocation.getCurrentPosition((locationInfo) => {
+            const geoHash = geohash.encode(locationInfo.coords.latitude, locationInfo.coords.longitude, 10);
+
+            /**
+             * Save the user location, so we do not need to check the location every time the user open
+             * the app
+             */
+            userRef.child(auth.currentUser.uid).update({ geoHash });
+
+            onGetGeoHashSuccess(getGeohashRange(locationInfo.coords.latitude, locationInfo.coords.longitude, 10));
+        }, (error) => {
+            console.log(error);
+            if (error.code === 2) {
+                console.log('Here put a cool Dialog or Snackbar telling to the user that enable their location');
+            } else if (error.code === 3) {
+                console.log('Here put a cool Dialog or Snackbar telling to the user that we can`t determine their location');
+            }
+
+            onFail();
+        });
+    }
 }

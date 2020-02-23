@@ -1,10 +1,11 @@
-import Geolocation from '@react-native-community/geolocation';
+import { PermissionsAndroid } from 'react-native';
 
 import { GET_ADOPTION_PUBLICATION, REMOVE_ADOPTION_PUBLICATION, REMOVE_ALL_ADOPTION_PUBLICATIONS, ON_BOARDING_VIEWED_AS } from '../../utils/Constants';
 
-import { adoptionRef } from '../../services/database';
+import { adoptionRef, userRef } from '../../services/database';
+import { auth } from '../../services/firebase';
 
-import { getGeohashRange } from '../../utils/Utils';
+import { loadPublicationsBasedOnLocation } from '../../utils/Utils';
 import { getAsyncStorageData } from '../../utils/LocalStorage';
 
 /**
@@ -31,52 +32,14 @@ export const removeAllPublicationsSuccess = () => ({ type: REMOVE_ALL_ADOPTION_P
 export const getAdoptionPublications = () => async (dispatch) => {
     try {
         if (await getAsyncStorageData(ON_BOARDING_VIEWED_AS) === 'true') {
-            Geolocation.getCurrentPosition((locationInfo) => {
-                const geoHashRange = getGeohashRange(locationInfo.coords.latitude, locationInfo.coords.longitude);
-
-                /**
-                 * If the location of the user is available we use it to filter only the 25 closest publications
-                 * Closest: In a range of 5km or less
-                 */
-                adoptionRef.where("geohash", ">=",geoHashRange.lowerGeoHash).where("geohash", "<=", geoHashRange.upperGeoHash).limit(25)
-                .onSnapshot((adoptionPublicationsSnap) => {
-                    const sortedAdoptionPublications = adoptionPublicationsSnap.docChanges().sort((a, b) => a.doc.data().timeStamp > b.doc.data().timeStamp);
-
-                    return dispatch(manageAdoptionPublications(sortedAdoptionPublications));
-                }, (error) => {
-                    console.error('[AdoptionPublicationsActions => Publication listener]:', error);
-                });
-            }, (error) => {
-                if (error.code === 1) {
-                    console.log('Here put a cool Dialog or Snackbar telling to the user that we don`t have permission to use their location');
-                } else if (error.code === 2) {
-                    console.log('Here put a cool Dialog or Snackbar telling to the user that enable their location');
-                } else if (error.code === 3) {
-                    console.log('Here put a cool Dialog or Snackbar telling to the user that we can`t determine their location');
-                }
-
-                /**
-                 * If the location of the user isn't available we just take the 25 most recent publications
-                 */
-                adoptionRef.orderBy('timeStamp').limit(25)
-                .onSnapshot((adoptionPublicationsSnap) => {
-
-                    return dispatch(manageAdoptionPublications(adoptionPublicationsSnap.docChanges()));
-                }, (error) => {
-                    console.error('[AdoptionPublicationsActions => Publication listener]:', error);
-                });
-            });
+            const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+            if (granted){
+                loadPetsBasedOnLocation(dispatch);
+            } else {
+                loadPetsByTimeStamp(dispatch);
+            }
         } else {
-            /**
-             * If the location of the user isn't available we just take the 25 most recent publications
-             */
-            adoptionRef.orderBy('timeStamp').limit(25)
-            .onSnapshot((adoptionPublicationsSnap) => {
-
-                return dispatch(manageAdoptionPublications(adoptionPublicationsSnap.docChanges()));
-            }, (error) => {
-                console.error('[AdoptionPublicationsActions => Publication listener]:', error);
-            });
+            loadPetsByTimeStamp(dispatch);
         }
     } catch (error) {
         console.error(error);
@@ -101,5 +64,37 @@ const manageAdoptionPublications = (docChanges) => (dispatch) => {
 
             return dispatch(removePublicationSuccess(updatedPublication.doc.id));
         }
+    });
+}
+
+const loadPetsBasedOnLocation = async (dispatch) => {
+
+    /**
+     * We load the publications at the same time when we load the user data, on configureStore
+     * so probably at this point we can not get the user data yet, so we make a direct query
+     * to the field
+     */
+    let userGeoHash = (await userRef.child(auth.currentUser.uid).child('geoHash').once('value')).val();
+
+    function loadPets(geoHashRange) {
+        adoptionRef.where("geohash", ">=",geoHashRange.lowerGeoHash).where("geohash", "<=", geoHashRange.upperGeoHash).limit(25)
+        .onSnapshot((adoptionPublicationsSnap) => {
+            const sortedAdoptionPublications = adoptionPublicationsSnap.docChanges().sort((a, b) => a.doc.data().timeStamp > b.doc.data().timeStamp);
+
+            return dispatch(manageAdoptionPublications(sortedAdoptionPublications));
+        }, (error) => {
+            console.error('[AdoptionPublicationsActions => Publication listener]:', error);
+        });
+    }
+
+    loadPublicationsBasedOnLocation(userGeoHash, loadPets, () => loadPetsByTimeStamp(dispatch));
+}
+
+const loadPetsByTimeStamp = (dispatch) => {
+    adoptionRef.orderBy('timeStamp').limit(25).onSnapshot((adoptionPublicationsSnap) => {
+
+        return dispatch(manageAdoptionPublications(adoptionPublicationsSnap.docChanges()));
+    }, (error) => {
+        console.error('[AdoptionPublicationsActions => Publication listener]:', error);
     });
 }

@@ -70,6 +70,7 @@ export const LOADING_DATA_SCREEN = 'LoadingDataScreen';
 
 // Async storage constants
 export const ON_BOARDING_VIEWED_AS = 'on_boarding_viewed';
+export const ASK_USER_FOR_LOCATION = 'ASK_USER_FOR_LOCATION';
 
 // API Key constants
 export const BATTUTA_API_KEY = 'b60ad6a578b6decda04575a54429b117';
