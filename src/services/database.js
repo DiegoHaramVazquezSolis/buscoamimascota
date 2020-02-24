@@ -98,6 +98,7 @@ export const createPetPublication = async (losted, author, petData, image) => {
         }
 
         return {
+            id: publication.id,
             author,
             image: uploadedImageUrl,
             ...petData

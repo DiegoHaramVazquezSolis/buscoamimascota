@@ -6,10 +6,13 @@ import GlobalStyles from './../../utils/GlobalStyles';
 import styles from './styles';
 
 import { ON_BOARDING_VIEWED_AS, MAIN_BOTTOM_NAVIGATOR } from '../../utils/Constants';
+import { messaging } from '../../services/firebase';
 
 import { storeAsyncStorageData } from './../../utils/LocalStorage';
 import { translate } from '../../services/i18n';
 import { loginAnonymously } from '../../services/auth';
+import { updateUserInfo } from '../../services/database';
+
 
 import CarouselOnBoardingIntroduction from './../../components/complex/CarouselOnBoardingIntroduction/CarouselOnBoardingIntroduction';
 import StepsProgressIndicator from './../../components/complex/StepsProgressIndicator/StepsProgressIndicator';
@@ -25,8 +28,9 @@ const OnBoardingIntroductionScreen = ({ navigation = {} }) => {
          * and navigate to the principal screen
          */
         async function setInitialConfiguration() {
+            const newUser = await loginAnonymously();
+            updateUserInfo(newUser.uid, { token: await messaging.getToken() });
             storeAsyncStorageData(ON_BOARDING_VIEWED_AS, 'true');
-            await loginAnonymously();
             navigation.navigate(MAIN_BOTTOM_NAVIGATOR);
         }
 

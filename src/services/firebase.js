@@ -4,12 +4,14 @@ import '@react-native-firebase/database';
 import '@react-native-firebase/dynamic-links';
 import '@react-native-firebase/auth';
 import '@react-native-firebase/storage';
+import '@react-native-firebase/messaging';
 
 export const firestoreDatabase = firebase.firestore();
 export const realTimeDatabase = firebase.database();
 export const firebaseDynamicLinksGenerator = firebase.dynamicLinks();
 export const auth = firebase.auth();
 export const storage = firebase.storage();
+export const messaging = firebase.messaging();
 
 // Auth providers
 export const FacebookAuthProvider = firebase.auth.FacebookAuthProvider;

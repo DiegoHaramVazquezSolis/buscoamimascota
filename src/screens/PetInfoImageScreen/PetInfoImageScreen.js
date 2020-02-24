@@ -36,6 +36,7 @@ const imagePickerOptions = {
 
 const PetInfoImageScreen = ({ navigation, uid = '' }) => {
     const [image, setImage] = useState({ uri: '', data: '' });
+    const [publishing, setPublishing] = useState(false);
 
     const getImage = () => {
         if (navigation.state.params.losted) {
@@ -56,7 +57,8 @@ const PetInfoImageScreen = ({ navigation, uid = '' }) => {
     }
 
     const publishAndContinue = async () => {
-        if (image.data !== '') {
+        if (image.data !== '' && !publishing) {
+            setPublishing(true);
             const { location, contact, formData, losted } = navigation.state.params;
             const GeoPointLocation = createFirestoreGeoPoint(location);
             const petData = {
@@ -68,7 +70,7 @@ const PetInfoImageScreen = ({ navigation, uid = '' }) => {
 
             const publicationData = await createPetPublication(losted, uid, petData, image.data);
 
-            navigation.navigate(PUBLICATION_DETAILS_STACK_NAVIGATOR, { ...publicationData });
+            navigation.navigate(PUBLICATION_DETAILS_STACK_NAVIGATOR, { ...publicationData, losted });
         } else {
             Alert.alert(
                 translate('PetInfoImageScreen.errorMessage.title'),
@@ -77,6 +79,7 @@ const PetInfoImageScreen = ({ navigation, uid = '' }) => {
                     { text: translate('PetInfoImageScreen.errorMessage.acceptButton') },
                 ]
             );
+            setPublishing(false);
         }
     }
 
@@ -106,7 +109,8 @@ const PetInfoImageScreen = ({ navigation, uid = '' }) => {
                 <View style={GlobalStyles.mt24}>
                     <ContainedButton
                         size='md'
-                        onPress={publishAndContinue}>
+                        onPress={publishAndContinue}
+                        disabled={publishing}>
                         {translate('PetInfoImageScreen.continueButton')}
                     </ContainedButton>
                 </View>

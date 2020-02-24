@@ -74,7 +74,7 @@ const loadPetsBasedOnLocation = async (dispatch) => {
      * so probably at this point we can not get the user data yet, so we make a direct query
      * to the field
      */
-    let userGeoHash = (await userRef.child(auth.currentUser.uid).child('geoHash').once('value')).val();
+    let userGeoHash = (await userRef.child(auth.currentUser.uid).child('geohash').once('value')).val();
 
     function loadPets(geoHashRange) {
         adoptionRef.where("geohash", ">=",geoHashRange.lowerGeoHash).where("geohash", "<=", geoHashRange.upperGeoHash).limit(25)

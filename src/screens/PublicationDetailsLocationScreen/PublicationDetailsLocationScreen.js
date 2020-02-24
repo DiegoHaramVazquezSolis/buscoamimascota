@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import MapView, { PROVIDER_DEFAULT, Marker } from 'react-native-maps';
 
 import GlobalStyles from '../../utils/GlobalStyles';

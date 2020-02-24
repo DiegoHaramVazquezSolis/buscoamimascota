@@ -3,7 +3,7 @@ import { widthPercentageToDP, heightPercentageToDP } from 'react-native-responsi
 
 export default styles = StyleSheet.create({
     carouselHeight: {
-        height: heightPercentageToDP(100) * .71
+        height: heightPercentageToDP(80)
     },
     flexGrow1: {
         flexGrow: 1

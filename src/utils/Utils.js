@@ -32,7 +32,7 @@ export function getGeohashRange(latitude = 20.6725076, longitude = -103.3866236,
         lowerGeoHash: geohash.encode(lowerLat, lowerLon, 10),
         upperGeoHash: geohash.encode(upperLat, upperLon, 10)
     };
-  };
+};
 
 /**
  * @description Truncate a string if the length of the string is greater or equal than maxLength
@@ -119,25 +119,26 @@ export function convertUTCDateToLocalDate(UTCDate) {
 }
 
 export function loadPublicationsBasedOnLocation(userGeoHash, onGetGeoHashSuccess, onFail) {
+    const DISTANCE_TO_SEARCH_PUBLICATIONS = 4 / 1.60934; // Kilometers / Miles per kilometer
 
     /**
      * If we know the location of the user we use it to show the nearest publications
      */
     if (userGeoHash) {
         const decodedUserGeoHash = decode(userGeoHash);
-        onGetGeoHashSuccess(getGeohashRange(decodedUserGeoHash.latitude, decodedUserGeoHash.longitude, 10));
+        onGetGeoHashSuccess(getGeohashRange(decodedUserGeoHash.latitude, decodedUserGeoHash.longitude, DISTANCE_TO_SEARCH_PUBLICATIONS));
 
     } else {
         Geolocation.getCurrentPosition((locationInfo) => {
-            const geoHash = geohash.encode(locationInfo.coords.latitude, locationInfo.coords.longitude, 10);
+            const geohash = geohash.encode(locationInfo.coords.latitude, locationInfo.coords.longitude, 10);
 
             /**
              * Save the user location, so we do not need to check the location every time the user open
              * the app
              */
-            userRef.child(auth.currentUser.uid).update({ geoHash });
+            userRef.child(auth.currentUser.uid).update({ geohash });
 
-            onGetGeoHashSuccess(getGeohashRange(locationInfo.coords.latitude, locationInfo.coords.longitude, 10));
+            onGetGeoHashSuccess(getGeohashRange(locationInfo.coords.latitude, locationInfo.coords.longitude, DISTANCE_TO_SEARCH_PUBLICATIONS));
         }, (error) => {
             console.log(error);
             if (error.code === 2) {

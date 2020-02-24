@@ -14,6 +14,8 @@ import { signOut, userIsLogged } from '../redux/actions/UserActions';
 export const loginAnonymously = async () => {
     const { user } = await auth.signInAnonymously();
     createUserProfile(user.uid, null, null);
+
+    return user;
 }
 
 /**

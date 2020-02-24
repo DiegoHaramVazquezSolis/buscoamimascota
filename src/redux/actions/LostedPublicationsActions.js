@@ -3,7 +3,7 @@ import { PermissionsAndroid, Alert } from 'react-native';
 import { GET_LOSTED_PUBLICATION, REMOVE_LOSTED_PUBLICATION, REMOVE_ALL_LOSTED_PUBLICATIONS, ON_BOARDING_VIEWED_AS, ASK_USER_FOR_LOCATION } from '../../utils/Constants';
 
 import { lostedRef, userRef } from '../../services/database';
-import { auth } from '../../services/firebase';
+import { auth, realTimeDatabase } from '../../services/firebase';
 
 import { loadPublicationsBasedOnLocation } from '../../utils/Utils';
 import { getAsyncStorageData, storeAsyncStorageData } from '../../utils/LocalStorage';
@@ -84,7 +84,7 @@ const loadPetsBasedOnLocation = async (dispatch) => {
      * so probably at this point we can not get the user data yet, so we make a direct query
      * to the field
      */
-    let userGeoHash = (await userRef.child(auth.currentUser.uid).child('geoHash').once('value')).val();
+    let userGeoHash = (await userRef.child(auth.currentUser.uid).child('geohash').once('value')).val();
     const locationPermissionGranted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
 
     if (!userGeoHash || !locationPermissionGranted) {
@@ -105,7 +105,7 @@ const loadPetsBasedOnLocation = async (dispatch) => {
     }
 
     function loadPets(geoHashRange) {
-        lostedRef.where("geohash", ">=",geoHashRange.lowerGeoHash).where("geohash", "<=", geoHashRange.upperGeoHash).limit(25)
+        lostedRef.where("geohash", ">=", geoHashRange.lowerGeoHash).where("geohash", "<=", geoHashRange.upperGeoHash).limit(25)
         .onSnapshot((lostedPublicationsSnap) => {
             const sortedLostedPublications = lostedPublicationsSnap.docChanges().sort((a, b) => a.doc.data().timeStamp > b.doc.data().timeStamp);
 

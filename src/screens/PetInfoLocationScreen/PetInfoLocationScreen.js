@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect, useRef } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import MapView, { PROVIDER_DEFAULT, Marker } from 'react-native-maps';
 
@@ -26,7 +26,7 @@ const PetInfoLocationScreen = ({ navigation }) => {
         }
     };
 
-    reducer = (prevState, state) => {
+    const reducer = (prevState, state) => {
         return {...prevState, ...state};
     }
 
@@ -58,34 +58,36 @@ const PetInfoLocationScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
-            <View style={styles.separator} />
-            <ScreenSubtitle>
-                {translate('PetInfoLocationScreen.subtitle')}
-            </ScreenSubtitle>
-            <View style={[GlobalStyles.mt12, styles.map]}>
-                <MapView
-                    ref={map}
-                    showsUserLocation={true}
-                    provider={PROVIDER_DEFAULT}
-                    style={styles.map}
-                    onPress={(event) => setLastKnownLocation(event.nativeEvent.coordinate)}
-                    initialRegion={state.initialRegion}>
-                    {state.location.hasOwnProperty('latitude') && state.location.hasOwnProperty('longitude') &&
-                        <Marker
-                            coordinate={state.location}
-                            title={translate('PetInfoLocationScreen.lastKnownLocation')} />
-                    }
-                </MapView>
-            </View>
-            {state.location.hasOwnProperty('latitude') && state.location.hasOwnProperty('longitude') &&
-                <View style={[GlobalStyles.alignSelfEnd, GlobalStyles.mt24, GlobalStyles.mr16]}>
-                    <ContainedButton
-                        size='sm'
-                        onPress={saveAndContinue}>
-                        {translate('PetInfoLocationScreen.continueButton')}
-                    </ContainedButton>
+            <ScrollView>
+                <View style={styles.separator} />
+                <ScreenSubtitle>
+                    {translate('PetInfoLocationScreen.subtitle')}
+                </ScreenSubtitle>
+                <View style={[GlobalStyles.mt12, styles.map]}>
+                    <MapView
+                        ref={map}
+                        showsUserLocation={true}
+                        provider={PROVIDER_DEFAULT}
+                        style={styles.map}
+                        onPress={(event) => setLastKnownLocation(event.nativeEvent.coordinate)}
+                        initialRegion={state.initialRegion}>
+                        {state.location.hasOwnProperty('latitude') && state.location.hasOwnProperty('longitude') &&
+                            <Marker
+                                coordinate={state.location}
+                                title={translate('PetInfoLocationScreen.lastKnownLocation')} />
+                        }
+                    </MapView>
                 </View>
-            }
+                {state.location.hasOwnProperty('latitude') && state.location.hasOwnProperty('longitude') &&
+                    <View style={[GlobalStyles.alignSelfEnd, GlobalStyles.mt24, GlobalStyles.mr16]}>
+                        <ContainedButton
+                            size='sm'
+                            onPress={saveAndContinue}>
+                            {translate('PetInfoLocationScreen.continueButton')}
+                        </ContainedButton>
+                    </View>
+                }
+            </ScrollView>
         </SafeAreaView>
     );
 }
