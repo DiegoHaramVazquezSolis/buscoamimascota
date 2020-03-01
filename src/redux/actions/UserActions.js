@@ -47,7 +47,7 @@ export const checkIfUserIsLogged = () => (dispatch) => {
                      * Save the user location, so we do not need to check the location every time the user open
                      * the app
                      */
-                    userRef.child(user.uid).update({ geohash });
+                    //userRef.child(user.uid).update({ geohash });
                 }, (error) => {
                     console.log(error);
                 });

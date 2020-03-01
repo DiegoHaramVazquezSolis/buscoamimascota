@@ -3,7 +3,7 @@ import { PermissionsAndroid, Alert } from 'react-native';
 import { GET_LOSTED_PUBLICATION, REMOVE_LOSTED_PUBLICATION, REMOVE_ALL_LOSTED_PUBLICATIONS, ON_BOARDING_VIEWED_AS, ASK_USER_FOR_LOCATION } from '../../utils/Constants';
 
 import { lostedRef, userRef } from '../../services/database';
-import { auth, realTimeDatabase } from '../../services/firebase';
+import { auth } from '../../services/firebase';
 
 import { loadPublicationsBasedOnLocation } from '../../utils/Utils';
 import { getAsyncStorageData, storeAsyncStorageData } from '../../utils/LocalStorage';

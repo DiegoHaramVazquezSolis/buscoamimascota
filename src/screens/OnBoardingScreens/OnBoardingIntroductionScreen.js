@@ -60,7 +60,7 @@ const OnBoardingIntroductionScreen = ({ navigation = {} }) => {
     return (
         <SafeAreaView style={[ GlobalStyles.flex1, GlobalStyles.alignItemsCenter ]}>
             <CarouselOnBoardingIntroduction determineIndexWithScrollPosition={determineIndexWithScrollPosition} />
-            <View style={styles.marginButton}>
+            <View>
                 <ContainedButton
                     size='md'
                     onPress={getStarted}

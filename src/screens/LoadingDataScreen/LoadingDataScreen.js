@@ -34,18 +34,25 @@ const LoadingDataScreen = ({ navigation }) => {
 
                     /**
                      * When the user opens the app through a push notification the userInteractions is equal to undefined
-                     * When the user is on the app and press the notification userInteraction is true
+                     * When the user is on the app and press the notification userInteraction is true, we only want to execute
+                     * this block of code if the user press the notification
                      */
                     if (userInteraction === undefined || userInteraction) {
                         if (navigateTo === PUBLICATION_DETAILS_STACK_NAVIGATOR && publicationId) {
                             let publication;
 
                             /**
-                             * All the fields we have on the data field of the notification are not casted when they
-                             * becomes, in this case we send a boolean but we receive a string, so we need to make
-                             * the comparision with the string 'true'
+                             * All the fields received from push notifications are not casted when they
+                             * becomes, so we need to cast it manually
                              */
-                            if (losted === 'true') {
+                            losted = JSON.parse(losted);
+
+                            if (losted) {
+
+                                /**
+                                 * We can not know if the publication is already on the redux data, so we load the data
+                                 * and send it as a navigation param
+                                 */
                                 publication = await lostedRef.doc(publicationId).get();
                             } else {
                                 publication = await adoptionRef.doc(publicationId).get();

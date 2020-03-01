@@ -41,8 +41,7 @@ const ChoosePublicationTypeScreen = ({ navigation }) => (
 ChoosePublicationTypeScreen.navigationOptions = ({ navigation }) => ({
     title: '',
     headerStyle: {
-        backgroundColor: PRIMARY_COLOR,
-        height: heightPercentageToDP(10)
+        backgroundColor: PRIMARY_COLOR
     },
     headerTintColor: '#fff',
     headerRight: () => <CloseRightButton onPress={() => navigation.dismiss()} />,

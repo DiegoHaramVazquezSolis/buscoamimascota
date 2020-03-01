@@ -55,8 +55,7 @@ const PublicationDetailsLocationScreen = ({ navigation }) => {
 PublicationDetailsLocationScreen.navigationOptions = ({ navigation }) => ({
     title: navigation.state.params.name,
     headerStyle: {
-        backgroundColor: PRIMARY_COLOR,
-        height: heightPercentageToDP(10)
+        backgroundColor: PRIMARY_COLOR
     },
     headerRight: () => <PublicationDetailsRightButtons navigation={navigation} {...navigation.state.params} />,
     headerTintColor: '#fff',

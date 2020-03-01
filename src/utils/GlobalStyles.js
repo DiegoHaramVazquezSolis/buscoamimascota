@@ -110,8 +110,7 @@ export default GlobalStyles = StyleSheet.create({
         marginLeft: 24
     },
     customStackNavigatorHeaderStyle: {
-        backgroundColor: PRIMARY_COLOR,
-        height: heightPercentageToDP(10)
+        backgroundColor: PRIMARY_COLOR
     },
     link: {
         color: PRIMARY_COLOR,
