@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "android": "react-native run-android",
-    "force-android": "cd android && gradlew clean && cd.. && react-native run-android",
+    "android": "cd android && gradlew clean && cd.. && react-native run-android",
     "test": "jest",
     "lint": "eslint ."
   },
