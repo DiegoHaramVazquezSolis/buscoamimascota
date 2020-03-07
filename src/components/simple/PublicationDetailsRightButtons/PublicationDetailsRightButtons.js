@@ -14,7 +14,7 @@ import Menu from '../Menu/Menu';
 import ListItem from '../ListItem/ListItem';
 import CreateReportDialog from '../../complex/CreateReportDialog/CreateReportDialog';
 
-const PublicationDetailsRightButtons = ({ navigation, id = '', uid = '', isLogged = false }) => {
+const PublicationDetailsRightButtons = ({ navigation, id = '', uid = '', isLogged = false, author }) => {
     const initialState = {
         openOptionsMenu: false,
         openReportDialog: false
@@ -64,15 +64,19 @@ const PublicationDetailsRightButtons = ({ navigation, id = '', uid = '', isLogge
                     fill='#FFF'
                     style={styles.icon} />
             </TouchableHighlight>
-            <View style={styles.iconSeparator} />
-            <TouchableHighlight
-                onPress={() => setState({ openOptionsMenu: true })}
-                underlayColor='rgba(0, 0, 0, .1)'
-                style={styles.iconContainer}>
-                <Assets.svg.MoreOptionsIcon
-                    fill='#FFF'
-                    style={styles.icon} />
-            </TouchableHighlight>
+            {uid !== author &&
+                <>
+                    <View style={styles.iconSeparator} />
+                    <TouchableHighlight
+                        onPress={() => setState({ openOptionsMenu: true })}
+                        underlayColor='rgba(0, 0, 0, .1)'
+                        style={styles.iconContainer}>
+                        <Assets.svg.MoreOptionsIcon
+                            fill='#FFF'
+                            style={styles.icon} />
+                    </TouchableHighlight>
+                </>
+            }
             <Menu onClose={() => setState({ openOptionsMenu: false })} open={state.openOptionsMenu}>
                 <ListItem
                     onPress={subscribeToPublication}

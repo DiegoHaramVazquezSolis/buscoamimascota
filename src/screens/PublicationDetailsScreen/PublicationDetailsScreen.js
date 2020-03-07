@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { SafeAreaView, Image, View, ScrollView, TextInput } from 'react-native';
-import { heightPercentageToDP } from 'react-native-responsive-screen';
+import React, { useEffect, useState } from 'react';
+import { BackHandler, SafeAreaView, Image, View, ScrollView, TextInput } from 'react-native';
 
 import styles from './styles';
 import GlobalStyles from '../../utils/GlobalStyles';
 
-import { PRIMARY_COLOR, PUBLICATION_DETAILS_LOCATION_SCREEN } from '../../utils/Constants';
+import { PRIMARY_COLOR, PUBLICATION_DETAILS_LOCATION_SCREEN, LOSTED_PUBLICATIONS_LIST_SCREEN, ADOPTION_PUBLICATIONS_LIST_SCREEN } from '../../utils/Constants';
 
 import { translate } from '../../services/i18n';
 
@@ -20,6 +19,20 @@ const PublicationDetailsScreen = ({ navigation }) => {
     const [openContactDialog, setOpenContactDialog] = useState(false);
 
     const { image, location, name, specie, sex, description, losted, haveId, contact } = navigation.state.params;
+
+    useEffect(() => {
+        const backButonHandler = BackHandler.addEventListener('hardwareBackPress', androidBackButonHandler);
+
+        return () => {
+            backButonHandler.remove();
+        };
+    }, []);
+
+    const androidBackButonHandler = () => {
+        navigation.navigate(losted ? LOSTED_PUBLICATIONS_LIST_SCREEN : ADOPTION_PUBLICATIONS_LIST_SCREEN);
+
+        return true;
+    }
 
     return (
         <SafeAreaView style={[GlobalStyles.flex1, GlobalStyles.alignItemsCenter]}>
