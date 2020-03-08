@@ -12,12 +12,14 @@ export const reportRef = realTimeDatabase.ref('/Report');
  * @param {string} uid User identifier
  * @param {string | null} email email direction of the new user
  * @param {string | null} photoURL Url from the profile image of the user
+ * @param {string | null} displayName Selected displayName of the user
  */
-export const createUserProfile = (uid, email, photoURL) => {
+export const createUserProfile = (uid, email, photoURL, displayName) => {
     try {
         userRef.child(uid).update({
             email,
             photoURL,
+            displayName,
             lostedPetsNotifications: true,
             adoptionPetsNotifications: true
         });

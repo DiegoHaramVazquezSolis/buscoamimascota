@@ -34,7 +34,7 @@ export const getLostedPublications = () => async (dispatch) => {
     try {
         if (await getAsyncStorageData(ON_BOARDING_VIEWED_AS) === 'true') {
             const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-            if (granted) {
+            if (granted && auth.currentUser) {
                 loadPetsBasedOnLocation(dispatch);
             } else {
                 if (!(await getAsyncStorageData(ASK_USER_FOR_LOCATION))) {
@@ -42,7 +42,7 @@ export const getLostedPublications = () => async (dispatch) => {
                         translate('LostedPublicationsActions.PermissionsDialog.title'),
                         translate('LostedPublicationsActions.PermissionsDialog.message'),
                         [
-                            { text: translate('LostedPublicationsActions.PermissionsDialog.acceptButton'), onPress: () => loadPetsBasedOnLocation(dispatch) }
+                            { text: translate('LostedPublicationsActions.PermissionsDialog.acceptButton'), onPress: () => { if (auth.currentUser) loadPetsBasedOnLocation(dispatch); else loadPetsByTimeStamp(dispatch); } }
                         ]
                     );
                 } else {

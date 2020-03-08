@@ -18,7 +18,9 @@ const LoadingDataScreen = ({ navigation }) => {
             Orientation.lockToPortrait();
 
             messaging.onTokenRefresh((token) => {
-                updateUserInfo(auth.currentUser.uid, { token });
+                if (auth.currentUser) {
+                    updateUserInfo(auth.currentUser.uid, { token });
+                }
             });
 
             PushNotification.configure({
@@ -72,7 +74,7 @@ const LoadingDataScreen = ({ navigation }) => {
              * the onboarding, in any other initialization of the app
              * the user must be redirected to the MainBottomNavigator
              */
-            if(await getAsyncStorageData(ON_BOARDING_VIEWED_AS) === 'true') {
+            if (await getAsyncStorageData(ON_BOARDING_VIEWED_AS) === 'true') {
                 const initialLink = await firebaseDynamicLinksGenerator.getInitialLink();
                 if (initialLink) {
                     console.log('Initial link:', initialLink);

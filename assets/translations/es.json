@@ -164,6 +164,7 @@
     "CreateAccountEmailScreen": {
         "title": "Registrate",
         "emailPlaceholder": "Email",
+        "namePlaceholder": "Nombre",
         "passwordPlaceholder": "Contraseña",
         "confirmPasswordPlaceholder": "Confirmar contraseña",
         "advertisment": {

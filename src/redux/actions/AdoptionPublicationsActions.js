@@ -33,7 +33,7 @@ export const getAdoptionPublications = () => async (dispatch) => {
     try {
         if (await getAsyncStorageData(ON_BOARDING_VIEWED_AS) === 'true') {
             const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-            if (granted){
+            if (granted && auth.currentUser) {
                 loadPetsBasedOnLocation(dispatch);
             } else {
                 loadPetsByTimeStamp(dispatch);

@@ -1,9 +1,7 @@
 import Geolocation from '@react-native-community/geolocation';
 import { encode } from 'ngeohash';
 
-import { USER_LOGGED, USER_NOT_LOGGED, USER_SIGN_OUT, ON_BOARDING_VIEWED_AS } from '../../utils/Constants';
-
-import { getAsyncStorageData } from '../../utils/LocalStorage';
+import { USER_LOGGED, USER_NOT_LOGGED, USER_SIGN_OUT } from '../../utils/Constants';
 
 import { auth, ANONYMOUS_PROVIDER } from '../../services/firebase';
 import { userRef } from '../../services/database';
@@ -36,6 +34,8 @@ export const checkIfUserIsLogged = () => (dispatch) => {
                 providerData = user.providerData[0].providerId;
             }
 
+            const { uid, email, isAnonymous } = user;
+
             /**
              * Only save the location of the user if the user has granted permission to do it
              */
@@ -47,7 +47,7 @@ export const checkIfUserIsLogged = () => (dispatch) => {
                      * Save the user location, so we do not need to check the location every time the user open
                      * the app
                      */
-                    userRef.child(user.uid).update({ geohash });
+                    userRef.child(uid).update({ geohash });
                 }, (error) => {
                     console.log(error);
                 });
@@ -57,16 +57,16 @@ export const checkIfUserIsLogged = () => (dispatch) => {
              * Inmediatly notify that the user is logged and send the data that we have
              */
             dispatch(userIsLogged({
-                uid: user.uid,
-                email: user.email,
+                uid: uid,
+                email: email,
                 authProvider: providerData,
-                isAnonymous: user.isAnonymous
+                isAnonymous: isAnonymous
             }));
 
             /**
              * Get the user profile and add that info the the local data
              */
-            return userRef.child(user.uid).on('value', (userData) => {
+            return userRef.child(uid).on('value', (userData) => {
                 dispatch(userIsLogged({
                     ...userData.val()
                 }));

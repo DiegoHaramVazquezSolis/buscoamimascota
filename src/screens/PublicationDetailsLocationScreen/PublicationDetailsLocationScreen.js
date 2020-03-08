@@ -61,7 +61,6 @@ PublicationDetailsLocationScreen.navigationOptions = ({ navigation }) => ({
     headerTintColor: '#fff',
     headerBackTitle: null,
     headerTitleStyle: {
-        fontSize: 12,
         fontWeight: '700',
         letterSpacing: .2
     }

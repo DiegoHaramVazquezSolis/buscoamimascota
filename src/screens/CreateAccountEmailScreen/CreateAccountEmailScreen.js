@@ -13,11 +13,13 @@ import ContainedButton from '../../components/simple/ContainedButton/ContainedBu
 import ScreenTitle from '../../components/simple/ScreenTitle/ScreenTitle';
 
 const CreateAccountEmailScreen = ({ navigation }) => {
+    let nameRef = useRef();
     let passwordRef = useRef();
     let confirmPasswordRef = useRef();
 
     const initialState = {
         email: '',
+        name: '',
         password: '',
         confirmPassword: ''
     };
@@ -29,11 +31,11 @@ const CreateAccountEmailScreen = ({ navigation }) => {
     const [ state, setState ] = useReducer(reducer, initialState);
 
     const createAccountWithEmail = async () => {
-        const { email, password, confirmPassword } = state;
-        if (email !== '' && password !== '' && confirmPassword !== '') {
+        const { email, name, password, confirmPassword } = state;
+        if (email !== '', name !== '' && password !== '' && confirmPassword !== '') {
             if (password === confirmPassword) {
                 try {
-                    await signInWithEmail(email, password);
+                    await signInWithEmail(email, password, name);
                     navigation.dismiss();
                 } catch (error) {
                     console.log(error);
@@ -68,11 +70,19 @@ const CreateAccountEmailScreen = ({ navigation }) => {
                     <View style={styles.fieldContainer}>
                         <CustomTextInput
                             keyboardType='email-address'
-                            onSubmitEditing={() => passwordRef.current.focus()}
+                            onSubmitEditing={() => nameRef.current.focus()}
                             placeholder={translate('CreateAccountEmailScreen.emailPlaceholder')}
                             onChangeText={(email) => setState({ email })}
                             returnKeyType='next'
                             autoCapitalize='none' />
+                    </View>
+                    <View style={styles.fieldContainer}>
+                        <CustomTextInput
+                            reference={nameRef}
+                            onSubmitEditing={() => passwordRef.current.focus()}
+                            placeholder={translate('CreateAccountEmailScreen.namePlaceholder')}
+                            onChangeText={(name) => setState({ name })}
+                            returnKeyType='next' />
                     </View>
                     <View style={styles.fieldContainer}>
                         <CustomTextInput

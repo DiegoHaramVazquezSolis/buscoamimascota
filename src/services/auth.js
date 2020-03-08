@@ -13,7 +13,7 @@ import { signOut, userIsLogged } from '../redux/actions/UserActions';
 
 export const loginAnonymously = async () => {
     const { user } = await auth.signInAnonymously();
-    createUserProfile(user.uid, null, null);
+    createUserProfile(user.uid, null, null, null);
 
     return user;
 }
@@ -29,18 +29,9 @@ export const loginWithFacebook = async () => {
         } else {
             const accessToken = (await AccessToken.getCurrentAccessToken()).accessToken;
             const credential = FacebookAuthProvider.credential(accessToken);
-            let loginWithCredentialResult;
+            const loginWithCredentialResult = await handleSocialMediaAuthentication(credential);
 
-            if (auth.currentUser) {
-                loginWithCredentialResult = await auth.currentUser.linkWithCredential(credential);
-            } else {
-                loginWithCredentialResult = await auth.signInWithCredential(credential);
-                createUserProfile(loginWithCredentialResult.user.uid);
-            }
-
-            const { uid, email } = loginWithCredentialResult.user;
-            store.dispatch(userIsLogged({ email, authProvider: FACEBOOK_PROVIDER }));
-            updateUserInfo(uid, { email });
+            store.dispatch(userIsLogged({ email: loginWithCredentialResult.user.email, authProvider: FACEBOOK_PROVIDER }));
 
             return loginWithCredentialResult;
         }
@@ -70,18 +61,9 @@ export const loginWithGoogle = async () => {
     try {
         const googleLoginResult = await GoogleSignin.signIn();
         const credential = GoogleAuthProvider.credential(googleLoginResult.idToken, googleLoginResult.accessToken);
-        let loginWithCredentialResult;
+        const loginWithCredentialResult = await handleSocialMediaAuthentication(credential);
 
-        if (auth.currentUser) {
-            loginWithCredentialResult = await auth.currentUser.linkWithCredential(credential);
-        } else {
-            loginWithCredentialResult = await auth.signInWithCredential(credential);
-            createUserProfile(loginWithCredentialResult.user.uid);
-        }
-
-        const { uid, email } = loginWithCredentialResult.user;
-        store.dispatch(userIsLogged({ email, authProvider: GOOGLE_PROVIDER }));
-        updateUserInfo(uid, { email });
+        store.dispatch(userIsLogged({ email: loginWithCredentialResult.user.email, authProvider: GOOGLE_PROVIDER }));
 
         return loginWithCredentialResult;
     } catch (error) {
@@ -100,6 +82,25 @@ export const loginWithGoogle = async () => {
             console.error('[Login with google error]', error);
         }
     }
+}
+
+const handleSocialMediaAuthentication = async (credential) => {
+    let loginWithCredentialResult;
+
+    if (auth.currentUser) {
+        loginWithCredentialResult = await auth.currentUser.linkWithCredential(credential);
+        const { name, picture } = loginWithCredentialResult.additionalUserInfo.profile;
+        const { uid, email } = loginWithCredentialResult.user;
+        updateUserInfo(uid, { email, photoURL: typeof picture === 'string' ? picture : null, displayName: name });
+    } else {
+        loginWithCredentialResult = await auth.signInWithCredential(credential);
+        const { uid, email, photoURL, displayName } = loginWithCredentialResult.user;
+        if (loginWithCredentialResult.additionalUserInfo.isNewUser) {
+            createUserProfile(uid, email, photoURL, displayName);
+        }
+    }
+
+    return loginWithCredentialResult;
 }
 
 /**
@@ -121,20 +122,23 @@ export const setupGoogleSignin = () => {
  * Create an account with email and password
  * @param {string} email User selected email
  * @param {string} password User selected password
+ * @param {string} displayName User selected displayName
  */
-export const signInWithEmail = async (email, password) => {
+export const signInWithEmail = async (email, password, displayName) => {
     try {
         let linkedCredentials;
 
         if (auth.currentUser) {
             const credential = EmailAuthProvider.credential(email, password);
             linkedCredentials = await auth.currentUser.linkWithCredential(credential);
+            auth.currentUser.updateProfile({ displayName: displayName });
+            updateUserInfo(linkedCredentials.user.uid, { displayName });
         } else {
             linkedCredentials = await auth.createUserWithEmailAndPassword(email, password);
-            createUserProfile(linkedCredentials.user.uid);
+            linkedCredentials.user.updateProfile({ displayName: displayName });
+            createUserProfile(linkedCredentials.user.uid, email, null, displayName);
         }
 
-        updateUserInfo(linkedCredentials.user.uid, { email });
         store.dispatch(userIsLogged({ email, authProvider: PASSWORD_PROVIDER }));
 
         return linkedCredentials;
