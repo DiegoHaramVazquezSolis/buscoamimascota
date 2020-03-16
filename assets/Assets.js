@@ -15,6 +15,8 @@ import AddIcon from './icons/Add.svg';
 import CartelIcon from './icons/Cartel.svg';
 import AdoptionIcon from './icons/Adoption.svg';
 import EditIcon from './icons/Edit.svg';
+import PawIcon from './icons/Paw.svg';
+import SettingsIcon from './icons/Settings.svg';
 
 export default Assets = {
     svg: {
@@ -34,6 +36,8 @@ export default Assets = {
         AddIcon,
         CartelIcon,
         AdoptionIcon,
-        EditIcon
+        EditIcon,
+        PawIcon,
+        SettingsIcon
     }
 }
