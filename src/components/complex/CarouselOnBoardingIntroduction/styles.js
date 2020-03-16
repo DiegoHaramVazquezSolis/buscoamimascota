@@ -9,7 +9,7 @@ export default styles = StyleSheet.create({
         flexGrow: 1
     },
     iconStyle: {
-        width: widthPercentageToDP(61)
+        marginBottom: 8,
     },
     screenContainer: {
         marginTop: heightPercentageToDP(100) * .05,

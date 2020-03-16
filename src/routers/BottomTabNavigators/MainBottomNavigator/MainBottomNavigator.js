@@ -1,8 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { View } from 'react-native';
 
 import { PUBLICATIONS_STACK_NAVIGATOR, SECONDARY_COLOR, DISABLED_COLOR, DARK_COLOR, USER_SETTINGS_SCREEN } from './../../../utils/Constants';
+import Assets from '../../../../assets/Assets';
 
 import { translate } from '../../../services/i18n';
 
@@ -17,14 +17,14 @@ const routesConfig = {
         screen: PublicationsStackNavigator,
         navigationOptions:{
             tabBarLabel: translate('Navigators.MainBottomNavigator.PublicationsStackNavigator'),
-            tabBarIcon:({tintColor}) => <View style={[styles.bottomTab, { backgroundColor: tintColor }]} />
+            tabBarIcon: ({tintColor}) => <Assets.svg.PawIcon fill={tintColor} />
         }
     },
     [USER_SETTINGS_SCREEN]: {
         screen: UserSettingsScreen,
         navigationOptions:{
-            tabBarLabel:'Ajustes',
-            tabBarIcon:({tintColor}) => <View style={[styles.bottomTab, { backgroundColor: tintColor }]} />
+            tabBarLabel: translate('Navigators.MainBottomNavigator.UserSettingsScreen'),
+            tabBarIcon: ({tintColor}) => <Assets.svg.SettingsIcon fill={tintColor} />
         }
     }
 };
@@ -40,6 +40,9 @@ const navigatorConfig = {
             height: 56,
             borderTopColor: DARK_COLOR
         },
+        tabStyle: {
+            marginTop: 8
+        },
         labelStyle: {
             fontSize: 14,
             fontWeight: '200',
@@ -49,12 +52,3 @@ const navigatorConfig = {
 };
 
 export default MainBottomNavigator = createBottomTabNavigator(routesConfig, navigatorConfig);
-
-const styles = {
-    bottomTab: {
-        marginTop: 8,
-        height: 24,
-        width: 24,
-        borderRadius: 100
-    }
-};

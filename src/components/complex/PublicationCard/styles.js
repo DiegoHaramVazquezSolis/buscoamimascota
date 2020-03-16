@@ -34,7 +34,7 @@ export default styles = StyleSheet.create({
         width: widthPercentageToDP(45)
     },
     descriptionContainer: {
-        height: heightPercentageToDP(8)
+        height: heightPercentageToDP(7.5)
     },
     description: {
         color: SECONDARY_TEXT_COLOR,

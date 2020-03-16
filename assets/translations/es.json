@@ -34,7 +34,8 @@
     },
     "Navigators": {
         "MainBottomNavigator": {
-            "PublicationsStackNavigator": "Mascotas"
+            "PublicationsStackNavigator": "Mascotas",
+            "UserSettingsScreen": "Ajustes"
         },
         "PetsTopTabNavigator": {
             "LostedPublicationsListScreen": "Perdidas",
